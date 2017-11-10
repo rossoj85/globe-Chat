@@ -61,7 +61,7 @@ export function postChannel(channel, history){
     }
 }
 
-//REDUCER
+//REDUCER (look into how history is pushed)
 export default(state = initialState, action)=>{
     //return newState
     switch(action.type){
