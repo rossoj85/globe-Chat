@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {LanguageSelect, NameEntry} from './index'
 import {connect} from 'react-redux';
-import store, {setLanguage} from '../store';
+import store, {setLanguage, changeIncomingMessageLanguage} from '../store';
 
 class Navbar extends Component {
 
@@ -12,7 +12,7 @@ handleLanguageChange(evt){
 
 
   render () {
-    // console.log("NAVBAR PROPS", this.props )
+    console.log("NAVBAR PROPS", this.props )
     const incomingMessageLanguage= this.props.incomingMessageLanguage
     // console.log(setLanguage)
     console.log(store.getState())
@@ -40,20 +40,10 @@ const mapDispatch=(dispatch)=>{
     handleLanguageChange: function(evt){
       console.log("Change registered", evt.target.value)
       const inputVal = evt.target.value
-      const action = setLanguage(inputVal)
+      const action = changeIncomingMessageLanguage(inputVal)
       dispatch(action)
     },
-    // handleLanguageSubmit: function(evt){
-    //   console.log(evt)
-    //   evt.preventDefault()
-    //   const language = evt.target.value
-    //   const action = setLanguage(language)
-    //   console.log(language)
-    //   dispatch(action)
-      
-    //   // const inputValue =evt.target.value;
-    //   // const action
-    // }
+ 
   }
 }
 export default connect(mapState, mapDispatch)(Navbar)

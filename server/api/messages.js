@@ -41,32 +41,29 @@ router.post('/translate',(req,res,next)=>{
 router.post('/', (req,res,next)=>{
     const content = req.body.message
     const channelId = req.body.channelId
-    console.log(req.body)
-    
-    // Message.create({content, channelId})
-    // .then(message=>{
-    // res.json(message)
-       
-    // })
-
+    console.log("REQ BODY",req.body)
+    console.log("THIS IS THE BODY",req.body.name )
+   
     Author.findOrCreate({
         where: {
           name: req.body.name || 'Jason'
         }
-      })
-      .spread(author => {
+    })
+    
+    .spread(author => {
         const message = Message.build({content, channelId});
-        console.log(message)
+        console.log("MESSAGE CREATED",message)
         message.setAuthor(author, { save: false });
         return message.save()
           .then(message => {
             message = message.toJSON();
             message.author = author;
             return message;
+        
           });
-      })
+       
+    })
       .then(message => {
-          console.log(message)
         res.json(message);
       })
       .catch(next);

@@ -1,20 +1,39 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
-import store, {writeName} from '../store'
+import store, {writeName, setUserNameAndId} from '../store'
 
 class NameEntry extends Component {
-
-  
+    constructor(){
+        super()
+        this.state={
+          localName: ''
+        }
+        this.handleBlur=this.handleBlur.bind(this)
+      }
+        
+     handleBlur(evt){
+         console.log("FOCUS LOST")
+         const finalName=evt.target.value
+         const action=setUserNameAndId(finalName)
+         store.dispatch(action)
+     } 
     render(){
         const {name} = this.props
-        console.log("NAME FORM NAME ENTRY",name)
-        console.log("NAME ENTRY PROPS", this.props)
+        // console.log("NAME FORM NAME ENTRY",name)
+        // console.log("NAME ENTRY PROPS", this.props)
+        // console.log("NAME", name)
+        
         return(
-            <form className="form-inline">
+            <div>
+            
+            <form className="form-inline" ref="nameSubmit"
+            onSubmit={(evt) => evt.preventDefault()}
+            
+            >
                 <label htmlFor="name">Your name</label>
                 <input
                     onChange={this.props.handleChange}
-                    onSubmit={this.props.handleSubmit}
+                    onBlur={this.handleBlur}
                     value={name}
                     type="text"
                     name="name"
@@ -22,7 +41,8 @@ class NameEntry extends Component {
                     className = "form-control"
                 />
             </form>
-
+            
+            </div>
         )
     }
 }
@@ -37,18 +57,13 @@ const mapDispatch=(dispatch)=>{
     return{
         handleChange(evt){
             evt.preventDefault()
+            evt.stopPropagation();
             const nameValue = evt.target.value
             const action = writeName(nameValue)
             dispatch(action)
         },
-        handleSubmit(evt){
-            evt.preventDefault()
-            const nameValue= evt.target.value
-            const action = writeName(nameValue)
-            dispatch(action)
-        }
-
     }
 }
 
 export default connect(mapState, mapDispatch)(NameEntry)
+

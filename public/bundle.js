@@ -41487,7 +41487,7 @@ var Navbar = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      // console.log("NAVBAR PROPS", this.props )
+      console.log("NAVBAR PROPS", this.props);
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       // console.log(setLanguage)
       console.log(_store2.default.getState());
@@ -41522,20 +41522,10 @@ var mapDispatch = function mapDispatch(dispatch) {
     handleLanguageChange: function handleLanguageChange(evt) {
       console.log("Change registered", evt.target.value);
       var inputVal = evt.target.value;
-      var action = (0, _store.setLanguage)(inputVal);
+      var action = (0, _store.changeIncomingMessageLanguage)(inputVal);
       dispatch(action);
     }
-    // handleLanguageSubmit: function(evt){
-    //   console.log(evt)
-    //   evt.preventDefault()
-    //   const language = evt.target.value
-    //   const action = setLanguage(language)
-    //   console.log(language)
-    //   dispatch(action)
 
-    //   // const inputValue =evt.target.value;
-    //   // const action
-    // }
   };
 };
 exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Navbar);
@@ -41612,7 +41602,7 @@ function postMessage(messageData) {
         _axios2.default.post('/api/messages', messageData).then(function (res) {
             return res.data;
         }).then(function (message) {
-            console.log("Posted MEssage", message);
+            // console.log("Inside Post MEssage THUNK", message)
             var action = gotNewMessageFromServer(message);
             dispatch(action);
             _socket2.default.emit('new-message', message);
@@ -45812,10 +45802,11 @@ exports.default = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.WRITE_NAME = exports.CHANGE_INCOMING_MESSAGE_LANGUAGE = undefined;
+exports.SET_NAME_AND_ID = exports.WRITE_NAME = exports.CHANGE_INCOMING_MESSAGE_LANGUAGE = undefined;
 exports.changeIncomingMessageLanguage = changeIncomingMessageLanguage;
 exports.writeName = writeName;
-exports.setLanguage = setLanguage;
+exports.setNamePlusId = setNamePlusId;
+exports.setUserNameAndId = setUserNameAndId;
 
 var _axios = __webpack_require__(50);
 
@@ -45825,11 +45816,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var initialState = {
     incomingMessageLanguage: 'en',
-    name: ''
+    nameWrite: '',
+    finalName: '',
+    userId: null
 };
 
 var CHANGE_INCOMING_MESSAGE_LANGUAGE = exports.CHANGE_INCOMING_MESSAGE_LANGUAGE = 'CHANGE_INCOMING_MESSAGE_LANGUAGE';
 var WRITE_NAME = exports.WRITE_NAME = "WRITE_NAME";
+var SET_NAME_AND_ID = exports.SET_NAME_AND_ID = "SET_NAME_AND_ID";
 
 //actions 
 function changeIncomingMessageLanguage(language) {
@@ -45845,13 +45839,36 @@ function writeName(nameInput) {
         nameInput: nameInput
     };
 }
+function setNamePlusId(finalName, id) {
+    return {
+        type: SET_NAME_AND_ID,
+        finalName: finalName,
+        id: id
+    };
+}
 
 //thunks 
-function setLanguage(language) {
+// export function setLanguage(language){
 
-    return function (dispatch) {
-        var action = changeIncomingMessageLanguage(language);
-        dispatch(action);
+//   return function  (dispatch){
+//       const action = changeIncomingMessageLanguage(language)
+//       dispatch(action)
+//   }
+// }
+
+function setUserNameAndId(finalName) {
+
+    return function thunk(dispatch) {
+        _axios2.default.get('/api/authors/' + finalName).then(function (res) {
+            return res.data;
+        }).then(function (user) {
+            console.log("FROM INSIDE SETUSERID THUNK", user);
+            var finalName = user[0].name;
+            var id = user[0].id;
+            console.log(id, finalName);
+            var action = setNamePlusId(finalName, id);
+            dispatch(action);
+        });
     };
 }
 
@@ -45867,7 +45884,10 @@ exports.default = function () {
             return Object.assign({}, state, { incomingMessageLanguage: action.incomingMessageLanguage });
 
         case WRITE_NAME:
-            return Object.assign({}, state, { name: action.nameInput });
+            return Object.assign({}, state, { nameWrite: action.nameInput });
+
+        case SET_NAME_AND_ID:
+            return Object.assign({}, state, { finalName: action.finalName, userId: action.id });
 
         default:
             return state;
@@ -45949,9 +45969,10 @@ var MessagesList = function (_Component) {
 
       // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
       // const filteredMessages = messages.filter(message => message.channelId === channelId);
-      // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
+      console.log("!#$#@MESSAGE LIST PROPS$#@!$!@", this.props);
       var messages = this.props.messagesCollection;
       var channelId = this.props.channelId;
+      var userId = this.props.userId;
       // console.log("MESSSAGES",messages)
       var filteredMessages = messages.filter(function (message) {
         return +message.channelId === +channelId;
@@ -45961,11 +45982,14 @@ var MessagesList = function (_Component) {
       // console.log("channelId", this.props.channelId)
       // const originalMessage = messages.originalMessage
       // const translatedText = messages.translatedText;
+      var messageDisplayed = false;
+
       console.log("MESSSAGES", messages);
+      console.log("PAGE USER ID", userId);
 
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'messagesList' },
         _react2.default.createElement(
           'h3',
           null,
@@ -45975,11 +45999,14 @@ var MessagesList = function (_Component) {
           'ul',
           { className: 'media-list' },
           filteredMessages.map(function (messageObject) {
-            return _react2.default.createElement(_index.Message, { message: messageObject.content,
+            return _react2.default.createElement(_index.Message, {
+              message: messageObject.content,
               translatedMessage: messageObject.translatedMessage,
-              id: messageObject.id,
+              messageId: messageObject.id,
               key: messageObject.id,
-              author: messageObject.author });
+              author: messageObject.author,
+              userId: userId
+            });
           })
         ),
         _react2.default.createElement(_index.NewMessageEntry, { channelId: channelId })
@@ -45994,7 +46021,8 @@ var mapState = function mapState(state, ownProps) {
   // console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
   return {
     messagesCollection: state.messages.messageCollection,
-    channelId: ownProps.match.params.channelId
+    channelId: ownProps.match.params.channelId,
+    userId: state.navbar.userId
 
   };
 };
@@ -46095,7 +46123,7 @@ var NewMessageEntry = function (_Component) {
       // console.log("NEW MESSAGE ENTRY",this.state.newMessageEntry)
       // console.log("CONTENT", this.state.newMessageEntry)
       // console.log("CHannel ID", this.props.channelId)
-      // console.log("PROPS",this.props)
+      // console.log("NEW MESSAGE ENTRY PROPS",this.props)
 
       return _react2.default.createElement(
         'form',
@@ -46135,7 +46163,7 @@ var mapState = function mapState(state, ownProps) {
     messagesCollection: state.messages.messageCollection,
     newMessageEntry: state.messages.newMessageEntry,
     incomingMessageLanguage: state.navbar.incomingMessageLanguage,
-    name: state.navbar.name
+    name: state.navbar.finalName
 
   };
 };
@@ -46160,7 +46188,8 @@ exports.default = (0, _reactRedux.connect)(mapState)(NewMessageEntry);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Message;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
@@ -46170,68 +46199,138 @@ var _reactBootstrap = __webpack_require__(475);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Message(props) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var message = props.message;
-  var translatedMessage = props.translatedMessage;
-  var id = props.id;
-  var name = props.author.name;
-  var image = props.author.image;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  return _react2.default.createElement(
-    'li',
-    { className: 'media' },
-    _react2.default.createElement(
-      'div',
-      { className: 'media-left' },
-      _react2.default.createElement(
-        'a',
-        { href: '#' },
-        _react2.default.createElement('img', { className: 'media-object', src: image, alt: 'image' })
-      )
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'media-body' },
-      _react2.default.createElement(
-        'h4',
-        { className: 'media-heading' },
-        name
-      ),
-      _react2.default.createElement(
-        'small',
-        null,
-        'Original Message: ',
-        message
-      ),
-      _react2.default.createElement('br', null),
-      _react2.default.createElement(
-        'strong',
-        null,
-        translatedMessage
-      )
-    )
-  );
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  // return (
-  //   <li className="media" className="col-md-6"  style={{border: "3px solid black"}}>
-  //     <div className="media-left">
-  //       <a href="#">
-  //         <img className="media-object"  alt="image" />
-  //       </a>
-  //     </div>
-  //     <div className="media-body">
-  //       <h4 className="media-heading">AUTHOR NAME</h4>
+var Message = function (_Component) {
+  _inherits(Message, _Component);
 
-  //       <Tabs defaultActiveKey={2} className="col-md-6" id="uncontrolled-tab-example">
-  //       <Tab eventKey={1} title="Tab 1">{translatedMessage}</Tab>
-  //       <Tab eventKey={2} title="Original Text">{message}</Tab>
-  //       </Tabs>
-  //     </div>
-  //   </li>
-  // );
+  function Message() {
+    _classCallCheck(this, Message);
 
-}
+    var _this = _possibleConstructorReturn(this, (Message.__proto__ || Object.getPrototypeOf(Message)).call(this));
+
+    _this.state = {
+      messageDisplayed: false
+    };
+    _this.showOriginalMessage = _this.showOriginalMessage.bind(_this);
+    return _this;
+  }
+
+  _createClass(Message, [{
+    key: 'showOriginalMessage',
+    value: function showOriginalMessage() {
+      var displayed = this.state.messageDisplayed;
+      // console.log("oldState", displayed)
+      // console.log("not displayed", !displayed)
+      this.setState({
+        messageDisplayed: !displayed
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var message = this.props.message;
+      var translatedMessage = this.props.translatedMessage;
+      var id = this.props.id;
+      var name = this.props.author.name;
+      var image = this.props.author.image;
+      var showOriginalMessage = this.props.showOriginalMessage;
+      var userId = this.props.userId;
+      var author = this.props.author;
+      var authorId = this.props.author.id;
+      console.log("the USER ID OF THIS Page", userId);
+      console.log("The AuthorID of this message", authorId);
+      // console.log("ORIGINAL NON-TRANLATED MESSAGE DISPLAYED",this.state.messageDisplayed)
+      // console.log(showOriginalMessage)
+
+      return _react2.default.createElement(
+        'li',
+        { className: 'media' },
+        _react2.default.createElement(
+          'div',
+          { className: 'media-left' },
+          _react2.default.createElement(
+            'a',
+            { href: '#' },
+            _react2.default.createElement('img', { className: 'media-object', src: image, alt: 'image' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'media-body' },
+          _react2.default.createElement(
+            'h4',
+            { className: 'media-heading' },
+            name
+          ),
+          +userId === +authorId ? _react2.default.createElement(
+            'strong',
+            null,
+            message
+          ) : null,
+          _react2.default.createElement(
+            'strong',
+            null,
+            translatedMessage
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'a',
+            { onClick: function onClick(e) {
+                return _this2.showOriginalMessage(e);
+              }, style: { cursor: 'pointer' } },
+            _react2.default.createElement(
+              'small',
+              null,
+              'Show Original Message'
+            )
+          ),
+
+          //displays the original  messages only when user clicks, else, nothing 
+          this.state.messageDisplayed ? _react2.default.createElement(
+            'div',
+            { id: 'originalMessageDiv' },
+            _react2.default.createElement(
+              'small',
+              null,
+              'Original Message: ',
+              message
+            )
+          ) : null
+        )
+      );
+    }
+    // return (
+    //   <li className="media" className="col-md-6"  style={{border: "3px solid black"}}>
+    //     <div className="media-left">
+    //       <a href="#">
+    //         <img className="media-object"  alt="image" />
+    //       </a>
+    //     </div>
+    //     <div className="media-body">
+    //       <h4 className="media-heading">AUTHOR NAME</h4>
+
+    //       <Tabs defaultActiveKey={2} className="col-md-6" id="uncontrolled-tab-example">
+    //       <Tab eventKey={1} title="Tab 1">{translatedMessage}</Tab>
+    //       <Tab eventKey={2} title="Original Text">{message}</Tab>
+    //       </Tabs>
+    //     </div>
+    //   </li>
+    // );
+
+
+  }]);
+
+  return Message;
+}(_react.Component);
+
+exports.default = Message;
 
 /***/ }),
 /* 475 */
@@ -57839,33 +57938,57 @@ var NameEntry = function (_Component) {
     function NameEntry() {
         _classCallCheck(this, NameEntry);
 
-        return _possibleConstructorReturn(this, (NameEntry.__proto__ || Object.getPrototypeOf(NameEntry)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (NameEntry.__proto__ || Object.getPrototypeOf(NameEntry)).call(this));
+
+        _this.state = {
+            localName: ''
+        };
+        _this.handleBlur = _this.handleBlur.bind(_this);
+        return _this;
     }
 
     _createClass(NameEntry, [{
+        key: 'handleBlur',
+        value: function handleBlur(evt) {
+            console.log("FOCUS LOST");
+            var finalName = evt.target.value;
+            var action = (0, _store.setUserNameAndId)(finalName);
+            _store2.default.dispatch(action);
+        }
+    }, {
         key: 'render',
         value: function render() {
             var name = this.props.name;
+            // console.log("NAME FORM NAME ENTRY",name)
+            // console.log("NAME ENTRY PROPS", this.props)
+            // console.log("NAME", name)
 
-            console.log("NAME FORM NAME ENTRY", name);
-            console.log("NAME ENTRY PROPS", this.props);
             return _react2.default.createElement(
-                'form',
-                { className: 'form-inline' },
+                'div',
+                null,
                 _react2.default.createElement(
-                    'label',
-                    { htmlFor: 'name' },
-                    'Your name'
-                ),
-                _react2.default.createElement('input', {
-                    onChange: this.props.handleChange,
-                    onSubmit: this.props.handleSubmit,
-                    value: name,
-                    type: 'text',
-                    name: 'name',
-                    placeholder: 'Enter your name',
-                    className: 'form-control'
-                })
+                    'form',
+                    { className: 'form-inline', ref: 'nameSubmit',
+                        onSubmit: function onSubmit(evt) {
+                            return evt.preventDefault();
+                        }
+
+                    },
+                    _react2.default.createElement(
+                        'label',
+                        { htmlFor: 'name' },
+                        'Your name'
+                    ),
+                    _react2.default.createElement('input', {
+                        onChange: this.props.handleChange,
+                        onBlur: this.handleBlur,
+                        value: name,
+                        type: 'text',
+                        name: 'name',
+                        placeholder: 'Enter your name',
+                        className: 'form-control'
+                    })
+                )
             );
         }
     }]);
@@ -57883,12 +58006,7 @@ var mapDispatch = function mapDispatch(dispatch) {
     return {
         handleChange: function handleChange(evt) {
             evt.preventDefault();
-            var nameValue = evt.target.value;
-            var action = (0, _store.writeName)(nameValue);
-            dispatch(action);
-        },
-        handleSubmit: function handleSubmit(evt) {
-            evt.preventDefault();
+            evt.stopPropagation();
             var nameValue = evt.target.value;
             var action = (0, _store.writeName)(nameValue);
             dispatch(action);

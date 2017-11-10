@@ -4,6 +4,10 @@ $darker-background: #303641;
 $active-font-folor: #D4D5D8;
 $active-background: #5294E2;
 
+
+//background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%); ligeter blue
+// background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+
 body {
   height: 100vh;
 
@@ -17,6 +21,7 @@ body {
 
     sidebar {
       background-color: $default-background;
+      //background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
       color: $default-font-color;
       z-index: 2;
 
@@ -107,6 +112,11 @@ body {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
+      // background-image: url("https://conceptdraw.com/a1799c3/p2/preview/640/pict--globe-telecommunication-networks-vector-stencils-library");
+      // background-position: center;
+      // background-size: 50%;
+      // background-repeat: no-repeat;
+      // background-color: opacity:2;
 
       .media-list {
         overflow-y: scroll;

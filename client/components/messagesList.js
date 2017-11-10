@@ -7,6 +7,7 @@ import axios from 'axios';
 
 
 class MessagesList extends Component {
+ 
 
 
 
@@ -14,9 +15,10 @@ class MessagesList extends Component {
   
     // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
     // const filteredMessages = messages.filter(message => message.channelId === channelId);
-    // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
+    console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
     const messages = this.props.messagesCollection
     const channelId= this.props.channelId
+    const userId = this.props.userId
     // console.log("MESSSAGES",messages)
     const filteredMessages = messages.filter(message=>
       +message.channelId===+channelId)
@@ -25,17 +27,24 @@ class MessagesList extends Component {
     // console.log("channelId", this.props.channelId)
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;
-    console.log("MESSSAGES",messages)
+    let messageDisplayed=false
 
+    console.log("MESSSAGES",messages)
+    console.log("PAGE USER ID", userId)
+    
     return (
-      <div>
+      <div id="messagesList">
       <h3>Messages GO HERE!</h3>
         <ul className="media-list">
-        {filteredMessages.map(messageObject=><Message message={messageObject.content} 
+        {filteredMessages.map(messageObject=><Message 
+          message={messageObject.content} 
           translatedMessage={messageObject.translatedMessage}
-          id={messageObject.id}
+          messageId={messageObject.id}
           key={messageObject.id}
-          author={messageObject.author}/>
+          author={messageObject.author}
+          userId={userId}
+          />
+          
         
         )}
         </ul>
@@ -49,6 +58,7 @@ const mapState = (state, ownProps) =>{
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
+    userId: state.navbar.userId
     
   }
 }
