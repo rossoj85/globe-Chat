@@ -50,7 +50,7 @@ handleSubmit(evt){
     // console.log("NEW MESSAGE ENTRY",this.state.newMessageEntry)
     // console.log("CONTENT", this.state.newMessageEntry)
     // console.log("CHannel ID", this.props.channelId)
-    // console.log("NEW MESSAGE ENTRY PROPS",this.props)
+    console.log("NEW MESSAGE ENTRY PROPS",this.props)
    
     return (
       <form id="new-message-form" onSubmit={this.handleSubmit}>

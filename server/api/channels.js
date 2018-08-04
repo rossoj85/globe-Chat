@@ -18,6 +18,16 @@ router.get('/', function (req, res, next) {
       .then(messages => res.json(messages))
       .catch(next);
   });
+  //GET A SINGLE CHANNGEL 
+  // GET api/channels/:channelId 
+  router.get('/:channelId', (req,res,next)=>{
+    const channelId = req.params.channelId
+    console.log('CHANNEL PARAMS', channelId)
+
+    Channel.findById(channelId)
+    .then(channel=>res.json(channel))
+    .catch(next)
+  })
   
   // POST /api/channels
   router.post('/', function (req, res, next) {

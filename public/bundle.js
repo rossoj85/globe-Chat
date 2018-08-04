@@ -41489,15 +41489,17 @@ var Navbar = function (_Component) {
     value: function render() {
       console.log("NAVBAR PROPS", this.props);
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
+      var currentChannel = this.props.currentChannel;
       // console.log(setLanguage)
-      console.log(_store2.default.getState());
+      console.log(currentChannel);
+      console.log('$$$$$NAVBAR STORE$$$$', _store2.default.getState());
       return _react2.default.createElement(
         'nav',
         null,
         _react2.default.createElement(
           'h3',
           null,
-          'CHANNEL'
+          currentChannel && currentChannel.name
         ),
         _react2.default.createElement(_index.NameEntry, null),
         _react2.default.createElement(_index.LanguageSelect, {
@@ -41514,7 +41516,8 @@ var Navbar = function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    incomingMessageLanguage: state.navbar.incomingMessageLanguage
+    incomingMessageLanguage: state.navbar.incomingMessageLanguage,
+    currentChannel: state.channels.currentChannel
   };
 };
 var mapDispatch = function mapDispatch(dispatch) {
@@ -45687,15 +45690,17 @@ Backoff.prototype.setJitter = function(jitter){
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.GET_CHANNEL = exports.WRITE_CHANNEL_NAME = exports.GET_CHANNELS = undefined;
+exports.SET_CURRENT_CHANNEL = exports.GET_CHANNEL = exports.WRITE_CHANNEL_NAME = exports.GET_CHANNELS = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.getChannels = getChannels;
 exports.writeChannelName = writeChannelName;
 exports.getChannel = getChannel;
+exports.setCurrent = setCurrent;
 exports.fetchChannels = fetchChannels;
 exports.postChannel = postChannel;
+exports.reduxSetCurrentChannel = reduxSetCurrentChannel;
 
 var _axios = __webpack_require__(50);
 
@@ -45712,12 +45717,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var initialState = {
     channels: [],
     newChannelEntry: '',
-    currentChannelId: ''
+    currentChannelId: '',
+    currentChannel: null
 };
 
 var GET_CHANNELS = exports.GET_CHANNELS = "GET_CHANNELS";
 var WRITE_CHANNEL_NAME = exports.WRITE_CHANNEL_NAME = "WRITE_CHANNEL_NAME";
 var GET_CHANNEL = exports.GET_CHANNEL = "GET_CHANNEL";
+var SET_CURRENT_CHANNEL = exports.SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL';
 
 //ACTIONS
 function getChannels(channels) {
@@ -45737,6 +45744,12 @@ function writeChannelName(channelName) {
 function getChannel(channel) {
     return {
         type: GET_CHANNEL,
+        channel: channel
+    };
+}
+function setCurrent(channel) {
+    return {
+        type: SET_CURRENT_CHANNEL,
         channel: channel
     };
 }
@@ -45764,6 +45777,18 @@ function postChannel(channel, history) {
         });
     };
 }
+function reduxSetCurrentChannel(channel) {
+    console.log('INSIDE THUNK!@#$!@!#$@!#!', channel);
+    // console.log(`api/channels/${channelId}`)
+    return function thunk(dispatch) {
+        //      axios.get(`/api/channels/${channelId}`)
+        //     .then(res=>res.data)
+        //     .then(currentChannel=>{
+        // console.log('CURRENT CHANNEL',currentChannel)
+        dispatch(setCurrent(channel));
+    };
+    // }
+}
 
 //REDUCER (look into how history is pushed)
 
@@ -45785,6 +45810,10 @@ exports.default = function () {
             //    console.log("ACTION.CHANNELS",action.channels)
             return _extends({}, state, {
                 channels: action.channels
+            });
+        case SET_CURRENT_CHANNEL:
+            return _extends({}, state, {
+                currentChannel: action.channel
             });
 
         default:
@@ -45969,7 +45998,7 @@ var MessagesList = function (_Component) {
 
       // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
       // const filteredMessages = messages.filter(message => message.channelId === channelId);
-      console.log("!#$#@MESSAGE LIST PROPS$#@!$!@", this.props);
+      // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
       var messages = this.props.messagesCollection;
       var channelId = this.props.channelId;
       var userId = this.props.userId;
@@ -45984,8 +46013,8 @@ var MessagesList = function (_Component) {
       // const translatedText = messages.translatedText;
       var messageDisplayed = false;
 
-      console.log("MESSSAGES", messages);
-      console.log("PAGE USER ID", userId);
+      // console.log("MESSSAGES",messages)
+      // console.log("PAGE USER ID", userId)
 
       return _react2.default.createElement(
         'div',
@@ -46123,7 +46152,7 @@ var NewMessageEntry = function (_Component) {
       // console.log("NEW MESSAGE ENTRY",this.state.newMessageEntry)
       // console.log("CONTENT", this.state.newMessageEntry)
       // console.log("CHannel ID", this.props.channelId)
-      // console.log("NEW MESSAGE ENTRY PROPS",this.props)
+      console.log("NEW MESSAGE ENTRY PROPS", this.props);
 
       return _react2.default.createElement(
         'form',
@@ -57759,19 +57788,19 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(116);
 
-var _store = __webpack_require__(37);
-
-var _store2 = _interopRequireDefault(_store);
-
 var _reactRedux = __webpack_require__(36);
+
+var _store = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import store from '../store';
 function ChannelList(props) {
   var messages = props.messages,
       channels = props.channels;
-  //   console.log("CHENNELS------",channels)
-  //   console.log("PROPS",props)
+
+  // console.log("CHANNEL LIST PROPS",props)
+  // console.log(reduxSetCurrentChannel)
 
   return _react2.default.createElement(
     'ul',
@@ -57779,7 +57808,9 @@ function ChannelList(props) {
     channels.channels.map(function (channel) {
       return _react2.default.createElement(
         'li',
-        { key: channel.id },
+        { key: channel.id, onClick: function onClick() {
+            return props.reactSetCurrentChannel(channel);
+          } },
         _react2.default.createElement(
           _reactRouterDom.NavLink,
           { to: '/channels/' + channel.id, activeClassName: 'active' },
@@ -57810,8 +57841,10 @@ function ChannelList(props) {
     )
   );
 }
+
 /**Write your connect component below! */
 
+// import {withRouter} from 'react-router-dom';
 var mapState = function mapState(state, ownProps) {
   // console.log(state)
   return {
@@ -57820,8 +57853,11 @@ var mapState = function mapState(state, ownProps) {
 
   };
 };
+var mapDispatch = {
+  reactSetCurrentChannel: _store.reduxSetCurrentChannel
+};
 
-var ChannelListContainer = (0, _reactRedux.connect)(mapState)(ChannelList);
+var ChannelListContainer = (0, _reactRedux.connect)(mapState, mapDispatch)(ChannelList);
 var ContainerWithRouter = (0, _reactRouterDom.withRouter)(ChannelListContainer);
 exports.default = ContainerWithRouter;
 
