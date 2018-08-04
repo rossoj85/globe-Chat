@@ -14,11 +14,13 @@ handleLanguageChange(evt){
   render () {
     console.log("NAVBAR PROPS", this.props )
     const incomingMessageLanguage= this.props.incomingMessageLanguage
+    const currentChannel =this.props.currentChannel
     // console.log(setLanguage)
-    console.log(store.getState())
+    console.log(currentChannel)
+    console.log('$$$$$NAVBAR STORE$$$$',store.getState())
     return (
       <nav>
-        <h3>CHANNEL</h3>
+        <h3>{currentChannel&&currentChannel.name}</h3>
         <NameEntry />
        <LanguageSelect 
                       incomingMessageLanguage={incomingMessageLanguage} 
@@ -32,7 +34,8 @@ handleLanguageChange(evt){
 
 const mapState=(state)=>{
   return{
-      incomingMessageLanguage: state.navbar.incomingMessageLanguage
+      incomingMessageLanguage: state.navbar.incomingMessageLanguage,
+      currentChannel: state.channels.currentChannel
   }
 }
 const mapDispatch=(dispatch)=>{

@@ -4,14 +4,15 @@ import socket from '../socket';
 const initialState = {
     channels: [],
     newChannelEntry:'',
-    currentChannelId:''
+    currentChannelId:'',
+    currentChannel: null
 }
 
 
 export const GET_CHANNELS = "GET_CHANNELS";
 export const WRITE_CHANNEL_NAME ="WRITE_CHANNEL_NAME";
 export const GET_CHANNEL ="GET_CHANNEL";
-
+export const SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL'
 
 
 //ACTIONS
@@ -33,6 +34,12 @@ export function writeChannelName(channelName){
 export function getChannel (channel){
     return {
         type: GET_CHANNEL,
+        channel
+    }
+}
+export function setCurrent(channel){
+    return{
+        type: SET_CURRENT_CHANNEL,
         channel
     }
 }
@@ -60,6 +67,18 @@ export function postChannel(channel, history){
         });
     }
 }
+export function reduxSetCurrentChannel(channel){
+    console.log('INSIDE THUNK!@#$!@!#$@!#!', channel)
+    // console.log(`api/channels/${channelId}`)
+    return function thunk(dispatch){
+    //      axios.get(`/api/channels/${channelId}`)
+    //     .then(res=>res.data)
+    //     .then(currentChannel=>{
+            // console.log('CURRENT CHANNEL',currentChannel)
+            dispatch(setCurrent(channel))
+        }
+    // }
+}
 
 //REDUCER (look into how history is pushed)
 export default(state = initialState, action)=>{
@@ -68,7 +87,7 @@ export default(state = initialState, action)=>{
         case WRITE_CHANNEL_NAME:
            return Object.assign({}, state, {newChannelEntry: action.newChannelEntry})
         
-           case GET_CHANNEL:
+        case GET_CHANNEL:
            return {
                ...state,
                channels: [...state.channels, action.channel]
@@ -80,6 +99,13 @@ export default(state = initialState, action)=>{
                 ...state,
                 channels: action.channels
             }
+        case SET_CURRENT_CHANNEL:
+            return {
+                ...state,
+                currentChannel: action.channel
+            }
+
+            
         
         default:
             return state;

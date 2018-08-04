@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import store from '../store';
+import { NavLink, withRouter } from 'react-router-dom';
+// import store from '../store';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+// import {withRouter} from 'react-router-dom';
+import {reduxSetCurrentChannel} from '../store'
 
 
  function ChannelList (props) {
   const {messages, channels} = props;
-//   console.log("CHENNELS------",channels)
-//   console.log("PROPS",props)
+
+  // console.log("CHANNEL LIST PROPS",props)
+  // console.log(reduxSetCurrentChannel)
+
     return (
       <ul>
       {
         channels.channels.map(channel=>{
           return (
-            <li key={channel.id}>
+            <li key={channel.id} onClick={()=>props.reactSetCurrentChannel(channel)}>
             <NavLink to= {`/channels/${channel.id}`} activeClassName="active">
             <span># {channel.name}</span>
             <span className="badge">{messages.filter(message => message.channelId === channel.id).length}
@@ -29,7 +32,9 @@ import {withRouter} from 'react-router-dom';
       </li>
       </ul>
     );
+  
 }
+
 /**Write your connect component below! */
 
 
@@ -41,8 +46,10 @@ const mapState = (state, ownProps) =>{
     
   }
 }
+const mapDispatch={
+    reactSetCurrentChannel: reduxSetCurrentChannel
+}
 
-
-const ChannelListContainer = connect(mapState)(ChannelList)
+const ChannelListContainer = connect(mapState, mapDispatch)(ChannelList)
 const ContainerWithRouter = withRouter(ChannelListContainer)
 export default ContainerWithRouter;
