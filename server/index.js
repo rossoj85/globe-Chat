@@ -8,6 +8,7 @@ const db = require('./db');
 const PORT = process.env.PORT || 3100;
 const server = app.listen(PORT, ()=>console.log(`You Will soon be chatting with people from aroudn the world on Port , ${PORT}`))
 const io=require('socket.io')(server)
+const session = require('express-session');
 
 // handle sockets
 require('./socket')(io);
@@ -15,6 +16,24 @@ require('./socket')(io);
 module.exports = app;
 
 db.sync().then(() => console.log('Database is synced'));
+app.use(session({
+  secret: 'YOURE A BUMBCLOT!!!!',
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.use('/api', function (req, res, next) {
+  if (!req.session.counter) req.session.counter = 0;
+  console.log('COUNTER', ++req.session.counter);
+  next();
+});
+
+app.use(function (req, res, next){
+  // console.log('passport user: ', req.user)
+  console.log('WASSUP HELLO', req.session);
+  // console.log(passport)
+  next();
+})
 
 app.use(volleyball);
 

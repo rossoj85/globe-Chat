@@ -45765,7 +45765,7 @@ function postChannel(channel, history) {
     };
 }
 
-//REDUCER
+//REDUCER (look into how history is pushed)
 
 exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
