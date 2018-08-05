@@ -20,7 +20,7 @@ import {reduxSetCurrentChannel} from '../store'
             <li key={channel.id} onClick={()=>props.reactSetCurrentChannel(channel)}>
             <NavLink to= {`/channels/${channel.id}`} activeClassName="active">
             <span># {channel.name}</span>
-            <span className="badge">{messages.filter(message => message.channelId === channel.id).length}
+            <span className="badge">{messages.length && messages.filter(message => message.channelId === channel.id).length}
             </span>
           </NavLink>
           </li>

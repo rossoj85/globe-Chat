@@ -11,6 +11,8 @@ const initialState = {
 
 export const WRITE_MESSAGE = 'WRITE_MESSAGE';
 export  const GOT_NEW_MESSAGE_FROM_SERVER ='GOT_NEW_MESSAGE_FROM_SERVER';
+export const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES'
+export const GET_SINGLE_CHANNEL_MESSAGES= 'GET_SINGLE_CHANNEL_MESSSAGES'
 
 
 export function writeMessage (inputContent){
@@ -27,7 +29,15 @@ export function gotNewMessageFromServer(message){
     }
 }
 
+export const getAllMesagesFromServer =(allMessages)=>({
+    type: GET_ALL_MESSAGES,
+    allMessages
+})
 
+export const getSingleChannelMessages = (singleChannelMessages)=>({
+    type: GET_SINGLE_CHANNEL_MESSAGES,
+    singleChannelMessages
+})
 
 // THUNKS AND DISPATCH
 export function postMessage(messageData){  //we could have also passed in channelId and contents
@@ -36,7 +46,6 @@ export function postMessage(messageData){  //we could have also passed in channe
     // const channelId = messageData.channelId
     // const incomingMessageLanguage = messageData.incomingMessageLanguage
     // console.log("INCOMING MESSAGE FROM THUNK",messageData)
-
     return function thunk(dispatch, getState){
         axios.post('/api/messages', messageData)
         .then(res=>res.data)
@@ -47,43 +56,22 @@ export function postMessage(messageData){  //we could have also passed in channe
             socket.emit('new-message', message)
             dispatch(writeMessage(""))
         })
-       
     }
 }
 
+export const fetchMessages =() =>
+    dispatch =>
+        axios.get('/api/messages')
+        .then(res=>res.data)
+        .then(allMessages=>{
+            console.log(allMessages)
+            dispatch(getAllMesagesFromServer(allMessages))
+        })
+        .catch(console.error)
 
-
-
-
-// export function postMessage(messageData){  //we could have also passed in channelId and contents
-//     // console.log("messagedata#$%#$@",messageData)
-//     // console.log(incomingMessageLanguage)
-//     const channelId = messageData.channelId
-//     const incomingMessageLanguage = messageData.incomingMessageLanguage
-//     console.log("INCOMING MESSAGE FROM THUNK",messageData)
-
-//     return function thunk(dispatch, getState){
-//         axios.post('/api/messages', messageData)
-//         .then(res=>res.data)
-//         .then(message=>{
-//             message.incomingMessageLanguage=incomingMessageLanguage
-//             message.channelId=channelId
-//             console.log("BEFORE TRANSLATE POST",message)
-//              return axios.post('/api/messages/translate',message, incomingMessageLanguage)
-        
-//         })
-//         .then(res=>res.data)
-//         .then(bothMessages=>{
-//             console.log("DATA FROM BOTH MESSAGES", bothMessages)
-//              const action = gotNewMessageFromServer(bothMessages)
-//              dispatch(action)
-//              dispatch(writeMessage(""))
-//         })     
-//     }
-// }
-
-
-
+export const fetchSingleChannelMessages =(channelId)=>
+        dispatch =>
+        axios.get('api/messages/:channelId')
 
 export default (state = initialState, action) => {
     //return newState
@@ -95,8 +83,41 @@ export default (state = initialState, action) => {
         case GOT_NEW_MESSAGE_FROM_SERVER:
             return Object.assign({}, state, {messageCollection: [...state.messageCollection, action.message]})
 
+        case GET_ALL_MESSAGES:
+            return {
+                ...state,
+                messageCollection: action.allMessages
+            }
         default:
             return state;
     }
 }
 
+
+// export function getAllMesagesFromServer(allMessages){
+//         return {
+//             type: GET__ALL_MESSAGES,
+//             allMessages
+//         }
+// }
+
+
+// export function getAllMesagesFromServer(allMessages){
+//         return {
+//             type: GET__ALL_MESSAGES,
+//             allMessages
+//         }
+// }
+
+// export function fetchMessages(){
+//     console.log('HIT FETCH MESSAGES')
+//     return function thunk(dispatch){
+//         axios.get('/api/messages')
+//         .then(res=>res.data)
+//         .then(allMessages=>{
+//             console.log(allMessages)
+//             dispatch(getAllMesagesFromServer(allMessages))
+//         })
+//         .catch(console.error)
+//     }
+// }

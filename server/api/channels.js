@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
       .then(channels => res.json(channels))
       .catch(next);
   });
-  
+  //going to have a duplicat of this in messages routes
   // GET /api/channels/:channelId/messages
   router.get('/:channelId/messages', function (req, res, next) {
     const channelId = req.params.channelId;

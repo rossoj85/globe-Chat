@@ -19,6 +19,7 @@
     "express": "^4.15.4",
     "express-session": "^1.15.6",
     "google-translate": "^2.0.5",
+    "mdbreact": "^4.6.1",
     "morgan": "^1.8.2",
     "pg": "6.4.2",
     "pg-hstore": "^2.3.2",
