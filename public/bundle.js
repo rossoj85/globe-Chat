@@ -18626,9 +18626,11 @@ var Main = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             console.log("Main Component mounted");
-
+            console.log(_store.fetchMessages);
             var channelsThunk = (0, _store.fetchChannels)();
+            var messagesThunk = (0, _store.fetchMessages)();
             _store2.default.dispatch(channelsThunk);
+            _store2.default.dispatch(messagesThunk);
         }
     }, {
         key: 'render',
@@ -41543,10 +41545,15 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Navbar);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.GOT_NEW_MESSAGE_FROM_SERVER = exports.WRITE_MESSAGE = undefined;
+exports.GET_MESSAGES = exports.GOT_NEW_MESSAGE_FROM_SERVER = exports.WRITE_MESSAGE = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.writeMessage = writeMessage;
 exports.gotNewMessageFromServer = gotNewMessageFromServer;
+exports.getAllMesagesFromServer = getAllMesagesFromServer;
 exports.postMessage = postMessage;
+exports.fetchMessages = fetchMessages;
 
 var _redux = __webpack_require__(82);
 
@@ -41577,6 +41584,7 @@ var initialState = {
 
 var WRITE_MESSAGE = exports.WRITE_MESSAGE = 'WRITE_MESSAGE';
 var GOT_NEW_MESSAGE_FROM_SERVER = exports.GOT_NEW_MESSAGE_FROM_SERVER = 'GOT_NEW_MESSAGE_FROM_SERVER';
+var GET_MESSAGES = exports.GET_MESSAGES = 'GET_MESSAGES';
 
 function writeMessage(inputContent) {
     return {
@@ -41591,6 +41599,12 @@ function gotNewMessageFromServer(message) {
         message: message
     };
 }
+function getAllMesagesFromServer(allMessages) {
+    return {
+        type: GET_MESSAGES,
+        allMessages: allMessages
+    };
+}
 
 // THUNKS AND DISPATCH
 function postMessage(messageData) {
@@ -41600,7 +41614,6 @@ function postMessage(messageData) {
     // const channelId = messageData.channelId
     // const incomingMessageLanguage = messageData.incomingMessageLanguage
     // console.log("INCOMING MESSAGE FROM THUNK",messageData)
-
     return function thunk(dispatch, getState) {
         _axios2.default.post('/api/messages', messageData).then(function (res) {
             return res.data;
@@ -41613,6 +41626,52 @@ function postMessage(messageData) {
         });
     };
 }
+
+// export const retrieveAllMessages = ()=>
+//     console.log('HIT RETRIEVE ALL MESSAFES!!')
+//     dispatch=>
+//         axios.get('/api/messages')
+//         .then(res=>console.log('RESSSSS',res.data))
+//         // .then(allMessages=>console.log(allMessages))
+//         // // .then(allMessages=>{
+//         // //     console.log('ALL MESSAGES------->',allMessages)
+//         // //     const action=getAllMesagesFromServer(allMessages)
+//         // //     dispatch(action)
+//         // // })
+//         // .catch(logErr)
+function fetchMessages() {
+    console.log('HIT FETCH MESSAGES');
+    return function thunk(dispatch) {
+        _axios2.default.get('/api/messages').then(function (res) {
+            return res.data;
+        }).then(function (allMessages) {
+            console.log(allMessages);
+            dispatch(getAllMesagesFromServer(allMessages));
+        });
+    };
+}
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    //return newState
+    switch (action.type) {
+
+        case WRITE_MESSAGE:
+            return Object.assign({}, state, { newMessageEntry: action.newMessageEntry });
+
+        case GOT_NEW_MESSAGE_FROM_SERVER:
+            return Object.assign({}, state, { messageCollection: [].concat(_toConsumableArray(state.messageCollection), [action.message]) });
+
+        case GET_MESSAGES:
+            return _extends({}, state, {
+                messageCollection: [].concat(_toConsumableArray(state.messageCollection), [action.allMessages])
+            });
+        default:
+            return state;
+    }
+};
 
 // export function postMessage(messageData){  //we could have also passed in channelId and contents
 //     // console.log("messagedata#$%#$@",messageData)
@@ -41640,25 +41699,6 @@ function postMessage(messageData) {
 //         })     
 //     }
 // }
-
-
-exports.default = function () {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    //return newState
-    switch (action.type) {
-
-        case WRITE_MESSAGE:
-            return Object.assign({}, state, { newMessageEntry: action.newMessageEntry });
-
-        case GOT_NEW_MESSAGE_FROM_SERVER:
-            return Object.assign({}, state, { messageCollection: [].concat(_toConsumableArray(state.messageCollection), [action.message]) });
-
-        default:
-            return state;
-    }
-};
 
 /***/ }),
 /* 427 */
@@ -57823,7 +57863,7 @@ function ChannelList(props) {
           _react2.default.createElement(
             'span',
             { className: 'badge' },
-            messages.filter(function (message) {
+            messages.length && messages.filter(function (message) {
               return message.channelId === channel.id;
             }).length
           )

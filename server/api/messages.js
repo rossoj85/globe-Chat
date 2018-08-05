@@ -5,7 +5,10 @@ const {Message, Author} = require('../db/models')
 module.exports = router
 
 router.get('/',(req,res,next)=>{
-    Message()
+    console.log('@$#!@!#$@#!$@#!$@!#$#!2HIT MESSAGES ROUTE$@#@#!$@!#$!@#$@!#$@#$@!#')
+    Message.findAll()
+    .then(allMessages=>res.json(allMessages))
+    .catch(next)
 })
 
 
