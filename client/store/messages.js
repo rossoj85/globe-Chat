@@ -26,12 +26,16 @@ export function gotNewMessageFromServer(message){
         message: message
     }
 }
-export function getAllMesagesFromServer(allMessages){
-        return {
-            type: GET_MESSAGES,
-            allMessages
-        }
-}
+// export function getAllMesagesFromServer(allMessages){
+//         return {
+//             type: GET_MESSAGES,
+//             allMessages
+//         }
+// }
+export const getAllMesagesFromServer =(allMessages)=>({
+    type:GET_MESSAGES,
+    allMessages
+})
 
 // THUNKS AND DISPATCH
 export function postMessage(messageData){  //we could have also passed in channelId and contents
@@ -53,29 +57,28 @@ export function postMessage(messageData){  //we could have also passed in channe
     }
 }
 
-// export const retrieveAllMessages = ()=>
-//     console.log('HIT RETRIEVE ALL MESSAFES!!')
-//     dispatch=>
+// export function fetchMessages(){
+//     console.log('HIT FETCH MESSAGES')
+//     return function thunk(dispatch){
 //         axios.get('/api/messages')
-//         .then(res=>console.log('RESSSSS',res.data))
-//         // .then(allMessages=>console.log(allMessages))
-//         // // .then(allMessages=>{
-//         // //     console.log('ALL MESSAGES------->',allMessages)
-//         // //     const action=getAllMesagesFromServer(allMessages)
-//         // //     dispatch(action)
-//         // // })
-//         // .catch(logErr)
-export function fetchMessages(){
-    console.log('HIT FETCH MESSAGES')
-    return function thunk(dispatch){
+//         .then(res=>res.data)
+//         .then(allMessages=>{
+//             console.log(allMessages)
+//             dispatch(getAllMesagesFromServer(allMessages))
+//         })
+//         .catch(console.error)
+//     }
+// }
+export const fetchMessages =() =>
+    dispatch =>
         axios.get('/api/messages')
         .then(res=>res.data)
         .then(allMessages=>{
             console.log(allMessages)
             dispatch(getAllMesagesFromServer(allMessages))
         })
-    }
-}
+        .catch(console.error)
+
 
 export default (state = initialState, action) => {
     //return newState
@@ -90,7 +93,7 @@ export default (state = initialState, action) => {
         case GET_MESSAGES:
             return {
                 ...state,
-                messageCollection: [...state.messageCollection, action.allMessages]
+                messageCollection: action.allMessages
             }
         default:
             return state;

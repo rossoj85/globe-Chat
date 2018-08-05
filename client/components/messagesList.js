@@ -23,7 +23,8 @@ class MessagesList extends Component {
     const filteredMessages = messages.filter(message=>
       +message.channelId===+channelId)
     // console.log("props channel id ",channelId)
-    // console.log("filtered Messages",filteredMessages)
+    console.log(messages)
+    console.log("filtered Messages",filteredMessages)
     // console.log("channelId", this.props.channelId)
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;

@@ -41545,15 +41545,13 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Navbar);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.GET_MESSAGES = exports.GOT_NEW_MESSAGE_FROM_SERVER = exports.WRITE_MESSAGE = undefined;
+exports.fetchMessages = exports.getAllMesagesFromServer = exports.GET_MESSAGES = exports.GOT_NEW_MESSAGE_FROM_SERVER = exports.WRITE_MESSAGE = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.writeMessage = writeMessage;
 exports.gotNewMessageFromServer = gotNewMessageFromServer;
-exports.getAllMesagesFromServer = getAllMesagesFromServer;
 exports.postMessage = postMessage;
-exports.fetchMessages = fetchMessages;
 
 var _redux = __webpack_require__(82);
 
@@ -41599,12 +41597,18 @@ function gotNewMessageFromServer(message) {
         message: message
     };
 }
-function getAllMesagesFromServer(allMessages) {
+// export function getAllMesagesFromServer(allMessages){
+//         return {
+//             type: GET_MESSAGES,
+//             allMessages
+//         }
+// }
+var getAllMesagesFromServer = exports.getAllMesagesFromServer = function getAllMesagesFromServer(allMessages) {
     return {
         type: GET_MESSAGES,
         allMessages: allMessages
     };
-}
+};
 
 // THUNKS AND DISPATCH
 function postMessage(messageData) {
@@ -41627,29 +41631,28 @@ function postMessage(messageData) {
     };
 }
 
-// export const retrieveAllMessages = ()=>
-//     console.log('HIT RETRIEVE ALL MESSAFES!!')
-//     dispatch=>
+// export function fetchMessages(){
+//     console.log('HIT FETCH MESSAGES')
+//     return function thunk(dispatch){
 //         axios.get('/api/messages')
-//         .then(res=>console.log('RESSSSS',res.data))
-//         // .then(allMessages=>console.log(allMessages))
-//         // // .then(allMessages=>{
-//         // //     console.log('ALL MESSAGES------->',allMessages)
-//         // //     const action=getAllMesagesFromServer(allMessages)
-//         // //     dispatch(action)
-//         // // })
-//         // .catch(logErr)
-function fetchMessages() {
-    console.log('HIT FETCH MESSAGES');
-    return function thunk(dispatch) {
-        _axios2.default.get('/api/messages').then(function (res) {
+//         .then(res=>res.data)
+//         .then(allMessages=>{
+//             console.log(allMessages)
+//             dispatch(getAllMesagesFromServer(allMessages))
+//         })
+//         .catch(console.error)
+//     }
+// }
+var fetchMessages = exports.fetchMessages = function fetchMessages() {
+    return function (dispatch) {
+        return _axios2.default.get('/api/messages').then(function (res) {
             return res.data;
         }).then(function (allMessages) {
             console.log(allMessages);
             dispatch(getAllMesagesFromServer(allMessages));
-        });
+        }).catch(console.error);
     };
-}
+};
 
 exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -41666,7 +41669,7 @@ exports.default = function () {
 
         case GET_MESSAGES:
             return _extends({}, state, {
-                messageCollection: [].concat(_toConsumableArray(state.messageCollection), [action.allMessages])
+                messageCollection: action.allMessages
             });
         default:
             return state;
@@ -46047,7 +46050,8 @@ var MessagesList = function (_Component) {
         return +message.channelId === +channelId;
       });
       // console.log("props channel id ",channelId)
-      // console.log("filtered Messages",filteredMessages)
+      console.log(messages);
+      console.log("filtered Messages", filteredMessages);
       // console.log("channelId", this.props.channelId)
       // const originalMessage = messages.originalMessage
       // const translatedText = messages.translatedText;
