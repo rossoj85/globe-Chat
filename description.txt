@@ -1,0 +1,11 @@
+FLOW
+In main on component did mount we make api request to get
+ 1.)the channels
+ 2.) all the messages
+
+TO DO 
+1.) Make a login page
+ We wnat to make it so that the app only requests the necessary messages 
+ for each channel it clicks 
+
+ We should store the current channel on the session. 

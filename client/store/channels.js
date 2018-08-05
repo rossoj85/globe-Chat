@@ -4,7 +4,6 @@ import socket from '../socket';
 const initialState = {
     channels: [],
     newChannelEntry:'',
-    currentChannelId:'',
     currentChannel: null
 }
 

@@ -10,7 +10,14 @@ router.get('/',(req,res,next)=>{
     .then(allMessages=>res.json(allMessages))
     .catch(next)
 })
-
+router.get('/:channelId',(req,res,next)=>{
+    console.log('HIT GET MESSAGE FROM CHANNEL')
+    const channelId = req.params.channelId
+    console.log(channelId)
+    Message.findAll({ where: { channelId } })
+    .then(messages => res.json(messages))
+    .catch(next);
+})
 
 
 router.post('/translate',(req,res,next)=>{
