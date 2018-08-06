@@ -13,7 +13,7 @@ export default class Main extends Component{
         const currentUserThunk =retrieveLoggedInUser();
         store.dispatch(channelsThunk)
         store.dispatch(messagesThunk)
-        // store.dispatch(currentUserThunk)
+        store.dispatch(currentUserThunk)
     }
 
     render(){

@@ -43,7 +43,7 @@ export const reduxLogin = credentials =>
         dispatch =>{
         console.log('HITTING RETRIEVE USER!!!!!!')
         axios.get('/api/auth/me')
-        .then(res=>console.log('THE RESPONSE',res.data))
+        .then(res=>res.data)
         
         .then(user => {
           console.log('INSIDE RETRIEVE USER USER!!!', user)

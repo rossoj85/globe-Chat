@@ -12,16 +12,17 @@ handleLanguageChange(evt){
 
 
   render () {
-    // console.log("NAVBAR PROPS", this.props )
+    console.log("NAVBAR PROPS", this.props )
     const incomingMessageLanguage= this.props.incomingMessageLanguage
     const currentChannel =this.props.currentChannel
+    const currentUser =this.props.currentUser
     // console.log(setLanguage)
     // console.log(currentChannel)
     // console.log('$$$$$NAVBAR STORE$$$$',store.getState())
     return (
       <nav>
         <h3>{currentChannel&&currentChannel.name}</h3>
-        <NameEntry />
+       {currentUser?  <p>Welcome {currentUser.name}</p>: <NameEntry/>}
        <LanguageSelect 
                       incomingMessageLanguage={incomingMessageLanguage} 
                       // handleLanguageSubmit={this.props.handleLanguageSubmit} 
@@ -35,7 +36,8 @@ handleLanguageChange(evt){
 const mapState=(state)=>{
   return{
       incomingMessageLanguage: state.navbar.incomingMessageLanguage,
-      currentChannel: state.channels.currentChannel
+      currentChannel: state.channels.currentChannel,
+      currentUser: state.currentUser
   }
 }
 const mapDispatch=(dispatch)=>{

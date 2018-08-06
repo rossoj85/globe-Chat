@@ -90,7 +90,7 @@ class Welcome extends React.Component {
       })
         .then( loggedInUser =>{
           console.log(loggedInUser)
-          // this.props.history.push(`/users/${loggedInUser.id}`)
+          this.props.history.push(`/`)
         })
       // .catch(console.error())
   

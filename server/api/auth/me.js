@@ -3,17 +3,18 @@ const {Author} = require('../../db/models');
 const HttpError = require('../../utils/HttpError');
 const hour = 360000;
 
-router.get('/',(res,req,next)=>{
+
     
     router.get ('/',(req,res,next)=>{
         console.log('@#$!$@!#$@!#INSIDE ME.js GET ROUTE')
         //so that login will recognise the passport data that is now stored on seesion
         // res.json(req.user) //this is a passport method
-        Author.findById(req.session.userId)
-        .then(res.json(user))
-        .catch(next)
+        Author.findById(req.session.authorId)
+        .then(author=>res.json(author))
+        // .catch(next)
+        // res.send('HEllo')
     })
-})
+
 
 router.put('/', (req, res, next)=>{
     console.log('HIT PUT TO SESSION!!!',console.log(req.session))
