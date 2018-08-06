@@ -3704,6 +3704,30 @@ Object.keys(_navbar).forEach(function (key) {
   });
 });
 
+var _author = __webpack_require__(632);
+
+Object.keys(_author).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _author[key];
+    }
+  });
+});
+
+var _currentUser = __webpack_require__(633);
+
+Object.keys(_currentUser).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _currentUser[key];
+    }
+  });
+});
+
 var _redux = __webpack_require__(84);
 
 var _reduxLogger = __webpack_require__(207);
@@ -3720,9 +3744,13 @@ var _channels2 = _interopRequireDefault(_channels);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
+var _author2 = _interopRequireDefault(_author);
+
+var _currentUser2 = _interopRequireDefault(_currentUser);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reducer = (0, _redux.combineReducers)({ messages: _messages2.default, channels: _channels2.default, navbar: _navbar2.default });
+var reducer = (0, _redux.combineReducers)({ messages: _messages2.default, channels: _channels2.default, navbar: _navbar2.default, author: _author2.default, currentUser: _currentUser2.default });
 
 var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger.createLogger)({ collapsed: true })));
 var store = (0, _redux.createStore)(reducer, middleware);
@@ -18704,8 +18732,10 @@ var Main = function (_Component) {
             console.log(_store.fetch);
             var channelsThunk = (0, _store.fetchChannels)();
             var messagesThunk = (0, _store.fetchMessages)();
+            var currentUserThunk = (0, _store.retrieveLoggedInUser)();
             _store2.default.dispatch(channelsThunk);
             _store2.default.dispatch(messagesThunk);
+            // store.dispatch(currentUserThunk)
         }
     }, {
         key: 'render',
@@ -41564,12 +41594,12 @@ var Navbar = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log("NAVBAR PROPS", this.props);
+      // console.log("NAVBAR PROPS", this.props )
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       var currentChannel = this.props.currentChannel;
       // console.log(setLanguage)
-      console.log(currentChannel);
-      console.log('$$$$$NAVBAR STORE$$$$', _store2.default.getState());
+      // console.log(currentChannel)
+      // console.log('$$$$$NAVBAR STORE$$$$',store.getState())
       return _react2.default.createElement(
         'nav',
         null,
@@ -58189,6 +58219,8 @@ var _reactRedux = __webpack_require__(34);
 
 var _reactSocialLoginButtons = __webpack_require__(619);
 
+var _store = __webpack_require__(38);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58203,7 +58235,10 @@ var Welcome = function (_React$Component) {
   function Welcome(props) {
     _classCallCheck(this, Welcome);
 
-    return _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).call(this, props));
+
+    _this.onSignupSubmit = _this.onSignupSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(Welcome, [{
@@ -58211,8 +58246,10 @@ var Welcome = function (_React$Component) {
     value: function render() {
       var message = this.props.message;
 
-      console.log(this.props);
+      console.log('WELCOME PAGE PROPS', this.props);
       console.log('MESSAGE', message);
+      console.log(_store.addUser);
+      console.log('#@#@#@# LOGIN #@#@#@#', _store.reduxLogin);
 
       return _react2.default.createElement(
         'div',
@@ -58222,7 +58259,22 @@ var Welcome = function (_React$Component) {
           { className: 'buffer local' },
           _react2.default.createElement(
             'form',
-            null,
+            { onSubmit: this.onSignupSubmit },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                null,
+                'User Name'
+              ),
+              _react2.default.createElement('input', {
+                name: 'userName',
+                type: 'userName',
+                className: 'form-control',
+                required: true
+              })
+            ),
             _react2.default.createElement(
               'div',
               { className: 'form-group' },
@@ -58302,23 +58354,30 @@ var Welcome = function (_React$Component) {
 
       event.preventDefault();
       var _event$target = event.target,
+          userName = _event$target.userName,
           email = _event$target.email,
           password = _event$target.password;
 
       var user = {
+        name: userName.value,
         email: email.value,
         password: password.value
       };
       this.props.reactSignup(user).then(function (createdUser) {
-        _this2.props.reactLogin(createdUser).then(function (loggedInUser) {
-          return _this2.props.history.push('/users/' + loggedInUser.id);
-        });
-      }).catch(console.error());
+        // console.log('CREATED USER',createdUser)
+        _this2.props.reactLogin(createdUser);
+      }).then(function (loggedInUser) {
+        console.log(loggedInUser);
+        // this.props.history.push(`/users/${loggedInUser.id}`)
+      });
+      // .catch(console.error())
 
       var message = this.props.message;
 
       console.log('SIGNUP CLICKED');
-      // console.log(`${message} isn't implemented yet`);
+      console.log(user.email);
+      console.log(user.password);
+      console.log(message + ' isn\'t implemented yet');
     }
   }]);
 
@@ -58329,7 +58388,12 @@ var mapState = function mapState() {
   return { message: 'Signup or Login' };
 };
 
-exports.default = (0, _reactRedux.connect)(mapState)(Welcome);
+var mapDispatch = {
+  reactSignup: _store.addUser,
+  reactLogin: _store.reduxLogin
+};
+
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Welcome);
 
 /***/ }),
 /* 619 */
@@ -59175,6 +59239,171 @@ var config = {
 var MicrosoftLoginButton = (0, _createButton2.default)(config);
 
 exports.default = MicrosoftLoginButton;
+
+/***/ }),
+/* 632 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addUser = exports.UPDATE = exports.REMOVE = exports.CREATE = exports.INITIALIZE = undefined;
+exports.default = reducer;
+
+var _axios = __webpack_require__(52);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/* -----------------    ACTION TYPES    ------------------ */
+
+var INITIALIZE = exports.INITIALIZE = 'INITIALIZE_USERS';
+var CREATE = exports.CREATE = 'CREATE_USER';
+var REMOVE = exports.REMOVE = 'REMOVE_USER';
+var UPDATE = exports.UPDATE = 'UPDATE_USER';
+
+/* ------------     ACTION CREATORS      ------------------ */
+
+var init = function init(authors) {
+  return { type: INITIALIZE, users: users };
+};
+var create = function create(user) {
+  return { type: CREATE, user: user };
+};
+var remove = function remove(id) {
+  return { type: REMOVE, id: id };
+};
+var update = function update(author) {
+  return { type: UPDATE, user: user };
+};
+
+/* ------------          REDUCER         ------------------ */
+
+function reducer() {
+  var users = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  switch (action.type) {
+
+    case INITIALIZE:
+      return action.users;
+
+    case CREATE:
+      return [action.user].concat(_toConsumableArray(users));
+
+    case REMOVE:
+      return users.filter(function (user) {
+        return user.id !== action.id;
+      });
+
+    case UPDATE:
+      return users.map(function (user) {
+        return action.user.id === user.id ? action.user : user;
+      });
+
+    default:
+      return users;
+  }
+}
+
+var addUser = exports.addUser = function addUser(author) {
+  return function (dispatch) {
+    return _axios2.default.post('/api/authors', author).then(function (res) {
+      return res.data;
+    }).then(function (createdUser) {
+      dispatch(create(createdUser));
+      return createdUser;
+    });
+  };
+};
+//  .catch(err => console.error(`Creating user: ${user} unsuccesful`, err));
+//we will catch for errors in the signup component
+// WE CANNOT BRACKET OUT THE FUNCTION HERE
+
+/***/ }),
+/* 633 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.retrieveLoggedInUser = exports.reduxLogin = undefined;
+exports.default = reducer;
+
+var _axios = __webpack_require__(52);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SET = 'SET_CURRENT_USER';
+
+// ACTIONS 
+//take user credentials and return an object whos type is set and the user is equal to the current user
+var set = function set(user) {
+  return { type: SET, user: user };
+};
+var logout = function logout() {
+  return { type: LOGOUT };
+};
+
+// REDUCER 
+function reducer() {
+  var currentUser = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  switch (action.type) {
+
+    case SET:
+      return action.user;
+
+    default:
+      return currentUser;
+  }
+}
+
+//THUNKED  ACTION CREATORS
+
+var logErr = console.error.bind(console);
+//returns a thunk that returns dispatch which returns axios call
+var reduxLogin = exports.reduxLogin = function reduxLogin(credentials) {
+  return function (dispatch) {
+    return _axios2.default.put('/api/auth/me', credentials).then(function (res) {
+      return res.data;
+    }).then(function (user) {
+      console.log('USER INSIDE REDUX LOGIN', user);
+      dispatch(set(user));
+      return user;
+      // .catch(logErr)
+      // catching in the Login component(WELCOME) because we want the thunked action creater to return user so that we can force a page
+      // change via routerhistory in the Login component
+    });
+  };
+};
+
+var retrieveLoggedInUser = exports.retrieveLoggedInUser = function retrieveLoggedInUser(credentials) {
+  return (
+    // console.log('HITTING RETRIEVE USER!!!!!!')
+    function (dispatch) {
+      console.log('HITTING RETRIEVE USER!!!!!!');
+      _axios2.default.get('/api/auth/me').then(function (res) {
+        return console.log('THE RESPONSE', res.data);
+      }).then(function (user) {
+        console.log('INSIDE RETRIEVE USER USER!!!', user);
+        dispatch(set(user));
+      }).catch(logErr);
+    }
+  );
+};
 
 /***/ })
 /******/ ]);

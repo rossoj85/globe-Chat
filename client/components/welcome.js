@@ -1,25 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FacebookLoginButton,GoogleLoginButton } from "react-social-login-buttons";
-
+import {addUser as reduxSignup,reduxLogin} from '../store';
 
 class Welcome extends React.Component {
     constructor(props) {
       super(props);
-     
+     this.onSignupSubmit=this.onSignupSubmit.bind(this)
     }
   
     render() {
     
       const { message } = this.props;
-      console.log(this.props)
+      console.log('WELCOME PAGE PROPS', this.props)
       console.log('MESSAGE',message)
+      console.log(reduxSignup)
+      console.log('#@#@#@# LOGIN #@#@#@#', reduxLogin)
       
       return (
         <div className="signin-container">
           <div className="buffer local">
-            <form >
+            <form onSubmit={this.onSignupSubmit}>
+            <div className="form-group">
+                
+            <label>User Name</label>
+            <input
+              name="userName"
+              type="userName"
+              className="form-control"
+              required
+            />
+          </div>
+
               <div className="form-group">
+                
                 <label>email</label>
                 <input
                   name="email"
@@ -63,25 +77,35 @@ class Welcome extends React.Component {
     }
     onSignupSubmit(event) {
       event.preventDefault();
-      const {email, password} = event.target; 
+      const {userName,email, password} = event.target; 
       const user = {
+        name: userName.value,
         email: email.value,
         password: password.value
       }
       this.props.reactSignup(user)
       .then(createdUser=>{
+        // console.log('CREATED USER',createdUser)
         this.props.reactLogin(createdUser)
-        .then( loggedInUser =>
-          this.props.history.push(`/users/${loggedInUser.id}`)
-        )
       })
-      .catch(console.error())
+        .then( loggedInUser =>{
+          console.log(loggedInUser)
+          // this.props.history.push(`/users/${loggedInUser.id}`)
+        })
+      // .catch(console.error())
   
       const { message } = this.props;
       console.log('SIGNUP CLICKED')
-      // console.log(`${message} isn't implemented yet`);
+      console.log(user.email)
+      console.log(user.password)
+      console.log(`${message} isn't implemented yet`);
     }
 }
 const mapState = () => ({ message: 'Signup or Login' });
 
-export default connect(mapState)(Welcome);
+const mapDispatch = {
+  reactSignup: reduxSignup,
+  reactLogin: reduxLogin
+}
+
+export default connect(mapState, mapDispatch)(Welcome);

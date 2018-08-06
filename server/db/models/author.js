@@ -19,7 +19,7 @@ module.exports = db.define('author', {
   phone: Sequelize.STRING,
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     // unique: true
   },
   password: Sequelize.STRING,

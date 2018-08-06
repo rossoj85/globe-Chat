@@ -12,12 +12,12 @@ handleLanguageChange(evt){
 
 
   render () {
-    console.log("NAVBAR PROPS", this.props )
+    // console.log("NAVBAR PROPS", this.props )
     const incomingMessageLanguage= this.props.incomingMessageLanguage
     const currentChannel =this.props.currentChannel
     // console.log(setLanguage)
-    console.log(currentChannel)
-    console.log('$$$$$NAVBAR STORE$$$$',store.getState())
+    // console.log(currentChannel)
+    // console.log('$$$$$NAVBAR STORE$$$$',store.getState())
     return (
       <nav>
         <h3>{currentChannel&&currentChannel.name}</h3>
