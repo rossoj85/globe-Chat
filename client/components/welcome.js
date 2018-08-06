@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FacebookLoginButton,GoogleLoginButton } from "react-social-login-buttons";
 
 
-export default class Welcome extends React.Component {
+class Welcome extends React.Component {
     constructor(props) {
       super(props);
      
@@ -12,6 +13,7 @@ export default class Welcome extends React.Component {
     
       const { message } = this.props;
       console.log(this.props)
+      console.log('MESSAGE',message)
       
       return (
         <div className="signin-container">
@@ -44,27 +46,23 @@ export default class Welcome extends React.Component {
             </div>
           </div>
           <div className="buffer oauth">
-            <p>
-              <a
-                target="_self"
-                href="api/auth/google"
-                className="btn btn-social btn-google">
-                <i className="fa fa-google" />
-                <span>{message} with Google</span>
-              </a>
-              
-              <a
-              style={{'marginTop': '15px'}}
-              target="_self"
-              href="api/auth/facebook"
-              className="btn btn-social btn-facebook">
-              <i className="fa fa-facebook" />
-              <span>{message} with Facebook</span>
+            
+            <a href="api/auth/google">
+            <GoogleLoginButton href="api/auth/google"
+            onClick={() => alert("Hello")} />
             </a>
-              
-            </p>
+
+            <a href="api/auth/facebook">
+            <FacebookLoginButton  href="api/auth/facebook"
+            onClick={() => alert("Hello")} />
+            </a>
+           
           </div>
         </div>
       );
     }
+    
 }
+const mapState = () => ({ message: 'Login' });
+
+export default connect(mapState)(Welcome);

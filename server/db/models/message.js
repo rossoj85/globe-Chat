@@ -9,7 +9,8 @@ module.exports = db.define('message', {
   },
   translation:{
     type: Sequelize.STRING,
-  }
+  },
+
 }, {
   defaultScope: {
     include: [

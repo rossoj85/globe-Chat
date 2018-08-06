@@ -10,16 +10,29 @@ const images = [
 ];
 
 const getRandomImage = () => images[Math.floor(Math.random() * images.length)];
-
+//singe image is returning, you must make any changes to field above before attempting a force sync
 module.exports = db.define('author', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
   },
+  phone: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    // unique: true
+  },
+  password: Sequelize.STRING,
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  googleId: Sequelize.STRING,
+  facebookId: Sequelize.STRING,
   image: {
     type: Sequelize.STRING,
     defaultValue: function () {
       return getRandomImage();
-    }
+    },  
   }
 });
