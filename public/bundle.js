@@ -58295,13 +58295,38 @@ var Welcome = function (_React$Component) {
         )
       );
     }
+  }, {
+    key: 'onSignupSubmit',
+    value: function onSignupSubmit(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      var _event$target = event.target,
+          email = _event$target.email,
+          password = _event$target.password;
+
+      var user = {
+        email: email.value,
+        password: password.value
+      };
+      this.props.reactSignup(user).then(function (createdUser) {
+        _this2.props.reactLogin(createdUser).then(function (loggedInUser) {
+          return _this2.props.history.push('/users/' + loggedInUser.id);
+        });
+      }).catch(console.error());
+
+      var message = this.props.message;
+
+      console.log('SIGNUP CLICKED');
+      // console.log(`${message} isn't implemented yet`);
+    }
   }]);
 
   return Welcome;
 }(_react2.default.Component);
 
 var mapState = function mapState() {
-  return { message: 'Login' };
+  return { message: 'Signup or Login' };
 };
 
 exports.default = (0, _reactRedux.connect)(mapState)(Welcome);

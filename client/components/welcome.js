@@ -49,7 +49,7 @@ class Welcome extends React.Component {
             
             <a href="api/auth/google">
             <GoogleLoginButton href="api/auth/google"
-            onClick={() => alert("Hello")} />
+            onClick={() => alert("Hello")}></GoogleLoginButton>
             </a>
 
             <a href="api/auth/facebook">
@@ -61,8 +61,27 @@ class Welcome extends React.Component {
         </div>
       );
     }
-    
+    onSignupSubmit(event) {
+      event.preventDefault();
+      const {email, password} = event.target; 
+      const user = {
+        email: email.value,
+        password: password.value
+      }
+      this.props.reactSignup(user)
+      .then(createdUser=>{
+        this.props.reactLogin(createdUser)
+        .then( loggedInUser =>
+          this.props.history.push(`/users/${loggedInUser.id}`)
+        )
+      })
+      .catch(console.error())
+  
+      const { message } = this.props;
+      console.log('SIGNUP CLICKED')
+      // console.log(`${message} isn't implemented yet`);
+    }
 }
-const mapState = () => ({ message: 'Login' });
+const mapState = () => ({ message: 'Signup or Login' });
 
 export default connect(mapState)(Welcome);
