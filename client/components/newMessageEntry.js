@@ -34,16 +34,7 @@ handleSubmit(evt){
   store.dispatch(postMessageThunk)
 }
 
-//stackchat handle submit
-// handleSubmit(evt){
-//   evt.preventDefault()
-//   const content = this.props.newMessageEntry
-//   const name = this.props.name
-//   const channelId = this.props.channelId
-//   const messageData = {content, name, channelId}
-//   const postMessageThunk = postMessage(messageData)
-//   store.dispatch(postMessageThunk)
-// }
+
 
 
   render () {
