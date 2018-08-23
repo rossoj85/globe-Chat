@@ -15,7 +15,7 @@ require('./socket')(io);
 
 module.exports = app;
 
-db.sync({force:true}).then(() => console.log('Database is synced'));
+db.sync().then(() => console.log('Database is synced'));
 app.use(session({
   secret: 'YOURE A BUMBCLOT!!!!',
   resave: false,
@@ -45,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', function (req, res, next) {
   if (!req.session.counter) req.session.counter = 0;
   console.log('COUNTER', ++req.session.counter);
+  console.log(req.session)
   next();
 });
 app.use('/api', require('./api'))

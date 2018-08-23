@@ -49,6 +49,7 @@ router.post('/translate',(req,res,next)=>{
 
 
 router.post('/', (req,res,next)=>{
+    console.log('INSIDE POST MESSAGE!!!!!')
     const content = req.body.message
     const channelId = req.body.channelId
     console.log("REQ BODY",req.body)
@@ -74,6 +75,7 @@ router.post('/', (req,res,next)=>{
        
     })
       .then(message => {
+          console.log('MESSAGE:', message)
         res.json(message);
       })
       .catch(next);

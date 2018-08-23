@@ -22,7 +22,7 @@ class NameEntry extends Component {
         // console.log("NAME FORM NAME ENTRY",name)
         // console.log("NAME ENTRY PROPS", this.props)
         // console.log("NAME", name)
-        
+        console.log('NAVBAR NAME ENTRY MOUNTED!!!!@@#!')
         return(
             <div>
             

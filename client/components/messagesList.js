@@ -18,13 +18,13 @@ class MessagesList extends Component {
     // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
     const messages = this.props.messagesCollection
     const channelId= this.props.channelId
-    const userId = this.props.userId
+    const userId = this.props.currentUser && this.props.currentUser.id
     // console.log("MESSSAGES",messages)
     const filteredMessages = messages.filter(message=>
       +message.channelId===+channelId)
     // console.log("props channel id ",channelId)
-    console.log(messages)
-    console.log("filtered Messages",filteredMessages)
+    // console.log(messages)
+    // console.log("filtered Messages",filteredMessages)
     // console.log("channelId", this.props.channelId)
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;
@@ -59,7 +59,8 @@ const mapState = (state, ownProps) =>{
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
-    userId: state.navbar.userId
+    currentUser: state.currentUser
+    // userId: state.navbar.userId
     
   }
 }

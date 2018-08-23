@@ -5,9 +5,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import messages from './messages'
 import channels from './channels'
 import navbar from './navbar'
+import author from './author'
+import currentUser from './currentUser'
 
 
-const reducer = combineReducers({messages,channels,navbar})
+const reducer = combineReducers({messages,channels,navbar,author,currentUser})
 
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({collapsed: true})))
 const store =createStore(reducer,middleware)
@@ -17,3 +19,5 @@ export default store
 export * from './messages'
 export * from './channels'
 export * from './navbar'
+export * from './author'
+export * from './currentUser'
