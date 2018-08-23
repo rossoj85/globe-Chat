@@ -30,8 +30,8 @@ export default class Message extends Component {
     const userId = this.props.userId
     const author=this.props.author
     const authorId =this.props.author.id
-    console.log("the USER ID OF THIS Page",userId)
-    console.log("The AuthorID of this message", authorId)
+    // console.log("the USER ID OF THIS Page",userId)
+    // console.log("The AuthorID of this message", authorId)
     // console.log("ORIGINAL NON-TRANLATED MESSAGE DISPLAYED",this.state.messageDisplayed)
     // console.log(showOriginalMessage)
 
@@ -44,24 +44,49 @@ export default class Message extends Component {
         </div>
         <div className="media-body">
           <h4 className="media-heading">{name}</h4>
-        {
-          +userId===+authorId? 
-          
-          <strong>{message}</strong>:null
-
-          
-
-
-
-
-        }
-          <strong>{translatedMessage}</strong>
-
-          <br/>
+          {
+            +userId===+authorId? 
+              <strong>{message}</strong>
+            :
+              <div>
+                <strong>{translatedMessage}</strong>
+                <br/>
+                <a onClick={(e)=>this.showOriginalMessage(e)} style={{cursor:'pointer'}}>
+                <small>Show Original Message</small>
+                </a>
+                  {
+                  this.state.messageDisplayed?
+                    <div id="originalMessageDiv" >
+                      <small>Original Message: {message}</small>
+                    </div>
+                    :
+                    null
+                  }
+              </div>
+          }
+            {/*<strong>{translatedMessage}</strong>*/}
+            {/*
+              +userId===+authorId? null:
+                <div>
+                  <br/>
+                  <a onClick={(e)=>this.showOriginalMessage(e)} style={{cursor:'pointer'}}>
+                  <small>Show Original Message</small>
+                  </a>
+                  {
+                    //displays the original  messages only when user clicks, else, nothing 
+                  this.state.messageDisplayed?
+                    <div id="originalMessageDiv" >
+                      <small>Original Message: {message}</small>
+                    </div>
+                    :null
+                  }
+      
+                </div>
+                */}
+          {/*<br/>
           <a onClick={(e)=>this.showOriginalMessage(e)} style={{cursor:'pointer'}}>
           <small>Show Original Message</small>
           </a>
-
           {
             //displays the original  messages only when user clicks, else, nothing 
           this.state.messageDisplayed?
@@ -70,7 +95,7 @@ export default class Message extends Component {
             </div>
             :null
           }
-          
+        */}
         </div>
       </li>
     );

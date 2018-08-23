@@ -20,7 +20,7 @@ handleChange(evt){
 handleSubmit(evt){
   evt.preventDefault()
   const content = this.props.newMessageEntry
-  const name = this.props.name
+  const name = this.props.currentUser.name;
   const channelId = this.props.channelId
   const incomingMessageLanguage = this.props.incomingMessageLanguage
   const originalMessage ={
@@ -79,7 +79,8 @@ const mapState = (state, ownProps) =>{
     messagesCollection: state.messages.messageCollection,
     newMessageEntry: state.messages.newMessageEntry,
     incomingMessageLanguage: state.navbar.incomingMessageLanguage,
-    name: state.navbar.finalName
+    // name: state.navbar.finalName
+    currentUser: state.currentUser
 
   }
 }

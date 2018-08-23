@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FacebookLoginButton,GoogleLoginButton } from "react-social-login-buttons";
 import {addUser as reduxSignup,reduxLogin} from '../store';
-
+//so redux signup creates user in db, but we should amke itto create or find
 class Welcome extends React.Component {
     constructor(props) {
       super(props);
@@ -85,14 +85,14 @@ class Welcome extends React.Component {
       }
       this.props.reactSignup(user)
       .then(createdUser=>{
-        // console.log('CREATED USER',createdUser)
+        // console.log('CREATED (*OR FOUND*) USER',createdUser)
         this.props.reactLogin(createdUser)
       })
         .then( loggedInUser =>{
           console.log(loggedInUser)
-          this.props.history.push(`/`)
+          this.props.history.push(`/channels/1`)
         })
-      // .catch(console.error())
+      .catch(console.error())
   
       const { message } = this.props;
       console.log('SIGNUP CLICKED')

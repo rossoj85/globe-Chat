@@ -17,8 +17,10 @@ const hour = 360000;
 
 
 router.put('/', (req, res, next)=>{
-    console.log('HIT PUT TO SESSION!!!',console.log(req.session))
-    const {email, password} = req.body
+    console.log('HIT PUT TO SESSION!!!', req.session)
+    const {email, password} = req.body[0]
+    console.log('email',email)
+    console.log('password',password)
     Author.findOne({
         where: {email, password}
     })

@@ -23,7 +23,7 @@ export default class Main extends Component{
             <Sidebar />
             <Navbar />
             <main>
-            <Route exact path='/welcome' component={Welcome}/>
+            <Route exact path='/' component={Welcome}/>
             <Switch>
                 <Route path='/new-channel' component={NewChannelEntry} />
                     <Route path="/channels/:channelId" component={MessagesList} />

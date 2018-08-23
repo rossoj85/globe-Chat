@@ -22,9 +22,29 @@ router.get('/:userName', (req, res, next)=> {
     .catch(next);
 })
 
-router.post('/', (req, res, next) => {
-    console.log(req.body)
-    Author.create(req.body)
-      .then(user => res.status(201).json(user))
+// router.post('/', (req, res, next) => {
+//     console.log(req.body)
+//     Author.create(req.body)
+//       .then(user => res.status(201).json(user))
+//       .catch(next);
+//   });
+
+  router.post('/', (req, res, next) => {
+    console.log('THE INFO - ',req.body)
+    const name = req.body.name
+    const email = req.body.email
+    const password = req.body.password
+    console.log('CONSTS - ',name,email,password)
+
+    Author.findOrCreate({
+        where:{name,password,
+            $or:[{email,password}]
+        }
+    })
+      .then(user => {
+          console.log('hello')
+          console.log(user)
+          res.status(201).json(user)
+        })
       .catch(next);
   });

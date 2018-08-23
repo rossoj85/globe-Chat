@@ -18748,7 +18748,7 @@ var Main = function (_Component) {
                 _react2.default.createElement(
                     'main',
                     null,
-                    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/welcome', component: _index.Welcome }),
+                    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _index.Welcome }),
                     _react2.default.createElement(
                         _reactRouterDom.Switch,
                         null,
@@ -46318,14 +46318,14 @@ var MessagesList = function (_Component) {
       // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
       var messages = this.props.messagesCollection;
       var channelId = this.props.channelId;
-      var userId = this.props.userId;
+      var userId = this.props.currentUser && this.props.currentUser.id;
       // console.log("MESSSAGES",messages)
       var filteredMessages = messages.filter(function (message) {
         return +message.channelId === +channelId;
       });
       // console.log("props channel id ",channelId)
-      console.log(messages);
-      console.log("filtered Messages", filteredMessages);
+      // console.log(messages)
+      // console.log("filtered Messages",filteredMessages)
       // console.log("channelId", this.props.channelId)
       // const originalMessage = messages.originalMessage
       // const translatedText = messages.translatedText;
@@ -46369,7 +46369,8 @@ var mapState = function mapState(state, ownProps) {
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
-    userId: state.navbar.userId
+    currentUser: state.currentUser
+    // userId: state.navbar.userId
 
   };
 };
@@ -46438,7 +46439,7 @@ var NewMessageEntry = function (_Component) {
     value: function handleSubmit(evt) {
       evt.preventDefault();
       var content = this.props.newMessageEntry;
-      var name = this.props.name;
+      var name = this.props.currentUser.name;
       var channelId = this.props.channelId;
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       var originalMessage = {
@@ -46510,7 +46511,8 @@ var mapState = function mapState(state, ownProps) {
     messagesCollection: state.messages.messageCollection,
     newMessageEntry: state.messages.newMessageEntry,
     incomingMessageLanguage: state.navbar.incomingMessageLanguage,
-    name: state.navbar.finalName
+    // name: state.navbar.finalName
+    currentUser: state.currentUser
 
   };
 };
@@ -46591,8 +46593,8 @@ var Message = function (_Component) {
       var userId = this.props.userId;
       var author = this.props.author;
       var authorId = this.props.author.id;
-      console.log("the USER ID OF THIS Page", userId);
-      console.log("The AuthorID of this message", authorId);
+      // console.log("the USER ID OF THIS Page",userId)
+      // console.log("The AuthorID of this message", authorId)
       // console.log("ORIGINAL NON-TRANLATED MESSAGE DISPLAYED",this.state.messageDisplayed)
       // console.log(showOriginalMessage)
 
@@ -46620,36 +46622,37 @@ var Message = function (_Component) {
             'strong',
             null,
             message
-          ) : null,
-          _react2.default.createElement(
-            'strong',
-            null,
-            translatedMessage
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'a',
-            { onClick: function onClick(e) {
-                return _this2.showOriginalMessage(e);
-              }, style: { cursor: 'pointer' } },
-            _react2.default.createElement(
-              'small',
-              null,
-              'Show Original Message'
-            )
-          ),
-
-          //displays the original  messages only when user clicks, else, nothing 
-          this.state.messageDisplayed ? _react2.default.createElement(
+          ) : _react2.default.createElement(
             'div',
-            { id: 'originalMessageDiv' },
+            null,
             _react2.default.createElement(
-              'small',
+              'strong',
               null,
-              'Original Message: ',
-              message
-            )
-          ) : null
+              translatedMessage
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'a',
+              { onClick: function onClick(e) {
+                  return _this2.showOriginalMessage(e);
+                }, style: { cursor: 'pointer' } },
+              _react2.default.createElement(
+                'small',
+                null,
+                'Show Original Message'
+              )
+            ),
+            this.state.messageDisplayed ? _react2.default.createElement(
+              'div',
+              { id: 'originalMessageDiv' },
+              _react2.default.createElement(
+                'small',
+                null,
+                'Original Message: ',
+                message
+              )
+            ) : null
+          )
         )
       );
     }
@@ -58317,6 +58320,7 @@ var NameEntry = function (_Component) {
             // console.log("NAME ENTRY PROPS", this.props)
             // console.log("NAME", name)
 
+            console.log('NAVBAR NAME ENTRY MOUNTED!!!!@@#!');
             return _react2.default.createElement(
                 'div',
                 null,
@@ -58401,6 +58405,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+//so redux signup creates user in db, but we should amke itto create or find
 var Welcome = function (_React$Component) {
   _inherits(Welcome, _React$Component);
 
@@ -58536,13 +58541,12 @@ var Welcome = function (_React$Component) {
         password: password.value
       };
       this.props.reactSignup(user).then(function (createdUser) {
-        // console.log('CREATED USER',createdUser)
+        // console.log('CREATED (*OR FOUND*) USER',createdUser)
         _this2.props.reactLogin(createdUser);
       }).then(function (loggedInUser) {
         console.log(loggedInUser);
-        _this2.props.history.push('/');
-      });
-      // .catch(console.error())
+        _this2.props.history.push('/channels/1');
+      }).catch(console.error());
 
       var message = this.props.message;
 
