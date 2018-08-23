@@ -41785,34 +41785,6 @@ exports.default = function () {
     }
 };
 
-// export function getAllMesagesFromServer(allMessages){
-//         return {
-//             type: GET__ALL_MESSAGES,
-//             allMessages
-//         }
-// }
-
-
-// export function getAllMesagesFromServer(allMessages){
-//         return {
-//             type: GET__ALL_MESSAGES,
-//             allMessages
-//         }
-// }
-
-// export function fetchMessages(){
-//     console.log('HIT FETCH MESSAGES')
-//     return function thunk(dispatch){
-//         axios.get('/api/messages')
-//         .then(res=>res.data)
-//         .then(allMessages=>{
-//             console.log(allMessages)
-//             dispatch(getAllMesagesFromServer(allMessages))
-//         })
-//         .catch(console.error)
-//     }
-// }
-
 /***/ }),
 /* 429 */
 /***/ (function(module, exports, __webpack_require__) {
