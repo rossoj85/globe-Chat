@@ -12,4 +12,5 @@ export{default as LanguageSelect} from './navbar-language-select'
 export {default as ChannelList} from './channelList';
 export {default as NewChannelEntry} from './newChannelEntry';
 export{default as NameEntry} from './navbar-nameEntry';
-export{default as Welcome} from './welcome.js';
+export{default as SignUp} from './signup';
+export{default as Login} from './login';

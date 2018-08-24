@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {Sidebar, Navbar, NewMessageEntry, MessagesList, NewChannelEntry, Welcome} from './index'
+import {Sidebar, Navbar, NewMessageEntry, MessagesList, NewChannelEntry, SignUp, Login} from './index'
 import store, {fetchChannels, fetch, fetchMessages, retrieveLoggedInUser } from '../store'
 
 export default class Main extends Component{
@@ -23,7 +23,8 @@ export default class Main extends Component{
             <Sidebar />
             <Navbar />
             <main>
-            <Route exact path='/' component={Welcome}/>
+            <Route exact path='/' component={SignUp}/>
+            <Route exact path='/login' component={Login}/>
             <Switch>
                 <Route path='/new-channel' component={NewChannelEntry} />
                     <Route path="/channels/:channelId" component={MessagesList} />

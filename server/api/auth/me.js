@@ -18,11 +18,21 @@ const hour = 360000;
 
 router.put('/', (req, res, next)=>{
     console.log('HIT PUT TO SESSION!!!', req.session)
-    const {email, password} = req.body[0]
+    const {email, password, nameOrEmail} = req.body
     console.log('email',email)
     console.log('password',password)
+    // console.log('nameOrEmail',nameOrEmail)
+    // Author.findOne({
+    //     where: {email, password}
+    // })
     Author.findOne({
-        where: {email, password}
+        where: {password, 
+            $or:[
+                {email},
+                {email:nameOrEmail},
+                {name:nameOrEmail}
+            ]
+        }
     })
     .then(author=>{
         if(author){

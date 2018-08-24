@@ -1,43 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FacebookLoginButton,GoogleLoginButton } from "react-social-login-buttons";
-import {addUser as reduxSignup,reduxLogin} from '../store';
+import {reduxLogin} from '../store';
 //so redux signup creates user in db, but we should amke itto create or find
-class Welcome extends React.Component {
+
+
+
+class Login extends React.Component {
     constructor(props) {
       super(props);
-     this.onSignupSubmit=this.onSignupSubmit.bind(this)
+     this.onLoginSubmit=this.onLoginSubmit.bind(this)
     }
   
     render() {
     
       const { message } = this.props;
-      console.log('WELCOME PAGE PROPS', this.props)
-      console.log('MESSAGE',message)
-      console.log(reduxSignup)
-      console.log('#@#@#@# LOGIN #@#@#@#', reduxLogin)
+    //   console.log('WELCOME PAGE PROPS', this.props)
+    //   console.log('MESSAGE',message)
+    //   console.log(reduxSignup)
+    //   console.log('#@#@#@# LOGIN #@#@#@#', reduxLogin)
       
       return (
         <div className="signin-container">
           <div className="buffer local">
-            <form onSubmit={this.onSignupSubmit}>
-            <div className="form-group">
-                
-            <label>User Name</label>
-            <input
-              name="userName"
-              type="userName"
-              className="form-control"
-              required
-            />
-          </div>
+            <form onSubmit={this.onLoginSubmit}>
+
 
               <div className="form-group">
                 
-                <label>email</label>
+                <label>email or user name</label>
                 <input
-                  name="email"
-                  type="email"
+                  name="nameOrEmail"
+                  type="nameOrEmail"
                   className="form-control"
                   required
                 />
@@ -75,19 +69,16 @@ class Welcome extends React.Component {
         </div>
       );
     }
-    onSignupSubmit(event) {
+    onLoginSubmit(event) {
       event.preventDefault();
-      const {userName,email, password} = event.target; 
+      const {nameOrEmail, password} = event.target; 
       const user = {
-        name: userName.value,
-        email: email.value,
+        nameOrEmail: nameOrEmail.value,
         password: password.value
-      }
-      this.props.reactSignup(user)
-      .then(createdUser=>{
-        // console.log('CREATED (*OR FOUND*) USER',createdUser)
-        this.props.reactLogin(createdUser)
-      })
+      }//
+     
+        this.props.reactLogin(user)
+  
         .then( loggedInUser =>{
           console.log(loggedInUser)
           this.props.history.push(`/channels/1`)
@@ -101,11 +92,11 @@ class Welcome extends React.Component {
       console.log(`${message} isn't implemented yet`);
     }
 }
-const mapState = () => ({ message: 'Signup or Login' });
+const mapState = () => ({ message: 'Login' });
 
 const mapDispatch = {
-  reactSignup: reduxSignup,
+//   reactSignup: reduxSignup,
   reactLogin: reduxLogin
 }
 
-export default connect(mapState, mapDispatch)(Welcome);
+export default connect(mapState, mapDispatch)(Login);
