@@ -11,7 +11,7 @@ const hour = 360000;
         // res.json(req.user) //this is a passport method
         Author.findById(req.session.authorId)
         .then(author=>res.json(author))
-        // .catch(next)
+        .catch(next)
         // res.send('HEllo')
     })
 

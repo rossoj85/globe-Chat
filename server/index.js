@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3100;
 const server = app.listen(PORT, ()=>console.log(`You Will soon be chatting with people from aroudn the world on Port , ${PORT}`))
 const io=require('socket.io')(server)
 const session = require('express-session');
+const passport = require('passport') 
+const {Author} = require('./db/models')
 
 // handle sockets
 require('./socket')(io);
@@ -21,7 +23,17 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
+passport.serializeUser((user,done)=>{
+  done(null,user.id)
+})
+passport.deserializeUser((id,done)=>{
+  Author.findById(id)
+  .then(user=>done(null,user))
+  .catch(done)
+})
 
 
 app.use(function (req, res, next){

@@ -66,13 +66,13 @@ class SignUp extends React.Component {
           <div className="buffer oauth">
             
             <a href="api/auth/google">
-            <GoogleSignupButton href="api/auth/google"
-            onClick={() => alert("Hello")}></GoogleSignupButton>
+            <GoogleSignupButton href="api/auth/google">
+            </GoogleSignupButton>
             </a>
 
             <a href="api/auth/facebook">
-            <FacebookSignupButton  href="api/auth/facebook"
-            onClick={() => alert("Hello")} />
+            <FacebookSignupButton  href="api/auth/facebook" 
+            />
             </a>
            
           </div>
