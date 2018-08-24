@@ -17,10 +17,10 @@ const hour = 360000;
 
 
 router.put('/', (req, res, next)=>{
-    console.log('HIT PUT TO SESSION!!!', req.session)
+    // console.log('HIT PUT TO SESSION!!!', req.session)
     const {email, password, nameOrEmail} = req.body
-    console.log('email',email)
-    console.log('password',password)
+    // console.log('email',email)
+    // console.log('password',password)
     // console.log('nameOrEmail',nameOrEmail)
     // Author.findOne({
     //     where: {email, password}
@@ -57,13 +57,13 @@ router.put('/', (req, res, next)=>{
 })
 
 router.delete('/',(req,res,next)=>{
-    req.logout()
-    res.sendStatus(204)
-    // console.log('SESSION BEFORE DESTROY', req.session)
-    // req.session.destroy()
-    // // we can also use:
-    // // delete req.session.userId
-    // console.log('SESSION AFTER DESTROY', req.session)
+    // req.logout()
+    // res.sendStatus(204)
+    console.log('SESSION BEFORE DESTROY', req.session)
+    req.session.destroy()
+    // we can also use:
+    // delete req.session.userId
+    console.log('SESSION AFTER DESTROY', req.session)
  
 })
 

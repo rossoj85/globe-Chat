@@ -14,7 +14,7 @@ const configGoog ={
     icon: "google",
     iconFormat: name => `fa fa-${name}`,
     style: { background: "#CB4023" },
-    activeStyle: { background: "#293e69" }
+    activeStyle: { background: "#A33422" }
   };
 /** My Facebook login button. */
 export const FacebookSignupButton = createButton(configFB);

@@ -16,10 +16,10 @@ class SignUp extends React.Component {
     render() {
     
       const { message } = this.props;
-      console.log('WELCOME PAGE PROPS', this.props)
-      console.log('MESSAGE',message)
-      console.log(reduxSignup)
-      console.log('#@#@#@# LOGIN #@#@#@#', reduxLogin)
+      // console.log('WELCOME PAGE PROPS', this.props)
+      // console.log('MESSAGE',message)
+      // console.log(reduxSignup)
+      // console.log('#@#@#@# LOGIN #@#@#@#', reduxLogin)
       
       return (
         <div className="signin-container">

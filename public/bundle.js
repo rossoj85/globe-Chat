@@ -25012,7 +25012,7 @@ exports = module.exports = __webpack_require__(277)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  height: 100vh; }\n  body #app {\n    height: 100%; }\n    body #app > div {\n      height: 100%;\n      display: flex; }\n    body #app sidebar {\n      background-color: #2B303B;\n      color: #AFB1B6;\n      z-index: 2; }\n      body #app sidebar .sidebar-header {\n        height: 53px;\n        width: 220px;\n        background-color: #303641;\n        border-bottom: 1px solid gray;\n        color: white; }\n        body #app sidebar .sidebar-header h3 {\n          display: flex;\n          align-items: center;\n          margin: 0;\n          padding: 12px; }\n          body #app sidebar .sidebar-header h3 div {\n            margin-right: 10px; }\n      body #app sidebar h5 {\n        text-transform: uppercase;\n        margin-left: 16px; }\n      body #app sidebar ul {\n        text-transform: lowercase;\n        list-style-type: none;\n        margin: 0;\n        padding: 0; }\n        body #app sidebar ul li {\n          height: 28px;\n          width: 205px; }\n          body #app sidebar ul li a {\n            color: #AFB1B6;\n            padding-left: 16px;\n            padding-top: 3px;\n            display: list-item;\n            height: 100%;\n            width: 100%; }\n            body #app sidebar ul li a:hover, body #app sidebar ul li a:focus {\n              color: #AFB1B6;\n              background-color: #303641;\n              text-decoration: none; }\n            body #app sidebar ul li a.active {\n              background-color: #5294E2;\n              color: #D4D5D8;\n              border-radius: 0 5px 5px 0; }\n            body #app sidebar ul li a span:first-child {\n              margin-right: 10px; }\n    body #app nav {\n      position: fixed;\n      height: 53px;\n      width: 100%;\n      background-color: white;\n      z-index: 1;\n      border-bottom: 1px solid gray;\n      display: flex;\n      flex-direction: row-reverse;\n      align-items: center; }\n      body #app nav h3 {\n        margin: 0 0 0 240px;\n        flex: 1 1 auto; }\n      body #app nav form {\n        margin: 0 10px 0 0; }\n      body #app nav .signupLogin {\n        float: right;\n        margin: 0 40px 0 0; }\n        body #app nav .signupLogin .btn {\n          margin-left: 20px;\n          width: 70px; }\n    body #app main {\n      margin: 78px 25px 25px 25px;\n      flex: 1 1 auto;\n      display: flex;\n      flex-direction: column; }\n      body #app main .media-list {\n        overflow-y: scroll;\n        flex: 1 1 auto; }\n      body #app main .media img {\n        height: 64px;\n        width: 64px; }\n      body #app main .media-object {\n        border-radius: 5px; }\n      body #app main > div {\n        display: flex;\n        flex-direction: column;\n        flex: 1 1 auto; }\n      body #app main #new-message-form {\n        position: relative; }\n        body #app main #new-message-form .form-control {\n          border-width: 3px 1.5px 3px 3px; }\n        body #app main #new-message-form .btn {\n          border-width: 3px; }\n\n.back-line {\n  line-height: 0;\n  border-bottom: 1px dotted #999;\n  text-align: center; }\n\n.back-line > span {\n  background: #fff;\n  color: #999;\n  padding: 0.5em;\n  border: 1px dotted #999;\n  border-radius: 50%; }\n\n.signin-container {\n  display: flex;\n  flex-direction: row !important;\n  align-items: center;\n  justify-content: center;\n  min-width: -webkit-min-content; }\n\n.signin-container > * {\n  width: 33%; }\n\n.signin-container .local {\n  max-width: 18em;\n  text-align: left; }\n\n.signin-container .or {\n  max-width: 10em; }\n\n.signin-container .oauth {\n  max-width: 18em; }\n\n.signin-container .btn-social {\n  text-align: center;\n  width: 100%; }\n\n@media (max-width: 600px) {\n  .signin-container {\n    flex-direction: column; }\n  .signin-container > * {\n    width: 100%; } }\n", ""]);
+exports.push([module.i, "body {\n  height: 100vh; }\n  body #app {\n    height: 100%; }\n    body #app > div {\n      height: 100%;\n      display: flex; }\n    body #app sidebar {\n      background-color: #2B303B;\n      color: #AFB1B6;\n      z-index: 2; }\n      body #app sidebar .sidebar-header {\n        height: 53px;\n        width: 220px;\n        background-color: #303641;\n        border-bottom: 1px solid gray;\n        color: white; }\n        body #app sidebar .sidebar-header h3 {\n          display: flex;\n          align-items: center;\n          margin: 0;\n          padding: 12px; }\n          body #app sidebar .sidebar-header h3 div {\n            margin-right: 10px; }\n      body #app sidebar h5 {\n        text-transform: uppercase;\n        margin-left: 16px; }\n      body #app sidebar ul {\n        text-transform: lowercase;\n        list-style-type: none;\n        margin: 0;\n        padding: 0; }\n        body #app sidebar ul li {\n          height: 28px;\n          width: 205px; }\n          body #app sidebar ul li a {\n            color: #AFB1B6;\n            padding-left: 16px;\n            padding-top: 3px;\n            display: list-item;\n            height: 100%;\n            width: 100%; }\n            body #app sidebar ul li a:hover, body #app sidebar ul li a:focus {\n              color: #AFB1B6;\n              background-color: #303641;\n              text-decoration: none; }\n            body #app sidebar ul li a.active {\n              background-color: #5294E2;\n              color: #D4D5D8;\n              border-radius: 0 5px 5px 0; }\n            body #app sidebar ul li a span:first-child {\n              margin-right: 10px; }\n    body #app nav {\n      position: fixed;\n      height: 53px;\n      width: 100%;\n      background-color: white;\n      z-index: 1;\n      border-bottom: 1px solid gray;\n      display: flex;\n      flex-direction: row-reverse;\n      align-items: center; }\n      body #app nav h3 {\n        margin: 0 0 0 240px;\n        flex: 1 1 auto; }\n      body #app nav form {\n        margin: 0 10px 0 0; }\n      body #app nav .signupLogin {\n        float: right;\n        margin: 0 40px 0 0; }\n        body #app nav .signupLogin .btn {\n          margin-left: 20px;\n          width: 70px; }\n      body #app nav .signedInControls {\n        display: inline-flex; }\n    body #app main {\n      margin: 78px 25px 25px 25px;\n      flex: 1 1 auto;\n      display: flex;\n      flex-direction: column; }\n      body #app main .media-list {\n        overflow-y: scroll;\n        flex: 1 1 auto; }\n      body #app main .media img {\n        height: 64px;\n        width: 64px; }\n      body #app main .media-object {\n        border-radius: 5px; }\n      body #app main > div {\n        display: flex;\n        flex-direction: column;\n        flex: 1 1 auto; }\n      body #app main #new-message-form {\n        position: relative; }\n        body #app main #new-message-form .form-control {\n          border-width: 3px 1.5px 3px 3px; }\n        body #app main #new-message-form .btn {\n          border-width: 3px; }\n\n.back-line {\n  line-height: 0;\n  border-bottom: 1px dotted #999;\n  text-align: center; }\n\n.back-line > span {\n  background: #fff;\n  color: #999;\n  padding: 0.5em;\n  border: 1px dotted #999;\n  border-radius: 50%; }\n\n.signin-container {\n  display: flex;\n  flex-direction: row !important;\n  align-items: center;\n  justify-content: center;\n  min-width: -webkit-min-content; }\n\n.signin-container > * {\n  width: 33%; }\n\n.signin-container .local {\n  max-width: 18em;\n  text-align: left; }\n\n.signin-container .or {\n  max-width: 10em; }\n\n.signin-container .oauth {\n  max-width: 18em; }\n\n.signin-container .btn-social {\n  text-align: center;\n  width: 100%; }\n\n@media (max-width: 600px) {\n  .signin-container {\n    flex-direction: column; }\n  .signin-container > * {\n    width: 100%; } }\n", ""]);
 
 // exports
 
@@ -41916,23 +41916,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Navbar = function (_Component) {
   _inherits(Navbar, _Component);
 
-  function Navbar() {
+  function Navbar(props) {
     _classCallCheck(this, Navbar);
 
-    return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).call(this, props));
   }
 
   _createClass(Navbar, [{
-    key: 'handleLanguageChange',
-    value: function handleLanguageChange(evt) {}
-  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       console.log("NAVBAR PROPS", this.props);
+
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       var currentChannel = this.props.currentChannel;
       var currentUser = this.props.currentUser;
-      console.log('LINK', _reactRouterDom.NavLink);
+
       // console.log(setLanguage)
       // console.log(currentChannel)
       // console.log('$$$$$NAVBAR STORE$$$$',store.getState())
@@ -41941,7 +41941,7 @@ var Navbar = function (_Component) {
         null,
         currentUser ? _react2.default.createElement(
           'div',
-          null,
+          { className: 'signedInControls' },
           _react2.default.createElement(
             'p',
             null,
@@ -41952,7 +41952,14 @@ var Navbar = function (_Component) {
             incomingMessageLanguage: incomingMessageLanguage
             // handleLanguageSubmit={this.props.handleLanguageSubmit} 
             , handleLanguageChange: this.props.handleLanguageChange
-          })
+          }),
+          _react2.default.createElement(
+            _reactBootstrap.Button,
+            { className: 'btn btn-secondary', onClick: function onClick() {
+                return _this2.props.logout();
+              } },
+            'Logout'
+          )
         ) : _react2.default.createElement(
           'div',
           { className: 'signupLogin' },
@@ -41989,18 +41996,22 @@ var mapState = function mapState(state) {
     currentUser: state.currentUser
   };
 };
-var mapDispatch = function mapDispatch(dispatch) {
+var mapDispatch = function mapDispatch(dispatch, ownProps) {
   return {
     handleLanguageChange: function handleLanguageChange(evt) {
       console.log("Change registered", evt.target.value);
       var inputVal = evt.target.value;
       var action = (0, _store.changeIncomingMessageLanguage)(inputVal);
       dispatch(action);
+    },
+    logout: function logout() {
+      dispatch((0, _store.reduxLogout)());
+      console.log('You logged out');
+      ownProps.history.push('/');
     }
-
   };
 };
-exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Navbar);
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapState, mapDispatch)(Navbar));
 
 /***/ }),
 /* 430 */
@@ -46498,7 +46509,7 @@ var addUser = exports.addUser = function addUser(author) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.retrieveLoggedInUser = exports.reduxLogin = undefined;
+exports.reduxLogout = exports.retrieveLoggedInUser = exports.reduxLogin = undefined;
 exports.default = reducer;
 
 var _axios = __webpack_require__(39);
@@ -46565,6 +46576,13 @@ var retrieveLoggedInUser = exports.retrieveLoggedInUser = function retrieveLogge
       }).catch(logErr);
     }
   );
+};
+var reduxLogout = exports.reduxLogout = function reduxLogout() {
+  return function (dispatch) {
+    console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$');
+    _axios2.default.delete('/api/auth/me');
+    dispatch(set(null));
+  };
 };
 
 /***/ }),
@@ -58449,11 +58467,10 @@ var SignUp = function (_React$Component) {
     key: 'render',
     value: function render() {
       var message = this.props.message;
-
-      console.log('WELCOME PAGE PROPS', this.props);
-      console.log('MESSAGE', message);
-      console.log(_store.addUser);
-      console.log('#@#@#@# LOGIN #@#@#@#', _store.reduxLogin);
+      // console.log('WELCOME PAGE PROPS', this.props)
+      // console.log('MESSAGE',message)
+      // console.log(reduxSignup)
+      // console.log('#@#@#@# LOGIN #@#@#@#', reduxLogin)
 
       return _react2.default.createElement(
         'div',
@@ -59453,7 +59470,7 @@ var configGoog = {
     return "fa fa-" + name;
   },
   style: { background: "#CB4023" },
-  activeStyle: { background: "#293e69" }
+  activeStyle: { background: "#A33422" }
 };
 /** My Facebook login button. */
 var FacebookSignupButton = exports.FacebookSignupButton = (0, _reactSocialLoginButtons.createButton)(configFB);

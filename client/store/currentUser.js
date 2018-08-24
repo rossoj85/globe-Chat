@@ -51,3 +51,13 @@ export const reduxLogin = credentials =>
         })
         .catch(logErr)
         }
+    export const reduxLogout = ()=> 
+    
+
+          dispatch=>{
+            console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$')
+            axios.delete('/api/auth/me')
+            dispatch(set(null))
+          }
+         
+        
