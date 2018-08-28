@@ -8,11 +8,12 @@ const hour = 360000;
     router.get ('/',(req,res,next)=>{
         console.log('@#$!$@!#$@!#INSIDE ME.js GET ROUTE')
         //so that login will recognise the passport data that is now stored on seesion
-        // res.json(req.user) //this is a passport method
-        Author.findById(req.session.authorId)
-        .then(author=>res.json(author))
-        .catch(next)
+        res.json(req.user) //this is a passport method
+        // Author.findById(req.session.authorId)
+        // .then(author=>res.json(author))
+        // .catch(next)
         // res.send('HEllo')
+
     })
 
 
@@ -57,10 +58,10 @@ router.put('/', (req, res, next)=>{
 })
 
 router.delete('/',(req,res,next)=>{
-    // req.logout()
+    req.logout()
     // res.sendStatus(204)
-    console.log('SESSION BEFORE DESTROY', req.session)
-    req.session.destroy()
+    // console.log('SESSION BEFORE DESTROY', req.session)
+    // req.session.destroy()
     // we can also use:
     // delete req.session.userId
     console.log('SESSION AFTER DESTROY', req.session)
