@@ -95,6 +95,7 @@ body {
       z-index: 1;
       border-bottom: 1px solid gray;
       display: flex;
+      flex-direction: row-reverse;    
       align-items: center;
 
       h3 {
@@ -104,6 +105,18 @@ body {
 
       form {
         margin: 0 10px 0 0;
+      }
+      .signupLogin{
+        float: right;
+        margin: 0 40px 0 0;
+        .btn{
+          margin-left: 20px;
+          width: 70px;
+          
+        }
+      }
+      .signedInControls{
+        display: inline-flex;
       }
     }
 
