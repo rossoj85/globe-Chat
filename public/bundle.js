@@ -59592,18 +59592,14 @@ var Login = function (_React$Component) {
           _react2.default.createElement(
             'a',
             { href: 'api/auth/google' },
-            _react2.default.createElement(_reactSocialLoginButtons.GoogleLoginButton, { href: 'api/auth/google',
-              onClick: function onClick() {
-                return alert("Hello");
-              } })
+            _react2.default.createElement(_reactSocialLoginButtons.GoogleLoginButton, { href: 'api/auth/google'
+            })
           ),
           _react2.default.createElement(
             'a',
             { href: 'api/auth/facebook' },
-            _react2.default.createElement(_reactSocialLoginButtons.FacebookLoginButton, { href: 'api/auth/facebook',
-              onClick: function onClick() {
-                return alert("Hello");
-              } })
+            _react2.default.createElement(_reactSocialLoginButtons.FacebookLoginButton, { href: 'api/auth/facebook'
+            })
           )
         )
       );

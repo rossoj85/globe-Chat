@@ -56,13 +56,13 @@ class Login extends React.Component {
           <div className="buffer oauth">
             
             <a href="api/auth/google">
-            <GoogleLoginButton href="api/auth/google"
-            onClick={() => alert("Hello")}></GoogleLoginButton>
+              <GoogleLoginButton href="api/auth/google"
+              ></GoogleLoginButton>
             </a>
 
             <a href="api/auth/facebook">
-            <FacebookLoginButton  href="api/auth/facebook"
-            onClick={() => alert("Hello")} />
+              <FacebookLoginButton  href="api/auth/facebook"
+              />
             </a>
            
           </div>
