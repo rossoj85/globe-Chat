@@ -11,14 +11,14 @@ import {reduxSetCurrentChannel} from '../store'
 
   // console.log("CHANNEL LIST PROPS",props)
   // console.log(reduxSetCurrentChannel)
-
+  console.log(location.pathname)
     return (
       <ul>
       {
         channels.channels.map(channel=>{
           return (
             <li key={channel.id} onClick={()=>props.reactSetCurrentChannel(channel)}>
-            <NavLink to= {`/channels/${channel.id}`} activeClassName="active">
+            <NavLink to= {`/channels/${channel.id}`} activeClassName="active" >
             <span># {channel.name}</span>
             <span className="badge">{messages.length && messages.filter(message => message.channelId === channel.id).length}
             </span>
@@ -34,6 +34,7 @@ import {reduxSetCurrentChannel} from '../store'
     );
   
 }
+
 
 /**Write your connect component below! */
 
@@ -53,3 +54,8 @@ const mapDispatch={
 const ChannelListContainer = connect(mapState, mapDispatch)(ChannelList)
 const ContainerWithRouter = withRouter(ChannelListContainer)
 export default ContainerWithRouter;
+
+
+// activeClassName={location.pathname !== "your pathname"? null : "nav-link-gdc-selected"} 
+// activeClassName="active"
+// activeClassName={location.pathname === `/channels/${channel.id}` ? 'active': null}

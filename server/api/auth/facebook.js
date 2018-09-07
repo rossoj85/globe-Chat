@@ -46,7 +46,7 @@ router.get('/', passport.authenticate('facebook',
 
 router.get('/verify',
   passport.authenticate('facebook', {
-    successRedirect: '/', // or wherever
+    successRedirect: '/channels/1', // or wherever
     failureRedirect: '/' // or wherever
   })
 );
