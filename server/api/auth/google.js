@@ -47,16 +47,16 @@ router.get('/', passport.authenticate('google', { scope: 'email' }))
 
 router.get('/verify',
   passport.authenticate('google', {
-    successRedirect: '/', // or wherever
+    successRedirect: '/channels/1', // or wherever
     failureRedirect: '/' // or wherever
   })
 );
 
-router.get('/verify',
-  passport.authenticate('google', {
-    successRedirect: '/', // or wherever
-    failureRedirect: '/' // or wherever
-  })
-);
+// router.get('/verify',
+//   passport.authenticate('google', {
+//     successRedirect: '/', // or wherever
+//     failureRedirect: '/' // or wherever
+//   })
+// );
 
 module.exports= router

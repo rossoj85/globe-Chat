@@ -29,6 +29,7 @@ app.use(passport.session())
 passport.serializeUser((user,done)=>{
   done(null,user.id)
 })
+
 passport.deserializeUser((id,done)=>{
   Author.findById(id)
   .then(user=>done(null,user))
