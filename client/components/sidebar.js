@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {ChannelList} from './index'
 import store from '../store'
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 class Sidebar extends Component {
 
   render () {
@@ -35,5 +36,5 @@ const mapState=(state)=>{
       currentUser: state.currentUser
   }
 }
-
-export default connect(mapState)(Sidebar)
+// with router forces a re-render when routees changes and is essential to use when you want active navlink classes
+export default withRouter(connect(mapState)(Sidebar));
