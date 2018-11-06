@@ -57681,7 +57681,9 @@ var MessagesList = function (_Component) {
       // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
       // const filteredMessages = messages.filter(message => message.channelId === channelId);
       console.log("!#$#@MESSAGE LIST PROPS$#@!$!@", this.props);
+
       var messages = this.props.messagesCollection;
+      console.log('MeSaGe ColLecTiOn', messages);
       var channelId = this.props.channelId;
       var userId = this.props.currentUser && this.props.currentUser.id;
       // console.log("MESSSAGES",messages)
@@ -57695,6 +57697,8 @@ var MessagesList = function (_Component) {
       // const originalMessage = messages.originalMessage
       // const translatedText = messages.translatedText;
       var messageDisplayed = false;
+      console.log(filteredMessages);
+      _axios2.default.post('/api/messages/translateAll', filteredMessages);
 
       // console.log("MESSSAGES",messages)
       // console.log("PAGE USER ID", userId)
@@ -57734,7 +57738,8 @@ var mapState = function mapState(state, ownProps) {
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    currentLanguage: state.navbar.incomingMessageLanguage
     // userId: state.navbar.userId
 
   };

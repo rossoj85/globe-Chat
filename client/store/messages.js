@@ -69,7 +69,7 @@ export const fetchMessages =() =>
         })
         .catch(console.error)
 
-export const fetchSingleChannelMessages =(channelId)=>
+export const fetchSingleChannelMessages = (channelId)=>
         dispatch =>
         axios.get('api/messages/:channelId')
 
