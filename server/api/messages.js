@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const googleTranslate = require('../../languageTest')
+// const googleTranslate = require('../../languageTest')
 const {Message, Author} = require('../db/models')
 const Bluebird = require('bluebird')
+const googleTranslate = Bluebird.promisifyAll(require('../../languageTest'))
 module.exports = router
 
 router.get('/',(req,res,next)=>{
@@ -42,20 +43,41 @@ router.post('/translate',(req,res,next)=>{
     })
 })
 router.post('/translateAll',(req,res,next)=>{
-    const filteredMessages = req.body
-    const message = filteredMessages[0].content
+    const messageArray = req.body
+    const message = messageArray[0].content
     console.log("BOOOOOOOMMMMM")
-    console.log( typeof filteredMessages)
-    // console.log(filteredMessages)
-    console.log(message)
-    Bluebird.map(filteredMessages,(message)=>{
-        // console.log(message.content)
-        // console.log(typeof message.content)
-        googleTranslate.translate(message.content, 'es', function(err,translation) {
-            console.log(message.content)
+    console.log(  messageArray)
+    let promises =[]
+    // console.log('-----------')
+    // for(let message of messageArray){
+    //     // console.log('#@###',message)
+    //     promises.push(
+    //         ()=>googleTranslate.translate(message.content, 'es', function(err,translation) {
+    //             if(err){console.log(err)}
+    //             return new Promise((resolve, reject)=>{
+    //                 resolve(message.translation = translation.translatedText);
+    //                 reject(console.err)
+    //             })
+    //                 .then(translation=>console.log(translation))
+    //                })
+    //     )
+    // }
+
+    // Bluebird.all(promises).then(function(){
+    //     console.log('DONE--------------------------------')
+    //     console.log(messageArray)
+    // })
+
+
+    Bluebird.map(messageArray,(message)=>{
+ 
+         googleTranslate.translate(message.content, 'es', function(err,translation) {
             console.log(translation)
         })
-    }).catch(next)
+    })
+    .then(()=> console.log("D O N E"))
+    
+    .catch(next)
     // googleTranslate.translate('My name is Brandon', 'es', function(err, translation) {
     //     console.log(translation.translatedText)
     //     })
