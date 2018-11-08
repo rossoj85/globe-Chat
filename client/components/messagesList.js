@@ -16,7 +16,9 @@ class MessagesList extends Component {
     // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
     // const filteredMessages = messages.filter(message => message.channelId === channelId);
     console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
+    
     const messages = this.props.messagesCollection
+    console.log('MeSaGe ColLecTiOn', messages)
     const channelId= this.props.channelId
     const userId = this.props.currentUser && this.props.currentUser.id
     // console.log("MESSSAGES",messages)
@@ -29,6 +31,8 @@ class MessagesList extends Component {
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;
     let messageDisplayed=false
+    console.log(filteredMessages)
+    axios.post('/api/messages/translateAll',filteredMessages)
 
     // console.log("MESSSAGES",messages)
     // console.log("PAGE USER ID", userId)
@@ -59,7 +63,8 @@ const mapState = (state, ownProps) =>{
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    currentLanguage: state.navbar.incomingMessageLanguage,
     // userId: state.navbar.userId
     
   }

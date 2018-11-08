@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const googleTranslate = require('../../languageTest')
+// const googleTranslate = require('../../languageTest')
 const {Message, Author} = require('../db/models')
-
+const Bluebird = require('bluebird')
+const googleTranslate = require('../../languageTest')
 module.exports = router
 
 router.get('/',(req,res,next)=>{
@@ -41,7 +42,36 @@ router.post('/translate',(req,res,next)=>{
           .then(translatedMessage=>res.json({id, content, translatedMessage, channelId, author}))
     })
 })
+router.post('/translateAll',(req,res,next)=>{
+    const messageArray = req.body
+    const message = messageArray[0].content
+    console.log("BOOOOOOOMMMMM")
+    console.log(  messageArray)
 
+
+
+    function promisedTranslation(message){
+        return  new Promise((resolve,reject)=>{
+            return googleTranslate.translate(message.content,'en','es',(err, translation)=>{
+                if(err !==null) reject(err)
+                else resolve(translation)
+            })
+        })
+    }
+    
+    Bluebird.map(messageArray,(message)=>{
+        return promisedTranslation(message)
+        .then(translation=>{
+            console.log(translation)
+            message.translation=translation.translatedText
+        })
+    }).then(res=>{
+        console.log('D O N E')
+        console.log(messageArray)
+    })
+    .catch(next)
+   
+})
 
 //POST TO DB
 
