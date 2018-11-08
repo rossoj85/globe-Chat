@@ -24,6 +24,7 @@ class MessagesList extends Component {
     // console.log("MESSSAGES",messages)
     const filteredMessages = messages.filter(message=>
       +message.channelId===+channelId)
+    const currentChannel =this.props.currentChannel
     // console.log("props channel id ",channelId)
     // console.log(messages)
     // console.log("filtered Messages",filteredMessages)
@@ -32,14 +33,17 @@ class MessagesList extends Component {
     // const translatedText = messages.translatedText;
     let messageDisplayed=false
     console.log(filteredMessages)
-    axios.post('/api/messages/translateAll',filteredMessages)
-
+    // axios.post('/api/messages/translateAll',filteredMessages)
+    // .then(res=>{
+    //   console.log(' -- - - - - - -- - ')
+    //   console.log(res.data)
+    // })
     // console.log("MESSSAGES",messages)
     // console.log("PAGE USER ID", userId)
     
     return (
       <div id="messagesList">
-      <h3>Messages GO HERE!</h3>
+      <h3>{currentChannel ? currentChannel.name: 'Messages Go Here!'}</h3>
         <ul className="media-list">
         {filteredMessages.map(messageObject=><Message 
           message={messageObject.content} 
@@ -65,6 +69,7 @@ const mapState = (state, ownProps) =>{
     channelId: ownProps.match.params.channelId,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
+    currentChannel: state.channels.currentChannel,
     // userId: state.navbar.userId
     
   }

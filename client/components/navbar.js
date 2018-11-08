@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LanguageSelect, NameEntry} from './index'
+import {LanguageSelect} from './index'
 import {connect} from 'react-redux';
 import store, {setLanguage, changeIncomingMessageLanguage, reduxLogout} from '../store';
 import {Button } from 'react-bootstrap'
@@ -24,13 +24,7 @@ class Navbar extends Component {
     // console.log('$$$$$NAVBAR STORE$$$$',store.getState())
     return (
       <nav>
-      {/*<h3>{currentChannel&&currentChannel.name}</h3>
-      {currentUser?  <p>Welcome {currentUser.name}</p>: <NameEntry/>}
-      <LanguageSelect 
-                    incomingMessageLanguage={incomingMessageLanguage} 
-                    // handleLanguageSubmit={this.props.handleLanguageSubmit} 
-                    handleLanguageChange={this.props.handleLanguageChange}
-    />*/}
+
       {currentUser ? 
         <div className='signedInControls'>
           <p>Welcome {currentUser.name}</p>

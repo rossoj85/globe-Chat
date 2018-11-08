@@ -14,6 +14,7 @@ export default class NavbarLanguageSelect extends Component {
         onChange={this.props.handleLanguageChange}
                                             >
             <option value='en'>English</option>
+            <option value='ar'>Arabic</option>
             <option value='zh-CN'>Chinese(Simplified)</option>
             <option value='fr'>French</option>
             <option value='de'>German</option>

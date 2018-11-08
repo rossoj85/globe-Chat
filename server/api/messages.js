@@ -45,8 +45,8 @@ router.post('/translate',(req,res,next)=>{
 router.post('/translateAll',(req,res,next)=>{
     const messageArray = req.body
     const message = messageArray[0].content
-    console.log("BOOOOOOOMMMMM")
-    console.log(  messageArray)
+    // console.log("BOOOOOOOMMMMM")
+    // console.log(  messageArray)
 
 
 
@@ -62,12 +62,15 @@ router.post('/translateAll',(req,res,next)=>{
     Bluebird.map(messageArray,(message)=>{
         return promisedTranslation(message)
         .then(translation=>{
-            console.log(translation)
+            // console.log(translation)
             message.translation=translation.translatedText
         })
-    }).then(res=>{
+    }).then(resInfo=>{
         console.log('D O N E')
-        console.log(messageArray)
+        // console.log(messageArray)
+        console.log('- - - - - - - ')
+        console.log(resInfo)
+        res.send(messageArray)
     })
     .catch(next)
    
