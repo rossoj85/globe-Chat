@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const initialState = {
     incomingMessageLanguage:'en',
-    nameWrite: '',
-    finalName:'',
+    // nameWrite: '',
+    // finalName:'',
     userId: null,
 }
 
