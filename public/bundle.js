@@ -41978,7 +41978,7 @@ var getSingleChannelMessages = exports.getSingleChannelMessages = function getSi
 // THUNKS AND DISPATCH
 function postMessage(messageData) {
     //we could have also passed in channelId and contents
-    // console.log("messagedata#$%#$@",messageData)
+    console.log("messagedata#$%#$@", messageData);
     // console.log(incomingMessageLanguage)
     // const channelId = messageData.channelId
     // const incomingMessageLanguage = messageData.incomingMessageLanguage
@@ -57735,8 +57735,8 @@ var mapState = function mapState(state, ownProps) {
     channelId: ownProps.match.params.channelId,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
-    currentChannel: state.channels.currentChannel
-    // userId: state.navbar.userId
+    currentChannel: state.channels.currentChannel,
+    userId: state.navbar.userId
 
   };
 };
@@ -57805,15 +57805,16 @@ var NewMessageEntry = function (_Component) {
     value: function handleSubmit(evt) {
       evt.preventDefault();
       var content = this.props.newMessageEntry;
-      var name = this.props.currentUser.name;
+      var authorId = this.props.currentUser.id;
       var channelId = this.props.channelId;
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       var originalMessage = {
         message: this.props.newMessageEntry,
         incomingMessageLanguage: incomingMessageLanguage,
         channelId: channelId,
-        name: name
+        authorId: authorId
       };
+      console.log('CURRENT USER', this.props.currentUser);
       console.log("ORIGINAL MESSAGE from handleSubmit", originalMessage);
       var postMessageThunk = (0, _store.postMessage)(originalMessage);
       _store2.default.dispatch(postMessageThunk);
@@ -57946,8 +57947,8 @@ var Message = function (_Component) {
       var userId = this.props.userId;
       var author = this.props.author;
       var authorId = this.props.author.id;
-      // console.log("the USER ID OF THIS Page",userId)
-      // console.log("The AuthorID of this message", authorId)
+      console.log("the USER ID OF THIS Page", userId);
+      console.log("The AuthorID of this message", authorId);
       // console.log("ORIGINAL NON-TRANLATED MESSAGE DISPLAYED",this.state.messageDisplayed)
       // console.log(showOriginalMessage)
 

@@ -88,9 +88,9 @@ router.post('/', (req,res,next)=>{
     console.log("REQ BODY",req.body)
     console.log("THIS IS THE BODY",req.body.name )
    
-    Author.findOrCreate({
+    Author.findAll({
         where: {
-          name: req.body.name || 'Jason'
+          id: req.body.authorId || 'Jason'
         }
     })
     

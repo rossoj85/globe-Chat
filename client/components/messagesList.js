@@ -70,7 +70,7 @@ const mapState = (state, ownProps) =>{
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,
-    // userId: state.navbar.userId
+    userId: state.navbar.userId
     
   }
 }

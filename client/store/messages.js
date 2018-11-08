@@ -41,7 +41,7 @@ export const getSingleChannelMessages = (singleChannelMessages)=>({
 
 // THUNKS AND DISPATCH
 export function postMessage(messageData){  //we could have also passed in channelId and contents
-    // console.log("messagedata#$%#$@",messageData)
+    console.log("messagedata#$%#$@",messageData)
     // console.log(incomingMessageLanguage)
     // const channelId = messageData.channelId
     // const incomingMessageLanguage = messageData.incomingMessageLanguage

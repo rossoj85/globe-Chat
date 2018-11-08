@@ -20,15 +20,16 @@ handleChange(evt){
 handleSubmit(evt){
   evt.preventDefault()
   const content = this.props.newMessageEntry
-  const name = this.props.currentUser.name;
+  const authorId = this.props.currentUser.id;
   const channelId = this.props.channelId
   const incomingMessageLanguage = this.props.incomingMessageLanguage
   const originalMessage ={
     message: this.props.newMessageEntry,
     incomingMessageLanguage,
     channelId,
-    name
+    authorId
     } 
+    console.log('CURRENT USER',this.props.currentUser)
     console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
   const postMessageThunk = postMessage(originalMessage)
   store.dispatch(postMessageThunk)
