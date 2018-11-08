@@ -47,7 +47,7 @@ router.post('/translateAll',(req,res,next)=>{
     const message = messageArray[0].content
     console.log("BOOOOOOOMMMMM")
     console.log(  messageArray)
-    let promises =[]
+
 
 
     function promisedTranslation(message){
@@ -58,6 +58,7 @@ router.post('/translateAll',(req,res,next)=>{
             })
         })
     }
+    
     Bluebird.map(messageArray,(message)=>{
         return promisedTranslation(message)
         .then(translation=>{
@@ -68,12 +69,8 @@ router.post('/translateAll',(req,res,next)=>{
         console.log('D O N E')
         console.log(messageArray)
     })
-   
-    
     .catch(next)
-    // googleTranslate.translate('My name is Brandon', 'es', function(err, translation) {
-    //     console.log(translation.translatedText)
-    //     })
+   
 })
 
 //POST TO DB
