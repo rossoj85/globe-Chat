@@ -49,11 +49,11 @@ export const reduxLogin = credentials =>
           console.log('INSIDE RETRIEVE USER USER!!!', user)
           dispatch(set(user))
         })
+        .then( console.log('3 - user FETCHED'))
         .catch(logErr)
         }
-    export const reduxLogout = ()=> 
-    
 
+    export const reduxLogout = ()=> 
           dispatch=>{
             console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$')
             axios.delete('/api/auth/me')

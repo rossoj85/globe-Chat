@@ -32,6 +32,7 @@ export default class Message extends Component {
     const authorId =this.props.author.id
     // console.log("the USER ID OF THIS Page",userId)
     // console.log("The AuthorID of this message", authorId)
+    // console.log('T H E  M E S S A G E', message)
     // console.log("ORIGINAL NON-TRANLATED MESSAGE DISPLAYED",this.state.messageDisplayed)
     // console.log(showOriginalMessage)
 

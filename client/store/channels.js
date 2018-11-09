@@ -45,13 +45,15 @@ export function setCurrent(channel){
 
 //THUNKS 
 export function fetchChannels(){
-    // console.log("FETCH RUNNING")
+    // console.log("FETCH CHANNELS 1")
     return function thunk (dispatch) {
         axios.get('/api/channels')
         .then(res=>res.data)
         .then(channels=>{
             dispatch(getChannels(channels))
         })
+        .then(res=>console.log('1 - CHANNELS FETCHED'))
+        .catch(console.err)
     }
 }
 

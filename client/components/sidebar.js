@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 class Sidebar extends Component {
 
   render () {
-    console.log('SIDEBAR PROPS', this.props)
+    // console.log('SIDEBAR PROPS', this.props)
     const currentUser = this.props.currentUser
     return (
       <sidebar>
