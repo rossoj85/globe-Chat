@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {LanguageSelect} from './index'
 import {connect} from 'react-redux';
-import store, {setLanguage, changeIncomingMessageLanguage, reduxLogout} from '../store';
+import store, {setLanguage, changeIncomingMessageLanguage, reduxLogout, fetchMessages} from '../store';
 import {Button } from 'react-bootstrap'
 import{NavLink,withRouter} from 'react-router-dom'
-
+import Bluebirt from 'bluebird';
 
 class Navbar extends Component {
 
@@ -13,7 +13,7 @@ class Navbar extends Component {
     }
 
   render () {
-    console.log("NAVBAR PROPS", this.props )
+    // console.log("NAVBAR PROPS", this.props )
   
     const incomingMessageLanguage= this.props.incomingMessageLanguage
     const currentChannel =this.props.currentChannel
@@ -56,10 +56,14 @@ const mapState=(state)=>{
 const mapDispatch=(dispatch,ownProps)=>{
   return {
     handleLanguageChange: function(evt){
-      console.log("Change registered", evt.target.value)
-      const inputVal = evt.target.value
-      const action = changeIncomingMessageLanguage(inputVal)
-      dispatch(action)
+        //comes from an on change on the dropdown in navbar-language-select
+      console.log("@@@@@@@@@@Change registered", evt.target.value)
+      const newIncomingMessageLanguage = evt.target.value
+      const changeLanguageThunk = changeIncomingMessageLanguage(newIncomingMessageLanguage)
+      const fetchMessagesThunk = fetchMessages(newIncomingMessageLanguage)
+      dispatch(changeLanguageThunk)
+      console.log('FRoM InSide handleLanguage Change', newIncomingMessageLanguage)
+      dispatch(fetchMessagesThunk)
     },
     logout: ()=>{
       dispatch(reduxLogout())

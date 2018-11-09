@@ -11,9 +11,9 @@ const initialState = {
 
 export const WRITE_MESSAGE = 'WRITE_MESSAGE';
 export  const GOT_NEW_MESSAGE_FROM_SERVER ='GOT_NEW_MESSAGE_FROM_SERVER';
-export const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES'
-export const GET_SINGLE_CHANNEL_MESSAGES= 'GET_SINGLE_CHANNEL_MESSSAGES'
-
+export const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES';
+export const GET_SINGLE_CHANNEL_MESSAGES= 'GET_SINGLE_CHANNEL_MESSSAGES';
+export const GET_TRANSLATION_OF_ALL_MESSAGES = 'GET_TRANSLATION_OF_ALL_MESSAGES';
 
 export function writeMessage (inputContent){
     return {
@@ -38,6 +38,10 @@ export const getSingleChannelMessages = (singleChannelMessages)=>({
     type: GET_SINGLE_CHANNEL_MESSAGES,
     singleChannelMessages
 })
+export const translateAllMessages = (allMessagesTranslated)=>({
+    type: GET_TRANSLATION_OF_ALL_MESSAGES,
+    translatedMessages
+})
 
 // THUNKS AND DISPATCH
 export function postMessage(messageData){  //we could have also passed in channelId and contents
@@ -55,19 +59,50 @@ export function postMessage(messageData){  //we could have also passed in channe
             dispatch(action)
             socket.emit('new-message', message)
             dispatch(writeMessage(""))
+            .catch(console.err)
         })
+       
     }
 }
 
-export const fetchMessages =() =>
-    dispatch =>
+// export const fetchMessages =() =>
+    
+//     dispatch =>
+//         axios.get('/api/messages')
+//         .then(res=>res.data)
+//         .then(allMessages=>{
+//             console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
+//             console.log(allMessages)
+//             axios.post('/api/messages/translateAll',allMessages)
+//             .then(res => res.data)
+//             .then(translatedMessageArray=> {
+//                 console.log('###TRANS MES###',translatedMessageArray)
+//                 dispatch(getAllMesagesFromServer(translatedMessageArray))
+//             })
+//             .then(console.log('2 - CHannles Fetched '))
+//         })
+//         .catch(console.error)
+
+export function fetchMessages(incomingMessageLanguage){
+
+    return function thunk(dispatch){
+        console.log('I C M L @#FROM INSIDE FETCH MESSAFES THUNK',incomingMessageLanguage)
         axios.get('/api/messages')
         .then(res=>res.data)
         .then(allMessages=>{
+            const messagesArrayAndLanguageObj = {incomingMessageLanguage,allMessages}
+            console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
             console.log(allMessages)
-            dispatch(getAllMesagesFromServer(allMessages))
+            axios.post('/api/messages/translateAll',messagesArrayAndLanguageObj)
+            .then(res => res.data)
+            .then(translatedMessageArray=> {
+                console.log('###TRANS MES###',translatedMessageArray)
+                dispatch(getAllMesagesFromServer(translatedMessageArray))
+            })
         })
         .catch(console.error)
+    }
+}
 
 export const fetchSingleChannelMessages = (channelId)=>
         dispatch =>
@@ -87,6 +122,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 messageCollection: action.allMessages
+            }
+        case GET_TRANSLATION_OF_ALL_MESSAGES:
+            return{
+                ...state,
+                messageCollection: action.translatedMessages
             }
         default:
             return state;

@@ -12,10 +12,10 @@ class MessagesList extends Component {
 
 
   render () {
-  console.log('NEW MESSAGE LIST MOUNTED')
+  // console.log('NEW MESSAGE LIST MOUNTED')
     // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
     // const filteredMessages = messages.filter(message => message.channelId === channelId);
-    console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
+    // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
     
     const messages = this.props.messagesCollection
     console.log('MeSaGe ColLecTiOn', messages)
@@ -47,7 +47,7 @@ class MessagesList extends Component {
         <ul className="media-list">
         {filteredMessages.map(messageObject=><Message 
           message={messageObject.content} 
-          translatedMessage={messageObject.translatedMessage}
+          translatedMessage={messageObject.translation}
           messageId={messageObject.id}
           key={messageObject.id}
           author={messageObject.author}

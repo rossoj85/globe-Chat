@@ -43,44 +43,43 @@ router.post('/translate',(req,res,next)=>{
     })
 })
 router.post('/translateAll',(req,res,next)=>{
-    const messageArray = req.body
-    const message = messageArray[0].content
-    // console.log("BOOOOOOOMMMMM")
-    // console.log(  messageArray)
+    const messageArrayAndLanguageObj = req.body
+    const incomingMessageLanguage = messageArrayAndLanguageObj.incomingMessageLanguage
+    const messageArray = messageArrayAndLanguageObj.allMessages
+    console.log("------BOOOOOOOMMMMM-------")
+    // console.log(incomingMessageLanguage)
+    // console.log(messageArray)
 
 
 
     function promisedTranslation(message){
         return  new Promise((resolve,reject)=>{
-            return googleTranslate.translate(message.content,'en','es',(err, translation)=>{
+            return googleTranslate.translate(message.content, incomingMessageLanguage, (err, translation)=>{
                 if(err !==null) reject(err)
                 else resolve(translation)
             })
         })
     }
-    
     Bluebird.map(messageArray,(message)=>{
         return promisedTranslation(message)
         .then(translation=>{
-            // console.log(translation)
+            // console.log(message)
+            // console.log(translation.translatedText)
             message.translation=translation.translatedText
+            // console.log(message)
         })
     }).then(resInfo=>{
         console.log('D O N E')
         // console.log(messageArray)
         console.log('- - - - - - - ')
-        console.log(resInfo)
+        // console.log(messageArray)
         res.send(messageArray)
     })
     .catch(next)
-   
 })
 
+
 //POST TO DB
-
-
-
-
 router.post('/', (req,res,next)=>{
     console.log('INSIDE POST MESSAGE!!!!!')
     const content = req.body.message
@@ -90,7 +89,7 @@ router.post('/', (req,res,next)=>{
    
     Author.findAll({
         where: {
-          id: req.body.authorId || 'Jason'
+          id: req.body.authorId 
         }
     })
     
