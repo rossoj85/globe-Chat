@@ -14,33 +14,27 @@ class Navbar extends Component {
 
   render () {
     // console.log("NAVBAR PROPS", this.props )
-  
     const incomingMessageLanguage= this.props.incomingMessageLanguage
     const currentChannel =this.props.currentChannel
     const currentUser =this.props.currentUser
-  
-    // console.log(setLanguage)
-    // console.log(currentChannel)
-    // console.log('$$$$$NAVBAR STORE$$$$',store.getState())
     return (
       <nav>
-
-      {currentUser ? 
-        <div className='signedInControls'>
-          <p>Welcome {currentUser.name}</p>
-          <LanguageSelect 
-                    incomingMessageLanguage={incomingMessageLanguage} 
-                    // handleLanguageSubmit={this.props.handleLanguageSubmit} 
-                    handleLanguageChange={this.props.handleLanguageChange}
-          />
-          <Button className='btn btn-secondary' onClick={()=>this.props.logout()}>Logout</Button>
-        </div>
-        :
-        <div className='signupLogin'>
-          <NavLink to='/'><Button className='btn btn-secondary'>Signup</Button></NavLink>
-          <NavLink to='/login'><Button className='btn btn-secondary'>Login</Button></NavLink>
-        </div>
-      }
+        {currentUser ? 
+          <div className='signedInControls'>
+            <p>Welcome {currentUser.name}</p>
+            <LanguageSelect 
+                      incomingMessageLanguage={incomingMessageLanguage} 
+                      // handleLanguageSubmit={this.props.handleLanguageSubmit} 
+                      handleLanguageChange={this.props.handleLanguageChange}
+            />
+            <Button className='btn btn-secondary' onClick={()=>this.props.logout()}>Logout</Button>
+          </div>
+          :
+          <div className='signupLogin'>
+            <NavLink to='/'><Button className='btn btn-secondary'>Signup</Button></NavLink>
+            <NavLink to='/login'><Button className='btn btn-secondary'>Login</Button></NavLink>
+          </div>
+        }
       </nav>
     );
   }
