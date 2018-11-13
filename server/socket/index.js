@@ -2,9 +2,9 @@ const Message = require('../db/models/message');
 const Channel = require('../db/models/channel');
 
 module.exports = io => {
-
+  let activeUsers=[]
+  
   io.on('connection', socket => {
-
     console.log(socket.id, ' has made a persistent connection to the server!');
 
     socket.on('new-message', message => {
@@ -16,9 +16,11 @@ module.exports = io => {
     });
     socket.on('new-user', (user) =>{
       const sockID = socket.id
+      user.sockID = sockID
+      activeUsers.push(user)
       console.log('NEW USER SOCKET ID~~~~~~', sockID)
 
-      socket.broadcast.emit('new-user', user, sockID)
+      socket.emit('new-user', user, sockID, activeUsers)
     })
 
   });

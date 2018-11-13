@@ -7,9 +7,10 @@ import channels from './channels'
 import navbar from './navbar'
 import author from './author'
 import currentUser from './currentUser'
+import activeUsers from './activeUsers';
 
 
-const reducer = combineReducers({messages,channels,navbar,author,currentUser})
+const reducer = combineReducers({messages,channels,navbar,author,currentUser,activeUsers})
 
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({collapsed: true})))
 const store =createStore(reducer,middleware)
@@ -21,3 +22,4 @@ export * from './channels'
 export * from './navbar'
 export * from './author'
 export * from './currentUser'
+export * from './activeUsers'

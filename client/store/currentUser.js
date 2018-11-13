@@ -23,7 +23,8 @@ export default function reducer (currentUser = null, action) {
   }
 
 //THUNKED  ACTION CREATORS
-
+//REDUX LOGIN IS FOR THE APPS BUILT IN LOGIN? LOGOUT W?SESSIONS
+//RETRIEVE LOGGED IN USER IS USED FOR OAUTH STRATEGIES
 const logErr = console.error.bind(console)
 //returns a thunk that returns dispatch which returns axios call
 export const reduxLogin = credentials =>
@@ -50,6 +51,7 @@ export const reduxLogin = credentials =>
         .then(user => {
           console.log('INSIDE RETRIEVE USER USER!!!', user)
           dispatch(set(user))
+          socket.emit('new-user',user)
         })
         .catch(logErr)
         }

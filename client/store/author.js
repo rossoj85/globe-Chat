@@ -42,9 +42,13 @@ export default function reducer (users = [], action) {
   axios.post('/api/authors', author)
         .then(res=>res.data)
         .then(createdUser => {
-         dispatch(create(createdUser))
+        //  dispatch(create(createdUser))
          return createdUser
         });
       //  .catch(err => console.error(`Creating user: ${user} unsuccesful`, err));
       //we will catch for errors in the signup component
       // WE CANNOT BRACKET OUT THE FUNCTION HERE
+  // export const addToActiveUser = user =>
+  //       dispatch =>
+  //       dispatch(create(user))
+

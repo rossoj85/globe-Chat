@@ -20,8 +20,13 @@ class Sidebar extends Component {
       {
         currentUser ?
         <div>
-          <h5>Channels</h5>
-          <ChannelList />
+          <div>
+            <h5>ACTIVE USERS</h5>
+          </div>
+          <div>
+            <h5>Channels</h5>
+            <ChannelList />
+          </div>
         </div>
         :
         null
