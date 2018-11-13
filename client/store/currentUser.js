@@ -1,4 +1,5 @@
 import axios from 'axios';
+import socket from '../socket';
 
 
 const SET = 'SET_CURRENT_USER'
@@ -30,8 +31,9 @@ export const reduxLogin = credentials =>
     axios.put('/api/auth/me', credentials)
     .then(res=>res.data)
     .then(user=>{
-        console.log('USER INSIDE REDUX LOGIN',user)
+        console.log('!!!!!!!!!!!!!!!!!!!!!!  USER INSIDE REDUX LOGIN',user)
       dispatch(set(user))
+      socket.emit('new-user',user)
       return user
       // .catch(logErr)
     // catching in the Login component(WELCOME) because we want the thunked action creater to return user so that we can force a page
@@ -49,7 +51,6 @@ export const reduxLogin = credentials =>
           console.log('INSIDE RETRIEVE USER USER!!!', user)
           dispatch(set(user))
         })
-        .then( console.log('3 - user FETCHED'))
         .catch(logErr)
         }
 

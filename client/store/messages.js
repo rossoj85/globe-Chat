@@ -59,29 +59,11 @@ export function postMessage(messageData){  //we could have also passed in channe
             dispatch(action)
             socket.emit('new-message', message)
             dispatch(writeMessage(""))
-            .catch(console.err)
         })
-       
+        .catch(console.err)
     }
 }
 
-// export const fetchMessages =() =>
-    
-//     dispatch =>
-//         axios.get('/api/messages')
-//         .then(res=>res.data)
-//         .then(allMessages=>{
-//             console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
-//             console.log(allMessages)
-//             axios.post('/api/messages/translateAll',allMessages)
-//             .then(res => res.data)
-//             .then(translatedMessageArray=> {
-//                 console.log('###TRANS MES###',translatedMessageArray)
-//                 dispatch(getAllMesagesFromServer(translatedMessageArray))
-//             })
-//             .then(console.log('2 - CHannles Fetched '))
-//         })
-//         .catch(console.error)
 
 export function fetchMessages(incomingMessageLanguage){
 

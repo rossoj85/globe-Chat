@@ -18,7 +18,7 @@ const hour = 360000;
 
 
 router.put('/', (req, res, next)=>{
-    // console.log('HIT PUT TO SESSION!!!', req.session)
+    console.log('HIT PUT TO SESSION!!!', req.session)
     const {email, password, nameOrEmail} = req.body
     // console.log('email',email)
     // console.log('password',password)
@@ -59,6 +59,7 @@ router.put('/', (req, res, next)=>{
 
 router.delete('/',(req,res,next)=>{
     req.logout()
+    req.session.destroy();
     // res.sendStatus(204)
     // console.log('SESSION BEFORE DESTROY', req.session)
     // req.session.destroy()

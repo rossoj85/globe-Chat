@@ -39,7 +39,7 @@ passport.deserializeUser((id,done)=>{
 
 app.use(function (req, res, next){
   // console.log('passport user: ', req.user)
-  console.log('WASSUP HELLO', req.session);
+  // console.log('WASSUP HELLO', req.session);
   // console.log(passport)
   next();
 })
@@ -57,8 +57,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', function (req, res, next) {
   if (!req.session.counter) req.session.counter = 0;
-  console.log('COUNTER', ++req.session.counter);
-  console.log(req.session)
+  // console.log('COUNTER', ++req.session.counter);
+  // console.log(req.session)
   next();
 });
 app.use('/api', require('./api'))

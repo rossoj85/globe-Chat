@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 const socket = io(window.location.origin);
 //import our state language pref
 
-socket.on('connect', () => {
+socket.on('connect', (socket) => {
   console.log('I am now connected to the server!');
 });
 
@@ -30,6 +30,12 @@ socket.on('new-message', message=>{
 socket.on('new-channel', channel=>{
   store.dispatch(getChannel(channel));
 })
+
+socket.on('new-user', (user, sockID)=>{
+  console.log( 'WE HAVE A NEW USER!!!', user)
+  console.log('New User SOCKET ID IS ', sockID)
+})
+
 
 const mapState = (state)=>{
   return {

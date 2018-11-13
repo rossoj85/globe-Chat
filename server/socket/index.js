@@ -14,9 +14,12 @@ module.exports = io => {
     socket.on('new-channel', channel => {
       socket.broadcast.emit('new-channel', channel);
     });
-    socket.on('new-active-user', user =>{
-      socket.broadcast.emit('new-active-user', userInfo)
-    });
+    socket.on('new-user', (user) =>{
+      const sockID = socket.id
+      console.log('NEW USER SOCKET ID~~~~~~', sockID)
+
+      socket.broadcast.emit('new-user', user, sockID)
+    })
 
   });
 
