@@ -68,13 +68,13 @@ export function postMessage(messageData){  //we could have also passed in channe
 export function fetchMessages(incomingMessageLanguage){
 
     return function thunk(dispatch){
-        console.log('I C M L @#FROM INSIDE FETCH MESSAFES THUNK',incomingMessageLanguage)
+        // console.log('I C M L @#FROM INSIDE FETCH MESSAFES THUNK',incomingMessageLanguage)
         axios.get('/api/messages')
         .then(res=>res.data)
         .then(allMessages=>{
             const messagesArrayAndLanguageObj = {incomingMessageLanguage,allMessages}
-            console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
-            console.log(allMessages)
+            // console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
+            // console.log(allMessages)
             axios.post('/api/messages/translateAll',messagesArrayAndLanguageObj)
             .then(res => res.data)
             .then(translatedMessageArray=> {

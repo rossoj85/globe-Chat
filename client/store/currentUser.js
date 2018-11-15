@@ -34,7 +34,7 @@ export const reduxLogin = credentials =>
     .then(user=>{
         console.log('!!!!!!!!!!!!!!!!!!!!!!  USER INSIDE REDUX LOGIN',user)
       dispatch(set(user))
-      socket.emit('new-user',user)
+      // socket.emit('new-user',user)
       return user
       // .catch(logErr)
     // catching in the Login component(WELCOME) because we want the thunked action creater to return user so that we can force a page
@@ -44,7 +44,7 @@ export const reduxLogin = credentials =>
     export const retrieveLoggedInUser = credentials =>
     // console.log('HITTING RETRIEVE USER!!!!!!')
         dispatch =>{
-        console.log('HITTING RETRIEVE USER!!!!!!')
+        console.log('HITTING RETRIEVE USER!!!!!!', credentials)
         axios.get('/api/auth/me')
         .then(res=>res.data)
         
@@ -61,6 +61,7 @@ export const reduxLogin = credentials =>
             console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$')
             axios.delete('/api/auth/me')
             dispatch(set(null))
+            socket.emit('disconnect', user)
           }
          
         

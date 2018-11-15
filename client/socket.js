@@ -40,6 +40,9 @@ socket.on('new-user', (user, sockID, activeUsers)=>{
   console.log('ARRaY of ConNeCtIoNs',activeUsers)
   // store.dispatch(addToActiveUser(user))
 })
+socket.on('disconnect', user =>{
+  console.log(`${user} has disconnected`)
+})
 
 
 const mapState = (state)=>{

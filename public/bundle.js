@@ -1103,7 +1103,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 var _prodInvariant = __webpack_require__(12);
 
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var ReactDOMComponentFlags = __webpack_require__(166);
 
 var invariant = __webpack_require__(10);
@@ -2849,7 +2849,7 @@ Object.keys(_currentUser).forEach(function (key) {
   });
 });
 
-var _activeUsers = __webpack_require__(477);
+var _activeUsers = __webpack_require__(476);
 
 Object.keys(_activeUsers).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2869,7 +2869,7 @@ var _reduxThunk = __webpack_require__(210);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reduxDevtoolsExtension = __webpack_require__(476);
+var _reduxDevtoolsExtension = __webpack_require__(477);
 
 var _messages2 = _interopRequireDefault(_messages);
 
@@ -3329,6 +3329,12 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(430);
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * This is the web browser implementation of `debug()`.
  *
@@ -3518,7 +3524,7 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3557,7 +3563,7 @@ var createButton = function createButton(config) {
 exports.default = createButton;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3770,12 +3776,6 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(430);
 
 /***/ }),
 /* 40 */
@@ -11561,7 +11561,7 @@ var _store = __webpack_require__(31);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11606,6 +11606,9 @@ socket.on('new-user', function (user, sockID, activeUsers) {
   console.log('ARRaY of ConNeCtIoNs', activeUsers);
   // store.dispatch(addToActiveUser(user))
 });
+socket.on('disconnect', function (user) {
+  console.log(user + ' has disconnected');
+});
 
 var mapState = function mapState(state) {
   return {
@@ -11623,7 +11626,7 @@ exports.default = socket;
  * Module dependencies.
  */
 
-var debug = __webpack_require__(36)('socket.io-parser');
+var debug = __webpack_require__(37)('socket.io-parser');
 var Emitter = __webpack_require__(53);
 var hasBin = __webpack_require__(217);
 var binary = __webpack_require__(453);
@@ -15666,7 +15669,7 @@ module.exports = CSSProperty;
 
 
 
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var ReactDOMComponentTree = __webpack_require__(16);
 var ReactInstrumentation = __webpack_require__(26);
 
@@ -16865,7 +16868,7 @@ module.exports = getActiveElement;
 var _prodInvariant = __webpack_require__(12);
 
 var DOMLazyTree = __webpack_require__(52);
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var React = __webpack_require__(49);
 var ReactBrowserEventEmitter = __webpack_require__(84);
 var ReactCurrentOwner = __webpack_require__(29);
@@ -19365,7 +19368,7 @@ var Emitter = __webpack_require__(53);
 var parser = __webpack_require__(127);
 var on = __webpack_require__(225);
 var bind = __webpack_require__(226);
-var debug = __webpack_require__(36)('socket.io-client:manager');
+var debug = __webpack_require__(37)('socket.io-client:manager');
 var indexOf = __webpack_require__(223);
 var Backoff = __webpack_require__(471);
 
@@ -20002,7 +20005,7 @@ var parseqs = __webpack_require__(88);
 var parser = __webpack_require__(54);
 var inherit = __webpack_require__(89);
 var yeast = __webpack_require__(222);
-var debug = __webpack_require__(36)('engine.io-client:polling');
+var debug = __webpack_require__(37)('engine.io-client:polling');
 
 /**
  * Module exports.
@@ -20344,7 +20347,7 @@ var Emitter = __webpack_require__(53);
 var toArray = __webpack_require__(470);
 var on = __webpack_require__(225);
 var bind = __webpack_require__(226);
-var debug = __webpack_require__(36)('socket.io-client:socket');
+var debug = __webpack_require__(37)('socket.io-client:socket');
 var parseqs = __webpack_require__(88);
 
 /**
@@ -29577,7 +29580,7 @@ module.exports = EnterLeaveEventPlugin;
 
 
 
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 
 var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
 var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
@@ -30274,7 +30277,7 @@ var AutoFocusUtils = __webpack_require__(319);
 var CSSPropertyOperations = __webpack_require__(320);
 var DOMLazyTree = __webpack_require__(52);
 var DOMNamespaces = __webpack_require__(107);
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var DOMPropertyOperations = __webpack_require__(178);
 var EventPluginHub = __webpack_require__(62);
 var EventPluginRegistry = __webpack_require__(79);
@@ -35289,7 +35292,7 @@ module.exports = getUnboundedScrollPosition;
 
 
 
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var EventPluginHub = __webpack_require__(62);
 var EventPluginUtils = __webpack_require__(101);
 var ReactComponentEnvironment = __webpack_require__(110);
@@ -37443,7 +37446,7 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 
 
 
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var EventPluginRegistry = __webpack_require__(79);
 var ReactComponentTreeHook = __webpack_require__(23);
 
@@ -37610,7 +37613,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 
 
-var DOMProperty = __webpack_require__(38);
+var DOMProperty = __webpack_require__(39);
 var ReactComponentTreeHook = __webpack_require__(23);
 
 var warning = __webpack_require__(11);
@@ -41982,7 +41985,7 @@ var _reduxThunk = __webpack_require__(210);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -42063,14 +42066,14 @@ function postMessage(messageData) {
 function fetchMessages(incomingMessageLanguage) {
 
     return function thunk(dispatch) {
-        console.log('I C M L @#FROM INSIDE FETCH MESSAFES THUNK', incomingMessageLanguage);
+        // console.log('I C M L @#FROM INSIDE FETCH MESSAFES THUNK',incomingMessageLanguage)
         _axios2.default.get('/api/messages').then(function (res) {
             return res.data;
         }).then(function (allMessages) {
-            var messagesArrayAndLanguageObj = { incomingMessageLanguage: incomingMessageLanguage, allMessages: allMessages };
-            console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#");
-            console.log(allMessages);
-            _axios2.default.post('/api/messages/translateAll', messagesArrayAndLanguageObj).then(function (res) {
+            var messagesArrayAndLanguageObj = { incomingMessageLanguage: incomingMessageLanguage, allMessages: allMessages
+                // console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
+                // console.log(allMessages)
+            };_axios2.default.post('/api/messages/translateAll', messagesArrayAndLanguageObj).then(function (res) {
                 return res.data;
             }).then(function (translatedMessageArray) {
                 console.log('###TRANS MES###', translatedMessageArray);
@@ -42992,7 +42995,7 @@ module.exports = function spread(callback) {
 var url = __webpack_require__(449);
 var parser = __webpack_require__(127);
 var Manager = __webpack_require__(219);
-var debug = __webpack_require__(36)('socket.io-client');
+var debug = __webpack_require__(37)('socket.io-client');
 
 /**
  * Module exports.
@@ -43090,7 +43093,7 @@ exports.Socket = __webpack_require__(224);
  */
 
 var parseuri = __webpack_require__(216);
-var debug = __webpack_require__(36)('socket.io-client:url');
+var debug = __webpack_require__(37)('socket.io-client:url');
 
 /**
  * Module exports.
@@ -43732,7 +43735,7 @@ module.exports.parser = __webpack_require__(54);
 
 var transports = __webpack_require__(220);
 var Emitter = __webpack_require__(53);
-var debug = __webpack_require__(36)('engine.io-client:socket');
+var debug = __webpack_require__(37)('engine.io-client:socket');
 var index = __webpack_require__(223);
 var parser = __webpack_require__(54);
 var parseuri = __webpack_require__(216);
@@ -44508,7 +44511,7 @@ var XMLHttpRequest = __webpack_require__(128);
 var Polling = __webpack_require__(221);
 var Emitter = __webpack_require__(53);
 var inherit = __webpack_require__(89);
-var debug = __webpack_require__(36)('engine.io-client:polling-xhr');
+var debug = __webpack_require__(37)('engine.io-client:polling-xhr');
 
 /**
  * Module exports.
@@ -45698,7 +45701,7 @@ var parser = __webpack_require__(54);
 var parseqs = __webpack_require__(88);
 var inherit = __webpack_require__(89);
 var yeast = __webpack_require__(222);
-var debug = __webpack_require__(36)('engine.io-client:websocket');
+var debug = __webpack_require__(37)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
@@ -46154,7 +46157,7 @@ exports.fetchChannels = fetchChannels;
 exports.postChannel = postChannel;
 exports.reduxSetCurrentChannel = reduxSetCurrentChannel;
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -46287,7 +46290,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.CHANGE_INCOMING_MESSAGE_LANGUAGE = undefined;
 exports.changeIncomingMessageLanguage = changeIncomingMessageLanguage;
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -46380,7 +46383,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.addUser = exports.UPDATE = exports.REMOVE = exports.CREATE = exports.INITIALIZE = undefined;
 exports.default = reducer;
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -46469,7 +46472,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.reduxLogout = exports.retrieveLoggedInUser = exports.reduxLogin = undefined;
 exports.default = reducer;
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -46517,7 +46520,7 @@ var reduxLogin = exports.reduxLogin = function reduxLogin(credentials) {
     }).then(function (user) {
       console.log('!!!!!!!!!!!!!!!!!!!!!!  USER INSIDE REDUX LOGIN', user);
       dispatch(set(user));
-      _socket2.default.emit('new-user', user);
+      // socket.emit('new-user',user)
       return user;
       // .catch(logErr)
       // catching in the Login component(WELCOME) because we want the thunked action creater to return user so that we can force a page
@@ -46530,7 +46533,7 @@ var retrieveLoggedInUser = exports.retrieveLoggedInUser = function retrieveLogge
   return (
     // console.log('HITTING RETRIEVE USER!!!!!!')
     function (dispatch) {
-      console.log('HITTING RETRIEVE USER!!!!!!');
+      console.log('HITTING RETRIEVE USER!!!!!!', credentials);
       _axios2.default.get('/api/auth/me').then(function (res) {
         return res.data;
       }).then(function (user) {
@@ -46547,38 +46550,12 @@ var reduxLogout = exports.reduxLogout = function reduxLogout() {
     console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$');
     _axios2.default.delete('/api/auth/me');
     dispatch(set(null));
+    _socket2.default.emit('disconnect', user);
   };
 };
 
 /***/ }),
 /* 476 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var compose = __webpack_require__(85).compose;
-
-exports.__esModule = true;
-exports.composeWithDevTools = (
-  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ :
-    function() {
-      if (arguments.length === 0) return undefined;
-      if (typeof arguments[0] === 'object') return compose;
-      return compose.apply(null, arguments);
-    }
-);
-
-exports.devToolsEnhancer = (
-  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION__ :
-    function() { return function(noop) { return noop; } }
-);
-
-
-/***/ }),
-/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46590,7 +46567,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.addToActiveUser = exports.ADD_USER = undefined;
 exports.default = reducer;
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -46650,6 +46627,33 @@ function reducer() {
       return activeUsers;
   }
 }
+
+/***/ }),
+/* 477 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var compose = __webpack_require__(85).compose;
+
+exports.__esModule = true;
+exports.composeWithDevTools = (
+  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ :
+    function() {
+      if (arguments.length === 0) return undefined;
+      if (typeof arguments[0] === 'object') return compose;
+      return compose.apply(null, arguments);
+    }
+);
+
+exports.devToolsEnhancer = (
+  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION__ :
+    function() { return function(noop) { return noop; } }
+);
+
 
 /***/ }),
 /* 478 */
@@ -63692,7 +63696,7 @@ var _reactRedux = __webpack_require__(28);
 
 var _index = __webpack_require__(87);
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -63722,7 +63726,7 @@ var MessagesList = function (_Component) {
       // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
 
       var messages = this.props.messagesCollection;
-      console.log('MeSaGe ColLecTiOn', messages);
+      // console.log('MeSaGe ColLecTiOn', messages)
       var channelId = this.props.channelId;
       var userId = this.props.currentUser && this.props.currentUser.id;
       // console.log("MESSSAGES",messages)
@@ -63731,19 +63735,14 @@ var MessagesList = function (_Component) {
       });
       var currentChannel = this.props.currentChannel;
       // console.log("props channel id ",channelId)
-      // console.log(messages)
+
       // console.log("filtered Messages",filteredMessages)
       // console.log("channelId", this.props.channelId)
       // const originalMessage = messages.originalMessage
       // const translatedText = messages.translatedText;
       var messageDisplayed = false;
-      console.log(filteredMessages);
-      // axios.post('/api/messages/translateAll',filteredMessages)
-      // .then(res=>{
-      //   console.log(' -- - - - - - -- - ')
-      //   console.log(res.data)
-      // })
-      // console.log("MESSSAGES",messages)
+      // console.log(filteredMessages)
+
       // console.log("PAGE USER ID", userId)
 
       return _react2.default.createElement(
@@ -63814,7 +63813,7 @@ var _store = __webpack_require__(31);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _axios = __webpack_require__(39);
+var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -64740,7 +64739,7 @@ Object.defineProperty(exports, "MicrosoftLoginButton", {
   }
 });
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 Object.defineProperty(exports, "createButton", {
   enumerable: true,
@@ -64766,7 +64765,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65088,7 +65087,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65143,7 +65142,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65201,7 +65200,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65256,7 +65255,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65313,7 +65312,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65379,7 +65378,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
@@ -65433,7 +65432,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createButton = __webpack_require__(37);
+var _createButton = __webpack_require__(38);
 
 var _createButton2 = _interopRequireDefault(_createButton);
 
