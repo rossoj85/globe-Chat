@@ -1,11 +1,11 @@
 const Message = require('../db/models/message');
 const Channel = require('../db/models/channel');
 
+let activeUsers=[]
+let quickLookup ={}
 
 
 module.exports = io => {
-  let activeUsers=[]
-  let quickLookup ={}
   io.on('connection', socket => {
     console.log(socket.id, ' has made a persistent connection to the server!');
 
@@ -34,8 +34,10 @@ module.exports = io => {
               break;
             }
       }
-      console.log(quickLookup)
-      socket.broadcast.emit('new-user', user, socket.id, activeUsers)
+      // console.log(quickLookup)
+      // console.log(activeUsers)
+      console.log('!!!NEW USER ON BACKEND!!!!')
+      io.emit('new-user', user, socket.id, activeUsers)
       // const sockID = socket.id
       // user.sockID = sockID
       // activeUsers.push(user)
@@ -48,3 +50,5 @@ module.exports = io => {
   });
 
 };
+
+module.exports.activeUsers = activeUsers
