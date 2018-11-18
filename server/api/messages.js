@@ -39,7 +39,7 @@ router.post('/translate',(req,res,next)=>{
             resolve(translation.translatedText);
             reject(console.err)
         })
-          .then(translatedMessage=>res.json({id, content, translatedMessage, channelId, author}))
+          .then(translation =>res.json({id, content, translation , channelId, author}))
     })
 })
 router.post('/translateAll',(req,res,next)=>{

@@ -18,7 +18,7 @@ class MessagesList extends Component {
     // console.log("!#$#@MESSAGE LIST PROPS$#@!$!@",this.props)
     
     const messages = this.props.messagesCollection
-    console.log('MeSaGe ColLecTiOn', messages)
+    // console.log('MeSaGe ColLecTiOn', messages)
     const channelId= this.props.channelId
     const userId = this.props.currentUser && this.props.currentUser.id
     // console.log("MESSSAGES",messages)
@@ -26,19 +26,14 @@ class MessagesList extends Component {
       +message.channelId===+channelId)
     const currentChannel =this.props.currentChannel
     // console.log("props channel id ",channelId)
-    // console.log(messages)
+
     // console.log("filtered Messages",filteredMessages)
     // console.log("channelId", this.props.channelId)
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;
     let messageDisplayed=false
-    console.log(filteredMessages)
-    // axios.post('/api/messages/translateAll',filteredMessages)
-    // .then(res=>{
-    //   console.log(' -- - - - - - -- - ')
-    //   console.log(res.data)
-    // })
-    // console.log("MESSSAGES",messages)
+    // console.log(filteredMessages)
+    
     // console.log("PAGE USER ID", userId)
     
     return (

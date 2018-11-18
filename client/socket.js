@@ -1,13 +1,16 @@
 import io from 'socket.io-client';
-import store, {gotNewMessageFromServer, getChannel} from './store';
+import store, {gotNewMessageFromServer, getChannel, fetchActiveUsers} from './store';
 import axios from 'axios';
 import {connect} from 'react-redux'
 
 const socket = io(window.location.origin);
 //import our state language pref
 
-socket.on('connect', () => {
+
+socket.on('connect', (socket) => {
   console.log('I am now connected to the server!');
+  const currentUser = store.getState().currentUser
+  console.log(currentUser)
 });
 
 socket.on('new-message', message=>{
@@ -30,6 +33,17 @@ socket.on('new-message', message=>{
 socket.on('new-channel', channel=>{
   store.dispatch(getChannel(channel));
 })
+
+socket.on('new-user', (user, sockID, activeUsers)=>{
+  // user.sockID = sockID
+  console.log( 'WE HAVE A NEW USER!!!', user)
+  console.log('ARRaY of ConNeCtIoNs',activeUsers)
+  store.dispatch(fetchActiveUsers(activeUsers))
+})
+socket.on('logout', activeUsers =>{
+  store.dispatch(fetchActiveUsers(activeUsers))
+})
+
 
 const mapState = (state)=>{
   return {

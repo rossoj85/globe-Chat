@@ -459,3 +459,10 @@ body {
 //   .story-container p {
 //     margin: 20px 0; }
 
+.activeDot{
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
