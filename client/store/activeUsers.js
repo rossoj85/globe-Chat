@@ -3,22 +3,22 @@ import axios from 'axios';
 /* -----------------    ACTION TYPES    ------------------ */
 
 // export const INITIALIZE = 'INITIALIZE_USERS';
-export const ADD_USER  = 'ADD_USER';
+export const REPLACE_ACTIVE_USER_ARRAY = 'REPLACE_ACTIVE_USER_ARRAY';
 // export const REMOVE = 'REMOVE_USER';
 // export const UPDATE     = 'UPDATE_USER';
 
 /* ------------     ACTION CREATORS      ------------------ */
 
 // const init  = authors => ({ type: INITIALIZE, users });
-const add = activeUser  => ({ type: ADD_USER, activeUser });
+const getActiveUsers = newActiveUserArray  => ({ type: REPLACE_ACTIVE_USER_ARRAY, newActiveUserArray });
 // const remove = id    => ({ type: REMOVE, id });
 // const update = author  => ({ type: UPDATE, user });
 
 /*------------      THUNKS      ------------------*/
-  export const addToActiveUser = activeUser =>
+  export const fetchActiveUsers = newActiveUserArray =>
         // console.log('ADDING A NEW USER', activeUser)
         dispatch =>
-        dispatch(add(activeUser))
+        dispatch(getActiveUsers(newActiveUserArray))
         
 
 /* ------------          REDUCER         ------------------ */
@@ -29,8 +29,8 @@ export default function reducer (activeUsers = [], action) {
     //   case INITIALIZE:
     //     return action.users;
   
-      case ADD_USER:
-        return [action.activeUser, ...activeUsers];
+      case REPLACE_ACTIVE_USER_ARRAY:
+        return action.newActiveUserArray;
   
     //   case REMOVE:
     //     return users.filter(user => user.id !== action.id);

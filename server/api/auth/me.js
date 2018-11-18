@@ -51,10 +51,10 @@ router.put('/', (req, res, next)=>{
                 res.json(user)
             })
 
-            req.session.cookie.expires = new Date(Date.now()+ hour)
-            // console.log(req.sesion)
+            // req.session.cookie.expires = new Date(Date.now()+ hour)
+            // // console.log(req.sesion)
            
-            res.json(user)  //we need some kind of respondse
+            // res.json(user)  //we need some kind of respondse
         }
         else{
             throw new HttpError(401,'cannot find user name/combo')

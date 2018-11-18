@@ -7,7 +7,9 @@ import store, {fetchChannels,  fetchMessages,  retrieveLoggedInUser } from '../s
 export default class Main extends Component{
 
     componentDidMount(){
+        let currentUser = store.getState().currentUser
         console.log("~~~~~~~~~~Main Component mounted~~~~~~~~~~")
+        console.log('###',currentUser)
         const incomingMessageLanguage = store.getState().navbar.incomingMessageLanguage
         const channelsThunk =fetchChannels();
         const messagesThunk = fetchMessages(incomingMessageLanguage);

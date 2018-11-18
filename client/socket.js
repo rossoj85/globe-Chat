@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import store, {gotNewMessageFromServer, getChannel, addToActiveUser} from './store';
+import store, {gotNewMessageFromServer, getChannel, fetchActiveUsers} from './store';
 import axios from 'axios';
 import {connect} from 'react-redux'
 
@@ -38,7 +38,7 @@ socket.on('new-user', (user, sockID, activeUsers)=>{
   // user.sockID = sockID
   console.log( 'WE HAVE A NEW USER!!!', user)
   console.log('ARRaY of ConNeCtIoNs',activeUsers)
-  // store.dispatch(addToActiveUser(user))
+  store.dispatch(fetchActiveUsers(activeUsers))
 })
 socket.on('disconnect', user =>{
   console.log(`${user} has disconnected`)

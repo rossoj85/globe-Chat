@@ -11604,7 +11604,7 @@ socket.on('new-user', function (user, sockID, activeUsers) {
   // user.sockID = sockID
   console.log('WE HAVE A NEW USER!!!', user);
   console.log('ARRaY of ConNeCtIoNs', activeUsers);
-  // store.dispatch(addToActiveUser(user))
+  _store2.default.dispatch((0, _store.fetchActiveUsers)(activeUsers));
 });
 socket.on('disconnect', function (user) {
   console.log(user + ' has disconnected');
@@ -18857,7 +18857,9 @@ var Main = function (_Component) {
     _createClass(Main, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var currentUser = _store2.default.getState().currentUser;
             console.log("~~~~~~~~~~Main Component mounted~~~~~~~~~~");
+            console.log('###', currentUser);
             var incomingMessageLanguage = _store2.default.getState().navbar.incomingMessageLanguage;
             var channelsThunk = (0, _store.fetchChannels)();
             var messagesThunk = (0, _store.fetchMessages)(incomingMessageLanguage);
@@ -42076,7 +42078,7 @@ function fetchMessages(incomingMessageLanguage) {
             };_axios2.default.post('/api/messages/translateAll', messagesArrayAndLanguageObj).then(function (res) {
                 return res.data;
             }).then(function (translatedMessageArray) {
-                console.log('###TRANS MES###', translatedMessageArray);
+                // console.log('###TRANS MES###',translatedMessageArray)
                 dispatch(getAllMesagesFromServer(translatedMessageArray));
             });
         }).catch(console.error);
@@ -46520,7 +46522,7 @@ var reduxLogin = exports.reduxLogin = function reduxLogin(credentials) {
     }).then(function (user) {
       console.log('!!!!!!!!!!!!!!!!!!!!!!  USER INSIDE REDUX LOGIN', user);
       dispatch(set(user));
-      // socket.emit('new-user',user)
+      _socket2.default.emit('new-user', user);
       return user;
       // .catch(logErr)
       // catching in the Login component(WELCOME) because we want the thunked action creater to return user so that we can force a page
@@ -46538,8 +46540,9 @@ var retrieveLoggedInUser = exports.retrieveLoggedInUser = function retrieveLogge
         return res.data;
       }).then(function (user) {
         console.log('INSIDE RETRIEVE USER USER!!!', user);
+        console.log(user.length);
         dispatch(set(user));
-        _socket2.default.emit('new-user', user);
+        if (user) _socket2.default.emit('new-user', user);
       }).catch(logErr);
     }
   );
@@ -46564,7 +46567,7 @@ var reduxLogout = exports.reduxLogout = function reduxLogout() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addToActiveUser = exports.ADD_USER = undefined;
+exports.fetchActiveUsers = exports.REPLACE_ACTIVE_USER_ARRAY = undefined;
 exports.default = reducer;
 
 var _axios = __webpack_require__(36);
@@ -46573,30 +46576,28 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 /* -----------------    ACTION TYPES    ------------------ */
 
 // export const INITIALIZE = 'INITIALIZE_USERS';
-var ADD_USER = exports.ADD_USER = 'ADD_USER';
+var REPLACE_ACTIVE_USER_ARRAY = exports.REPLACE_ACTIVE_USER_ARRAY = 'REPLACE_ACTIVE_USER_ARRAY';
 // export const REMOVE = 'REMOVE_USER';
 // export const UPDATE     = 'UPDATE_USER';
 
 /* ------------     ACTION CREATORS      ------------------ */
 
 // const init  = authors => ({ type: INITIALIZE, users });
-var add = function add(activeUser) {
-  return { type: ADD_USER, activeUser: activeUser };
+var getActiveUsers = function getActiveUsers(newActiveUserArray) {
+  return { type: REPLACE_ACTIVE_USER_ARRAY, newActiveUserArray: newActiveUserArray };
 };
 // const remove = id    => ({ type: REMOVE, id });
 // const update = author  => ({ type: UPDATE, user });
 
 /*------------      THUNKS      ------------------*/
-var addToActiveUser = exports.addToActiveUser = function addToActiveUser(activeUser) {
+var fetchActiveUsers = exports.fetchActiveUsers = function fetchActiveUsers(newActiveUserArray) {
   return (
     // console.log('ADDING A NEW USER', activeUser)
     function (dispatch) {
-      return dispatch(add(activeUser));
+      return dispatch(getActiveUsers(newActiveUserArray));
     }
   );
 };
@@ -46612,8 +46613,8 @@ function reducer() {
     //   case INITIALIZE:
     //     return action.users;
 
-    case ADD_USER:
-      return [action.activeUser].concat(_toConsumableArray(activeUsers));
+    case REPLACE_ACTIVE_USER_ARRAY:
+      return action.newActiveUserArray;
 
     //   case REMOVE:
     //     return users.filter(user => user.id !== action.id);

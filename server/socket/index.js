@@ -30,10 +30,12 @@ module.exports = io => {
           for(let activeUser of activeUsers)
             if(activeUser.id === user.id){
               activeUser.sockId = socket.id
+              quickLookup[user.id]=socket.id
               break;
             }
       }
-      socket.emit('new-user', user, socket.id, activeUsers)
+      console.log(quickLookup)
+      socket.broadcast.emit('new-user', user, socket.id, activeUsers)
       // const sockID = socket.id
       // user.sockID = sockID
       // activeUsers.push(user)

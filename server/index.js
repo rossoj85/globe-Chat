@@ -39,7 +39,7 @@ passport.deserializeUser((id,done)=>{
 
 app.use(function (req, res, next){
   // console.log('passport user: ', req.user)
-  console.log('WASSUP HELLO', req.session);
+  // console.log('WASSUP HELLO', req.session);
   // console.log(passport)
   next();
 })

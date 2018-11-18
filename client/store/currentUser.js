@@ -34,7 +34,7 @@ export const reduxLogin = credentials =>
     .then(user=>{
         console.log('!!!!!!!!!!!!!!!!!!!!!!  USER INSIDE REDUX LOGIN',user)
       dispatch(set(user))
-      // socket.emit('new-user',user)
+      socket.emit('new-user',user)
       return user
       // .catch(logErr)
     // catching in the Login component(WELCOME) because we want the thunked action creater to return user so that we can force a page
@@ -50,8 +50,9 @@ export const reduxLogin = credentials =>
         
         .then(user => {
           console.log('INSIDE RETRIEVE USER USER!!!', user)
+          console.log(user.length)
           dispatch(set(user))
-          socket.emit('new-user',user)
+          if(user) socket.emit('new-user',user)
         })
         .catch(logErr)
         }

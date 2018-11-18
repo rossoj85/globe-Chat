@@ -78,7 +78,7 @@ export function fetchMessages(incomingMessageLanguage){
             axios.post('/api/messages/translateAll',messagesArrayAndLanguageObj)
             .then(res => res.data)
             .then(translatedMessageArray=> {
-                console.log('###TRANS MES###',translatedMessageArray)
+                // console.log('###TRANS MES###',translatedMessageArray)
                 dispatch(getAllMesagesFromServer(translatedMessageArray))
             })
         })
