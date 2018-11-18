@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {ChannelList} from './index'
+import {ActiveUsersList} from './index'
 import store from '../store'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -22,6 +23,7 @@ class Sidebar extends Component {
         <div>
           <div>
             <h5>ACTIVE USERS</h5>
+            <ActiveUsersList />
           </div>
           <div>
             <h5>Channels</h5>

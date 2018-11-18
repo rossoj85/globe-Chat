@@ -6,6 +6,7 @@ export { default as Main } from './main';
 export {default as Sidebar} from './sidebar';
 export {default as Navbar} from './navbar';
 export {default as MessagesList} from './messagesList';
+export {default as ActiveUsersList} from './sidebar-activeUsers'
 export {default as NewMessageEntry} from './newMessageEntry';
 export {default as Message} from './message';
 export{default as LanguageSelect} from './navbar-language-select'
