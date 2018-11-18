@@ -57,12 +57,12 @@ export const reduxLogin = credentials =>
         .catch(logErr)
         }
 
-    export const reduxLogout = ()=> 
+    export const reduxLogout = (currentUser)=> 
           dispatch=>{
             console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$')
             axios.delete('/api/auth/me')
             dispatch(set(null))
-            socket.emit('disconnect', user)
+            socket.emit('logout', currentUser)
           }
          
         

@@ -11615,8 +11615,8 @@ socket.on('new-user', function (user, sockID, activeUsers) {
   console.log('ARRaY of ConNeCtIoNs', activeUsers);
   _store2.default.dispatch((0, _store.fetchActiveUsers)(activeUsers));
 });
-socket.on('disconnect', function (user) {
-  console.log(user + ' has disconnected');
+socket.on('logout', function (activeUsers) {
+  _store2.default.dispatch((0, _store.fetchActiveUsers)(activeUsers));
 });
 
 var mapState = function mapState(state) {
@@ -46310,15 +46310,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var initialState = {
     incomingMessageLanguage: 'en',
-    // nameWrite: '',
-    // finalName:'',
     userId: null
 };
 
 var CHANGE_INCOMING_MESSAGE_LANGUAGE = exports.CHANGE_INCOMING_MESSAGE_LANGUAGE = 'CHANGE_INCOMING_MESSAGE_LANGUAGE';
-// export const WRITE_NAME = "WRITE_NAME";
-// export const SET_NAME_AND_ID= "SET_NAME_AND_ID";
-
 
 //actions 
 function changeIncomingMessageLanguage(language) {
@@ -46327,38 +46322,6 @@ function changeIncomingMessageLanguage(language) {
         incomingMessageLanguage: language
     };
 }
-
-// export function writeName(nameInput){
-//     return {
-//         type: WRITE_NAME,
-//         nameInput
-//     }
-// }
-// export function setNamePlusId(finalName, id){
-//     return {
-//         type: SET_NAME_AND_ID,
-//         finalName,
-//         id
-//     }
-// }
-
-
-// export function setUserNameAndId(finalName){
-
-//     return function thunk(dispatch){
-//         axios.get(`/api/authors/${finalName}`)
-//         .then(res=>res.data)
-//         .then(user=>{
-//             console.log("FROM INSIDE SETUSERID THUNK", user)
-//             const finalName= user[0].name
-//             const id= user[0].id
-//             console.log(id,finalName)
-//             const action= setNamePlusId(finalName, id)
-//             dispatch(action)
-//         })
-//     }
-// }
-
 
 exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -46558,12 +46521,12 @@ var retrieveLoggedInUser = exports.retrieveLoggedInUser = function retrieveLogge
   );
 };
 
-var reduxLogout = exports.reduxLogout = function reduxLogout() {
+var reduxLogout = exports.reduxLogout = function reduxLogout(currentUser) {
   return function (dispatch) {
     console.log('HIT LOGOUT!!!!@#$!#$@#!%@!%@#%@#%@!#$');
     _axios2.default.delete('/api/auth/me');
     dispatch(set(null));
-    _socket2.default.emit('disconnect', user);
+    _socket2.default.emit('logout', currentUser);
   };
 };
 
@@ -46798,7 +46761,8 @@ var mapDispatch = function mapDispatch(dispatch, ownProps) {
       dispatch(fetchMessagesThunk);
     },
     logout: function logout() {
-      dispatch((0, _store.reduxLogout)());
+      var currentUser = _store2.default.getState().currentUser;
+      dispatch((0, _store.reduxLogout)(currentUser));
       console.log('You logged out');
       ownProps.history.push('/');
     }

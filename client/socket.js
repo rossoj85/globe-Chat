@@ -40,8 +40,8 @@ socket.on('new-user', (user, sockID, activeUsers)=>{
   console.log('ARRaY of ConNeCtIoNs',activeUsers)
   store.dispatch(fetchActiveUsers(activeUsers))
 })
-socket.on('disconnect', user =>{
-  console.log(`${user} has disconnected`)
+socket.on('logout', activeUsers =>{
+  store.dispatch(fetchActiveUsers(activeUsers))
 })
 
 

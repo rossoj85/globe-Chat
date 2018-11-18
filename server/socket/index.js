@@ -44,8 +44,11 @@ module.exports = io => {
       // console.log('NEW USER SOCKET ID~~~~~~', sockID)
       // socket.emit('new-user', user, sockID, activeUsers)
     })
-    socket.on('disconnect',(user)=>{
-      console.log('DISCONNECT IN THE BACK END ', user)
+    socket.on('logout',(disconnectingUser)=>{
+      console.log('~~~~DISCONNECT IN THE BACK END~~~~~')
+      delete quickLookup[disconnectingUser.id]
+      activeUsers =activeUsers.filter(activeUser=>activeUser.id!==disconnectingUser.id)
+      socket.broadcast.emit('logout',activeUsers)
     })
   });
 

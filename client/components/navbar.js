@@ -60,7 +60,8 @@ const mapDispatch=(dispatch,ownProps)=>{
       dispatch(fetchMessagesThunk)
     },
     logout: ()=>{
-      dispatch(reduxLogout())
+      const currentUser = store.getState().currentUser
+      dispatch(reduxLogout(currentUser))
       console.log('You logged out')
       ownProps.history.push('/');
     }
