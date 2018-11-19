@@ -23,11 +23,20 @@ handleSubmit(evt){
   const authorId = this.props.currentUser.id;
   const channelId = this.props.channelId
   const incomingMessageLanguage = this.props.incomingMessageLanguage
+
+  //applies only to Direct Messages
+  const isDM = this.props.isDM
+  const recipientId = this.props.recipientId
+
   const originalMessage ={
     message: this.props.newMessageEntry,
     incomingMessageLanguage,
     channelId,
-    authorId
+    authorId,
+
+    //for DMs
+    isDM,
+    recipientId
     } 
     console.log('CURRENT USER',this.props.currentUser)
     console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {Sidebar, Navbar, NewMessageEntry, MessagesList, NewChannelEntry, SignUp, Login} from './index'
+import {Sidebar, Navbar, NewMessageEntry, MessagesList, DirectMessageList, NewChannelEntry, SignUp, Login,} from './index'
 import store, {fetchChannels,  fetchMessages,  retrieveLoggedInUser } from '../store'
 
 export default class Main extends Component{
@@ -33,7 +33,7 @@ export default class Main extends Component{
             <Switch>
                 <Route path='/new-channel' component={NewChannelEntry} />
                     <Route path="/channels/:channelId" component={MessagesList} />
-                    {/*<Redirect to="/channels/1" />*/}
+                <Route path ='/dm/:recipientId' component={DirectMessageList} />   
                 </Switch>
             </main>
         </div>

@@ -8,12 +8,15 @@ const initialState = {
     messageCollection: [],
     newMessageEntry: '',
 }
-
+// CHANNEL MESSAGES
 export const WRITE_MESSAGE = 'WRITE_MESSAGE';
 export  const GOT_NEW_MESSAGE_FROM_SERVER ='GOT_NEW_MESSAGE_FROM_SERVER';
 export const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES';
 export const GET_SINGLE_CHANNEL_MESSAGES= 'GET_SINGLE_CHANNEL_MESSSAGES';
 export const GET_TRANSLATION_OF_ALL_MESSAGES = 'GET_TRANSLATION_OF_ALL_MESSAGES';
+
+//DIRECT MESSAGES
+export const GET_ALL_USER_DM = 'GET_ALL_USER_DM'
 
 export function writeMessage (inputContent){
     return {
@@ -43,13 +46,33 @@ export const translateAllMessages = (allMessagesTranslated)=>({
     translatedMessages
 })
 
+export const getAllUserDM = (allDM) =>{
+    type: GET_ALL_USER_DM,
+    allDM
+}
+
 // THUNKS AND DISPATCH
+export const fetchDM = (userId, incomingMessageLanguage)=>{
+    dispatch =>{
+        axios.get('/api/messages/dm/:userId')
+        .then(res=>res.data)
+        .then(directMessages =>{
+            const messagesArrayAndLanguageObj ={incomingMessageLanguage, directMessages}
+            axios.post('/api/messages/translateAll',messagesArrayAndLanguageObj)
+            .then(res=>res.data)
+            .then(translatedDMArray=>{
+                dispatch(getAllUserDM(translatedDMArray))
+            })
+        })
+        .catch(console.error)
+    }
+}
+
+
+
+
 export function postMessage(messageData){  //we could have also passed in channelId and contents
     console.log("messagedata#$%#$@",messageData)
-    // console.log(incomingMessageLanguage)
-    // const channelId = messageData.channelId
-    // const incomingMessageLanguage = messageData.incomingMessageLanguage
-    // console.log("INCOMING MESSAGE FROM THUNK",messageData)
     return function thunk(dispatch, getState){
         axios.post('/api/messages', messageData)
         .then(res=>res.data)
@@ -63,7 +86,6 @@ export function postMessage(messageData){  //we could have also passed in channe
         .catch(console.err)
     }
 }
-
 
 export function fetchMessages(incomingMessageLanguage){
 

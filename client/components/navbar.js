@@ -4,13 +4,9 @@ import {connect} from 'react-redux';
 import store, {setLanguage, changeIncomingMessageLanguage, reduxLogout, fetchMessages} from '../store';
 import {Button } from 'react-bootstrap'
 import{NavLink,withRouter} from 'react-router-dom'
-import Bluebirt from 'bluebird';
+
 
 class Navbar extends Component {
-
-    constructor(props) {
-      super(props);
-    }
 
   render () {
     // console.log("NAVBAR PROPS", this.props )

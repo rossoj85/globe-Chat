@@ -7,10 +7,16 @@ module.exports = db.define('message', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  translation:{
-    type: Sequelize.STRING,
+  isDM:{
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
-
+  recipientId:{
+    type: Sequelize.INTEGER,
+  },
+  // translation:{
+  //   type: Sequelize.STRING,
+  // },
 }, {
   defaultScope: {
     include: [

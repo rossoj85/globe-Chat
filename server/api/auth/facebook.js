@@ -19,7 +19,7 @@ passport.use(
         //these are the fields on our user model
         name: profile.displayName,
         email: profile.emails[0].value,
-        photo: profile.photos ? profile.photos[0].value : undefined
+        image: profile.photos ? profile.photos[0].value : undefined
     }
     // console.log('---FRIENDS-------', profile._json.friends.summary)
     // console.log('-------LIKES DATA-----',profile._json.likes.data)

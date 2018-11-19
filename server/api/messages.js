@@ -5,6 +5,7 @@ const Bluebird = require('bluebird')
 const googleTranslate = require('../../languageTest')
 module.exports = router
 
+//GETTING MESSAGES
 router.get('/',(req,res,next)=>{
     console.log('@$#!@!#$@#!$@#!$@!#$#!2HIT MESSAGES ROUTE$@#@#!$@!#$!@#$@!#$@#$@!#')
     Message.findAll()
@@ -19,8 +20,15 @@ router.get('/:channelId',(req,res,next)=>{
     .then(messages => res.json(messages))
     .catch(next);
 })
+router.get('/dm/:userId',(req,res,next)=>{
+    const recipientId = req.params.userId
 
+    Message.findAll({where: recipientId})
+    .then(directMessages=>res.send(directMessages))
+    .catch(next);
+})
 
+//TRANSLATING MESSAGES
 router.post('/translate',(req,res,next)=>{
     // console.log("INSIDE TRANSLATE!")
     const content = req.body.content
@@ -49,9 +57,6 @@ router.post('/translateAll',(req,res,next)=>{
     console.log("------BOOOOOOOMMMMM-------")
     // console.log(incomingMessageLanguage)
     // console.log(messageArray)
-
-
-
     function promisedTranslation(message){
         return  new Promise((resolve,reject)=>{
             return googleTranslate.translate(message.content, incomingMessageLanguage, (err, translation)=>{
@@ -84,9 +89,15 @@ router.post('/', (req,res,next)=>{
     console.log('INSIDE POST MESSAGE!!!!!')
     const content = req.body.message
     const channelId = req.body.channelId
+
+    //for DMs
+    const recipientId = req.body.recipientId
+    let isDM;
+    if(!req.body.isDM) isDM=false
+    if(req.body.isDM) isDM=true
     console.log("REQ BODY",req.body)
-    console.log("THIS IS THE BODY",req.body.name )
-   
+    console.log("THIS IS A DM", isDM)
+
     Author.findAll({
         where: {
           id: req.body.authorId 
@@ -94,7 +105,7 @@ router.post('/', (req,res,next)=>{
     })
     
     .spread(author => {
-        const message = Message.build({content, channelId});
+        const message = Message.build({content, channelId, isDM, recipientId});
         console.log("MESSAGE CREATED",message)
         message.setAuthor(author, { save: false });
         return message.save()
@@ -102,9 +113,7 @@ router.post('/', (req,res,next)=>{
             message = message.toJSON();
             message.author = author;
             return message;
-        
           });
-       
     })
       .then(message => {
           console.log('MESSAGE:', message)
