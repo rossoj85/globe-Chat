@@ -10,6 +10,7 @@ import {reduxSetCurrentChannel} from '../store'
 
   // console.log("CHANNEL LIST PROPS",props)
   // console.log(reduxSetCurrentChannel)
+  //test push
   console.log(location.pathname)
     return (
       <ul>
