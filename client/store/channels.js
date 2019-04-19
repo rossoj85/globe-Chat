@@ -71,14 +71,13 @@ export function postChannel(channel, history){
 export function reduxSetCurrentChannel(channel){
     console.log('INSIDE THUNK!@#$!@!#$@!#!', channel)
     // console.log(`api/channels/${channelId}`)
-    return function thunk(dispatch){
-    //      axios.get(`/api/channels/${channelId}`)
-    //     .then(res=>res.data)
-    //     .then(currentChannel=>{
-            // console.log('CURRENT CHANNEL',currentChannel)
-            dispatch(setCurrent(channel))
+    if(!channel.isDM) return function thunk(dispatch){dispatch(setCurrent(channel))}
+    else {
+        return function thunk(dispatch){
+            console.log('------>INSIDE DA THUNK',channel)
+            axios.post(`/api/channels/dm/${channel.name}`, channel)
         }
-    // }
+    }
 }
 
 //REDUCER (look into how history is pushed)

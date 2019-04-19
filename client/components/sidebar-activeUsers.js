@@ -8,7 +8,7 @@ import {reduxSetCurrentChannel} from '../store'
  const activeUserList = (props) => {
   const {activeUsers, currentUser} = props;
   const setCurrentChannel = (dmRoomId) =>{
-
+    
     let channel = {
       id: null,
       name: dmRoomId,
