@@ -15,3 +15,4 @@ export {default as NewChannelEntry} from './newChannelEntry';
 export{default as NameEntry} from './navbar-nameEntry';
 export{default as SignUp} from './signup';
 export{default as Login} from './login';
+export {default as MessageListDMS} from './messageListDMS'
