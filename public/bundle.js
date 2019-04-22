@@ -46264,6 +46264,7 @@ function reduxSetCurrentChannel(channel) {
         return function thunk(dispatch) {
             console.log('------>INSIDE DA THUNK', channel);
             _axios2.default.post('/api/channels/dm/' + channel.name, channel);
+            dispatch(setCurrent(channel));
         };
     }
 }
@@ -63803,11 +63804,13 @@ var activeUserList = function activeUserList(props) {
   var activeUsers = props.activeUsers,
       currentUser = props.currentUser;
 
-  var setCurrentChannel = function setCurrentChannel(dmRoomId) {
-
+  var setCurrentChannel = function setCurrentChannel(dmRoomId, activeUserId) {
+    console.log('***************ACTIVE USER"S ID', activeUserId);
     var channel = {
       id: null,
       name: dmRoomId,
+      userOne: props.currentUser.id,
+      userTwo: activeUserId,
       updatedAt: null,
       createdAt: null,
       isDM: true
@@ -63832,7 +63835,7 @@ var activeUserList = function activeUserList(props) {
         _react2.default.createElement(
           _reactRouterDom.NavLink,
           { to: '/dm/' + dmRoomId, onClick: function onClick() {
-              return setCurrentChannel(dmRoomId);
+              return setCurrentChannel(dmRoomId, activeUser.id);
             }, activeClassName: 'active' },
           _react2.default.createElement(
             'span',
@@ -65795,6 +65798,7 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var messgeListDMS = function messgeListDMS(props) {
+  console.log("DM LIST PROPS", props);
   var currentChannel = props.currentChannel,
       channelId = props.channelId;
 

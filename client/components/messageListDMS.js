@@ -5,6 +5,7 @@ import axios from 'axios';
 
 
 const messgeListDMS = (props)=>{
+    console.log("DM LIST PROPS", props)
     const {currentChannel, channelId} = props;
 
     return (

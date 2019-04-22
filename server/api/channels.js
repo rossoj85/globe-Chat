@@ -31,12 +31,21 @@ router.get('/', function (req, res, next) {
   //FIND OR CREATE A SINGLE DM CHANNEL BY NAME
 
   router.post('/dm/:dmChannelName',(req,res,next)=>{
-    const dmChannelName = req.params.dmChannelName
-    const channel = req.body
+    const dmChannelName = req.params.dmChannelName;
+    const isDM = req.body.isDM;
+    const userOne = req.body.userOne;
+    const userTwo = req.body.userTwo;
+    const channel = req.body;
+
     console.log("@@@@@@@@@INSIDE DM GET ROUTE ! ! ! !")
     console.log("---->CHANNEL FROM BODY", channel)
     Channel.findOrCreate({
-      where:{name: dmChannelName}
+      where:{
+        name: dmChannelName,
+        isDM,
+        userOne,
+        userTwo
+      }
     })
     .then(channel=>console.log(channel));
   })

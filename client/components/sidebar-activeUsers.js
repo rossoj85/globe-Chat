@@ -7,11 +7,13 @@ import {reduxSetCurrentChannel} from '../store'
 
  const activeUserList = (props) => {
   const {activeUsers, currentUser} = props;
-  const setCurrentChannel = (dmRoomId) =>{
-    
+  const setCurrentChannel = (dmRoomId, activeUserId) =>{
+      console.log('***************ACTIVE USER"S ID', activeUserId)
     let channel = {
       id: null,
       name: dmRoomId,
+      userOne: props.currentUser.id,
+      userTwo: activeUserId,
       updatedAt: null,
       createdAt: null,
       isDM: true
@@ -31,7 +33,7 @@ import {reduxSetCurrentChannel} from '../store'
           
           return (
             <li key={activeUser.id} /*onClick={()=>props.reactSetCurrentChannel(channel)}*/>
-            <NavLink to= {`/dm/${dmRoomId}`} onClick={()=>setCurrentChannel(dmRoomId)} activeClassName="active" >
+            <NavLink to= {`/dm/${dmRoomId}`} onClick={()=>setCurrentChannel(dmRoomId, activeUser.id)} activeClassName="active" >
             <span ><span className = 'activeDot'></span>{activeUser.name}</span>
             {/* <span className="badge">{messages.length && messages.filter(message => message.channelId === channel.id).length} */}
             {/* </span> */}

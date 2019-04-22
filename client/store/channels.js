@@ -76,6 +76,7 @@ export function reduxSetCurrentChannel(channel){
         return function thunk(dispatch){
             console.log('------>INSIDE DA THUNK',channel)
             axios.post(`/api/channels/dm/${channel.name}`, channel)
+            dispatch(setCurrent(channel))
         }
     }
 }
