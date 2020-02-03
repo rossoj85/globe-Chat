@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 // import store from '../store';
 import {connect} from 'react-redux';
-import {reduxSetCurrentChannel} from '../store'
+import {reduxSetCurrentChannel} from '../../store'
 
 
  const activeUserList = (props) => {
   const {activeUsers, currentUser} = props;
   const setCurrentChannel = (dmRoomId, activeUserId) =>{
       console.log('***************ACTIVE USER"S ID', activeUserId)
+      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
     let channel = {
       id: null,
       name: dmRoomId,
@@ -20,6 +21,7 @@ import {reduxSetCurrentChannel} from '../store'
     }
     props.reactSetCurrentChannel(channel)
   }
+  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   console.log(location.pathname)
     return (
       <ul>

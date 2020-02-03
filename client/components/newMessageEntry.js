@@ -31,6 +31,7 @@ handleSubmit(evt){
     } 
     console.log('CURRENT USER',this.props.currentUser)
     console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
+    console.log('---> Channel ID', channelId);
   const postMessageThunk = postMessage(originalMessage)
   store.dispatch(postMessageThunk)
 }

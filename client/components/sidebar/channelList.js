@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 // import store from '../store';
 import {connect} from 'react-redux';
-import {reduxSetCurrentChannel} from '../store'
+import {reduxSetCurrentChannel} from '../../store'
 
 
  function ChannelList (props) {

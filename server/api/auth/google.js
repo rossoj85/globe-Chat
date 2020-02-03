@@ -22,10 +22,11 @@ passport.use(
             console.log('---', 'in verification callback', profile, '---');
             var info ={
                 //these are the fields on our user model
-                name: profile.displayName,
+                name: profile.displayName || "dummyName",
                 email: profile.emails[0].value,
                 photo: profile.photos ? profile.photos[0].value : undefined
             }
+            console.log('INFO-->', info);
             Author.findOrCreate({
                 where: {googleId: profile.id},
                 //if the persons id(which is the same as their gogle id) is not in db, we use 'defaults' to set up thier profile in our app
