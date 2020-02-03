@@ -9,3 +9,75 @@ TO DO
  for each channel it clicks 
 
  We should store the current channel on the session. 
+
+
+
+HOW CHANNEL MESSAGES WORK
+    (all props are using react-redux and connect funtion)
+1.) From new Message entry 
+    - authorId is taken from this.props.currentUser 
+    - channelID is being passed in through messagesList, which is coming though the connect & mapstate
+2.) Constructs an "Original(non-translated) Message"
+    - const originalMessage ={
+                message: this.props.newMessageEntry,
+                incomingMessageLanguage,
+                channelId,
+                authorId
+    } 
+3.) Uses postMessage(imported from store) to dispatch the message to the store. 
+    -post message makes an API call 'api/messages' 
+    -the message object looks like this on the backend 
+            - { 
+                message: 'logging out a new message',
+                incomingMessageLanguage: 'es',
+                channelId: '1',
+                authorId: 1 
+                }
+
+4.) Post Message does a search by author from the author id on the message 
+    - next it builds a message with the fields conten and channelID found on the req body
+    -it takes the message and uses a message.setAuthor to put the author onto that message.
+    -it uses a message.save() to save the message to the DB
+    - it retuns the message
+    - it then .then's off the the previous spread and res.json's the message back to the front end
+
+5.) On the front-end it registers a "got new message from server", sends it to the reducer.
+
+6.) Uses socket to emit the 'new message'
+
+7. Uses dispatch writeMessage to clear out the text-box. 
+
+
+
+HOW CURRENT CHANNEL WORKS 
+1.) onClick from inside channelList.js triggers reactSetCurrentChannel aka reduxSetCurrentChannel, imported from store/channels
+2.) reduxSetCurrentChannel takes in channel and sends it to the reducer
+    - channel contains {
+        id: (int)
+        name: (string)
+        updatedAt: Date
+        createdAt: Date
+        isDM: bool 
+    }
+
+DMs 
+1.) Are jsut channels that shoudl be referenced by name
+2.) Checks for logged in user's id before fdetching the message data. TRhere should only be 2 users per DM 
+3.)
+
+RIGHT NOW THE BIG DIFFERENCE BETWEEN CHANNEL MESSAGES AND DM MESSAGES IS THAT DM MESSAGES NEED TO BE FETCHED WHEN COMPONENT MOUNTS. 
+    - project will eventually be refactored to fetch channel message when that channel mounts. 
+
+
+
+**thoguhts****
+1.) Change the channels model with fields isDM and with thus user id of the two who are premitted 
+    to use that channell. 
+
+3.) ******FIND OR CREATE A CHANNEL ON NEW MESSAGE ENTRY WITH DMS********
+WHen user writes a DM and enters it, new Mesage Entry checks for the channel
+    a.) if it doesn't exist, it creates it (sequalixe finoOrCreate)
+    b.) if it exists it posts the new message beloning to the channel id of that name 
+
+3.) All Dm should be stored in DB but socket emits(notifications of new messages) 
+    should only go to the users that they are intended for. 

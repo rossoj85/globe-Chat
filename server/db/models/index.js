@@ -7,6 +7,9 @@ Channel.hasMany(Message, {
   hooks: true
 });
 
+Channel.belongsToMany(Author,{as:'DM_Channel', through: 'DM_Channels', foreignKey:'DM_Channel_ID'})
+Author.belongsToMany(Channel,{as: 'DmUser', through: 'DM_Channels', foreignKey: 'DMUser'})
+
 Author.hasMany(Message);
 
 Message.belongsTo(Channel);

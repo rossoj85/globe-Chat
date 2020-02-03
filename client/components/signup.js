@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FacebookLoginButton,GoogleLoginButton } from "react-social-login-buttons";
-import {FacebookSignupButton, GoogleSignupButton} from './customButtons'
+import {FacebookSignupButton, GoogleSignupButton} from './login/customButtons'
 import {addUser as reduxSignup,reduxLogin} from '../store';
 //so redux signup creates user in db, but we should amke itto create or find
 

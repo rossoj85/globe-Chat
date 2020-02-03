@@ -28,7 +28,27 @@ router.get('/', function (req, res, next) {
     .then(channel=>res.json(channel))
     .catch(next)
   })
-  
+  //FIND OR CREATE A SINGLE DM CHANNEL BY NAME
+
+  router.post('/dm/:dmChannelName',(req,res,next)=>{
+    const dmChannelName = req.params.dmChannelName;
+    const isDM = req.body.isDM;
+    const userOne = req.body.userOne;
+    const userTwo = req.body.userTwo;
+    const channel = req.body;
+
+    console.log("@@@@@@@@@INSIDE DM GET ROUTE ! ! ! !")
+    console.log("---->CHANNEL FROM BODY", channel)
+    Channel.findOrCreate({
+      where:{
+        name: dmChannelName,
+        isDM,
+        userOne,
+        userTwo
+      }
+    })
+    .then(channel=>console.log(channel));
+  })
   // POST /api/channels
   router.post('/', function (req, res, next) {
     Channel.create(req.body)

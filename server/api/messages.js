@@ -53,8 +53,12 @@ router.post('/translateAll',(req,res,next)=>{
 
 
     function promisedTranslation(message){
+        console.log("SINGLE MESSAGE~~~`", message)
+        console.log("TRANSLATION KEY---->",googleTranslate)
         return  new Promise((resolve,reject)=>{
             return googleTranslate.translate(message.content, incomingMessageLanguage, (err, translation)=>{
+                console.log("messaage.content", message.content)
+                console.log("TRANSLAITON~~~", translation)
                 if(err !==null) reject(err)
                 else resolve(translation)
             })
@@ -63,8 +67,8 @@ router.post('/translateAll',(req,res,next)=>{
     Bluebird.map(messageArray,(message)=>{
         return promisedTranslation(message)
         .then(translation=>{
-            // console.log(message)
-            // console.log(translation.translatedText)
+            console.log("MESSAGE",message)
+            console.log("TRANSLATED TEXT",translation.translatedText)
             message.translation=translation.translatedText
             // console.log(message)
         })
@@ -85,7 +89,7 @@ router.post('/', (req,res,next)=>{
     const content = req.body.message
     const channelId = req.body.channelId
     console.log("REQ BODY",req.body)
-    console.log("THIS IS THE BODY",req.body.name )
+    // console.log("THIS IS THE BODY",req.body.name )
    
     Author.findAll({
         where: {
@@ -95,14 +99,13 @@ router.post('/', (req,res,next)=>{
     
     .spread(author => {
         const message = Message.build({content, channelId});
-        console.log("MESSAGE CREATED",message)
+        // console.log("MESSAGE CREATED",message)
         message.setAuthor(author, { save: false });
         return message.save()
           .then(message => {
             message = message.toJSON();
             message.author = author;
             return message;
-        
           });
        
     })
