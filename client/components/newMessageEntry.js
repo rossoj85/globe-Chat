@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import store, {writeMessage, postMessage} from '../store';
+import store, {writeMessage, postMessage, postDMchannel} from '../store';
 import axios from 'axios';
 
 
@@ -15,25 +15,37 @@ handleChange(evt){
   const action =writeMessage(inputValue)
   store.dispatch(action)
 }
+postMessage 
 
-//my handle submit 
+//first determine id the current channel si dm or not. If current channel is DM we first
+//have to create that channel with a find or create and then link the message to that 
+//channel 
 handleSubmit(evt){
   evt.preventDefault()
+  console.log('POSTDM CHANNEL', postDMchannel);
   const content = this.props.newMessageEntry
   const authorId = this.props.currentUser.id;
-  const channelId = this.props.channelId
-  const incomingMessageLanguage = this.props.incomingMessageLanguage
-  const originalMessage ={
-    message: this.props.newMessageEntry,
-    incomingMessageLanguage,
-    channelId,
-    authorId
-    } 
-    console.log('CURRENT USER',this.props.currentUser)
-    console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
-    console.log('---> Channel ID', channelId);
-  const postMessageThunk = postMessage(originalMessage)
-  store.dispatch(postMessageThunk)
+  const currentChannel = this.props.currentChannel;
+  console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~');
+
+  if(currentChannel.isDM){
+    let postChannelThunk = postDMchannel(currentChannel);
+    const postDMchannelThunk = postDMchannel(currentChannel);
+    store.dispatch(postDMchannelThunk)
+  }
+  // const channelId = this.props.channelId
+  // const incomingMessageLanguage = this.props.incomingMessageLanguage
+  // const originalMessage ={
+  //   message: this.props.newMessageEntry,
+  //   incomingMessageLanguage,
+  //   channelId,
+  //   authorId
+  //   } 
+  //   console.log('CURRENT USER',this.props.currentUser)
+  //   console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
+  //   console.log('---> Channel ID', channelId);
+  // const postMessageThunk = postMessage(originalMessage)
+  // store.dispatch(postMessageThunk)
 }
 
 
@@ -74,7 +86,8 @@ const mapState = (state, ownProps) =>{
     newMessageEntry: state.messages.newMessageEntry,
     incomingMessageLanguage: state.navbar.incomingMessageLanguage,
     // name: state.navbar.finalName
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    currentChannel: state.channels.currentChannel
 
   }
 }

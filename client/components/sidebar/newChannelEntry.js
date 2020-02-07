@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {writeChannelName, postChannel} from '../store';
+import {writeChannelName, postChannel} from '../../store';
 
  const NewChannelEntry = (props)=> {
    console.log("PROOPSS", props)

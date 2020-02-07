@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { Channel, Message } = require('../db/models');
+const sequelize= require('sequelize');
+const Op = sequelize.Op;
 
 module.exports = router
 
@@ -37,17 +39,25 @@ router.get('/', function (req, res, next) {
     const userTwo = req.body.userTwo;
     const channel = req.body;
 
-    console.log("@@@@@@@@@INSIDE DM GET ROUTE ! ! ! !")
-    console.log("---->CHANNEL FROM BODY", channel)
+    // console.log("@@@@@@@@@INSIDE DM GET ROUTE ! ! ! !")
+    // console.log("---->CHANNEL FROM BODY", channel)
+    console.log('USERS', userOne, "---", userTwo);
     Channel.findOrCreate({
       where:{
         name: dmChannelName,
         isDM,
+        // userOne: {
+        //   [Op.or]: [userOne]
+        // },
+        // userTwo:{
+        //   [Op.or]: [userTwo]
+        // },
         userOne,
         userTwo
       }
     })
-    .then(channel=>console.log(channel));
+    .then(DMchannel => res.json(DMchannel))
+    .catch(next)
   })
   // POST /api/channels
   router.post('/', function (req, res, next) {
