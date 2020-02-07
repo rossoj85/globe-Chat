@@ -42076,7 +42076,7 @@ function postMessage(messageData) {
         _axios2.default.post('/api/messages', messageData).then(function (res) {
             return res.data;
         }).then(function (message) {
-            // console.log("Inside Post MEssage THUNK", message)
+            console.log("Inside Post MEssage THUNK", message);
             var action = gotNewMessageFromServer(message);
             dispatch(action);
             _socket2.default.emit('new-message', message);
@@ -46176,7 +46176,6 @@ exports.writeChannelName = writeChannelName;
 exports.getChannel = getChannel;
 exports.setCurrent = setCurrent;
 exports.fetchChannels = fetchChannels;
-exports.postDMchannel = postDMchannel;
 exports.postChannel = postChannel;
 exports.reduxSetCurrentChannel = reduxSetCurrentChannel;
 
@@ -46244,18 +46243,20 @@ function fetchChannels() {
         }).catch(console.err);
     };
 }
-function postDMchannel(channel) {
-    return function thunk(dispatch) {
-        return _axios2.default.post('/api/channels', channel).then(function (res) {
-            return res.data;
-        }).then(function (newDMchannel) {
-            console.log('NEW DM CHANNEL', newDMchannel);
-            dispatch(getChannel(newDMchannel));
-            _socket2.default.emit('new-channel', newDMchannel);
-            return;
-        });
-    };
-}
+// export function postDMchannel(channel){
+//     return function thunk(dispatch){
+//         return axios.post('/api/channels', channel)
+//         .then(res=>res.data)
+//         .then(newDMchannel=>{
+//             console.log('NEW DM CHANNEL', newDMchannel);
+//             dispatch(getChannel(newDMchannel));
+//             socket.emit('new-channel', newDMchannel)
+//             return;
+//         })
+
+//     }
+
+// } 
 
 function postChannel(channel, history) {
     return function thunk(dispatch) {
@@ -63774,7 +63775,7 @@ var MessagesList = function (_Component) {
             });
           })
         ),
-        _react2.default.createElement(_index.NewMessageEntry, { channelId: channelId })
+        _react2.default.createElement(_index.NewMessageEntry, null)
       );
     }
   }]);
@@ -63783,7 +63784,7 @@ var MessagesList = function (_Component) {
 }(_react.Component);
 
 var mapState = function mapState(state, ownProps) {
-  // console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
+  console.log("OWN PROPS Params FROM MESSAGE LIST", ownProps.match.params);
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
@@ -63850,7 +63851,7 @@ var activeUserList = function activeUserList(props) {
     'ul',
     null,
     activeUsers.map(function (activeUser) {
-
+      console.log('activeUser-->', activeUser);
       var sortedUsers = [activeUser.id, currentUser.id].sort(function (a, b) {
         return a - b;
       });
@@ -63970,24 +63971,25 @@ var NewMessageEntry = function (_Component) {
       var currentChannel = this.props.currentChannel;
       console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~');
 
-      if (currentChannel.isDM) {
-        var postChannelThunk = (0, _store.postDMchannel)(currentChannel);
-        var postDMchannelThunk = (0, _store.postDMchannel)(currentChannel);
-        _store2.default.dispatch(postDMchannelThunk);
-      }
-      // const channelId = this.props.channelId
-      // const incomingMessageLanguage = this.props.incomingMessageLanguage
-      // const originalMessage ={
-      //   message: this.props.newMessageEntry,
-      //   incomingMessageLanguage,
-      //   channelId,
-      //   authorId
-      //   } 
-      //   console.log('CURRENT USER',this.props.currentUser)
-      //   console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
+      // if(currentChannel.isDM){
+      //   let postChannelThunk = postDMchannel(currentChannel);
+      //   const postDMchannelThunk = postDMchannel(currentChannel);
+      //   store.dispatch(postDMchannelThunk)
+      // }
+      var channelId = this.props.channelId;
+      var incomingMessageLanguage = this.props.incomingMessageLanguage;
+      var originalMessage = {
+        message: this.props.newMessageEntry,
+        incomingMessageLanguage: incomingMessageLanguage,
+        channelId: channelId,
+        authorId: authorId
+        // console.log('newMessageEntryProps', this.props);
+        // console.log('channelId', channelId);
+        // console.log('CURRENT USER',this.props.currentUser)
+      };console.log("ORIGINAL MESSAGE from handleSubmit", originalMessage);
       //   console.log('---> Channel ID', channelId);
-      // const postMessageThunk = postMessage(originalMessage)
-      // store.dispatch(postMessageThunk)
+      var postMessageThunk = (0, _store.postMessage)(originalMessage);
+      _store2.default.dispatch(postMessageThunk);
     }
   }, {
     key: 'render',
@@ -64036,7 +64038,6 @@ var mapState = function mapState(state, ownProps) {
     messagesCollection: state.messages.messageCollection,
     newMessageEntry: state.messages.newMessageEntry,
     incomingMessageLanguage: state.navbar.incomingMessageLanguage,
-    // name: state.navbar.finalName
     currentUser: state.currentUser,
     currentChannel: state.channels.currentChannel
 
@@ -65857,9 +65858,9 @@ var messgeListDMS = function messgeListDMS(props) {
   );
 };
 var mapState = function mapState(state, ownProps) {
-  // console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
+  console.log("OWN PROPS FROM MESSAGE LIST", ownProps);
   return {
-    channelId: ownProps.match.params.channelId,
+    channelId: ownProps.match.params.dmpair,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,

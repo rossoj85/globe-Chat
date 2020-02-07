@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import {Sidebar, Navbar, NewMessageEntry, MessagesList, NewChannelEntry, SignUp, Login, MessageListDMS} from './index'
-import store, {fetchChannels,  fetchMessages,  retrieveLoggedInUser } from '../store'
+import store, {fetchChannels,  fetchMessages,  retrieveLoggedInUser, reduxSetCurrentChannel } from '../store'
 
 export default class Main extends Component{
 

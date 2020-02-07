@@ -40,7 +40,7 @@ const activeUserList = (props) => {
       <ul>
       {
         activeUsers.map(activeUser=>{
-
+          console.log('activeUser-->',activeUser);
           let sortedUsers = [activeUser.id, currentUser.id].sort((a,b)=>a-b);
           sortedUsers.splice(1,0,'dm');
           let dmRoomId = sortedUsers.join("");

@@ -54,7 +54,7 @@ export function postMessage(messageData){  //we could have also passed in channe
         axios.post('/api/messages', messageData)
         .then(res=>res.data)
         .then(message=>{
-            // console.log("Inside Post MEssage THUNK", message)
+            console.log("Inside Post MEssage THUNK", message)
             const action = gotNewMessageFromServer(message)
             dispatch(action)
             socket.emit('new-message', message)

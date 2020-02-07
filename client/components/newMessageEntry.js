@@ -28,24 +28,26 @@ handleSubmit(evt){
   const currentChannel = this.props.currentChannel;
   console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~');
 
-  if(currentChannel.isDM){
-    let postChannelThunk = postDMchannel(currentChannel);
-    const postDMchannelThunk = postDMchannel(currentChannel);
-    store.dispatch(postDMchannelThunk)
-  }
-  // const channelId = this.props.channelId
-  // const incomingMessageLanguage = this.props.incomingMessageLanguage
-  // const originalMessage ={
-  //   message: this.props.newMessageEntry,
-  //   incomingMessageLanguage,
-  //   channelId,
-  //   authorId
-  //   } 
-  //   console.log('CURRENT USER',this.props.currentUser)
-  //   console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
+  // if(currentChannel.isDM){
+  //   let postChannelThunk = postDMchannel(currentChannel);
+  //   const postDMchannelThunk = postDMchannel(currentChannel);
+  //   store.dispatch(postDMchannelThunk)
+  // }
+  const channelId = this.props.channelId
+  const incomingMessageLanguage = this.props.incomingMessageLanguage
+  const originalMessage ={
+    message: this.props.newMessageEntry,
+    incomingMessageLanguage,
+    channelId,
+    authorId
+    } 
+    // console.log('newMessageEntryProps', this.props);
+    // console.log('channelId', channelId);
+    // console.log('CURRENT USER',this.props.currentUser)
+    console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
   //   console.log('---> Channel ID', channelId);
-  // const postMessageThunk = postMessage(originalMessage)
-  // store.dispatch(postMessageThunk)
+  const postMessageThunk = postMessage(originalMessage)
+  store.dispatch(postMessageThunk)
 }
 
 
@@ -85,7 +87,6 @@ const mapState = (state, ownProps) =>{
     messagesCollection: state.messages.messageCollection,
     newMessageEntry: state.messages.newMessageEntry,
     incomingMessageLanguage: state.navbar.incomingMessageLanguage,
-    // name: state.navbar.finalName
     currentUser: state.currentUser,
     currentChannel: state.channels.currentChannel
 

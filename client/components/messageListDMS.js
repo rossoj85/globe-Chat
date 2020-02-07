@@ -30,9 +30,9 @@ const messgeListDMS = (props)=>{
       );
 }
 const mapState = (state, ownProps) =>{
-    // console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
+    console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
   return {
-    channelId: ownProps.match.params.channelId,
+    channelId: ownProps.match.params.dmpair,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,

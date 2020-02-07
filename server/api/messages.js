@@ -98,6 +98,7 @@ router.post('/', (req,res,next)=>{
     })
     
     .spread(author => {
+        console.log('INSDIE THE AUHTOER SPREAD');
         const message = Message.build({content, channelId});
         // console.log("MESSAGE CREATED",message)
         message.setAuthor(author, { save: false });

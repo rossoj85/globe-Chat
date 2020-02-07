@@ -56,20 +56,20 @@ export function fetchChannels(){
         .catch(console.err)
     }
 }
-export function postDMchannel(channel){
-    return function thunk(dispatch){
-        return axios.post('/api/channels', channel)
-        .then(res=>res.data)
-        .then(newDMchannel=>{
-            console.log('NEW DM CHANNEL', newDMchannel);
-            dispatch(getChannel(newDMchannel));
-            socket.emit('new-channel', newDMchannel)
-            return;
-        })
+// export function postDMchannel(channel){
+//     return function thunk(dispatch){
+//         return axios.post('/api/channels', channel)
+//         .then(res=>res.data)
+//         .then(newDMchannel=>{
+//             console.log('NEW DM CHANNEL', newDMchannel);
+//             dispatch(getChannel(newDMchannel));
+//             socket.emit('new-channel', newDMchannel)
+//             return;
+//         })
 
-    }
+//     }
 
-} 
+// } 
 
 export function postChannel(channel, history){
     return function thunk(dispatch){

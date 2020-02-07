@@ -91,3 +91,7 @@ the newly created channel name with the user id
 userOne and userTwo
 1.) useroNE is the client using the app 
 2.) user two is a freind from the list. 
+
+isDM is handled in the newMessageEntry component
+
+**have to set currentChannel in main.js

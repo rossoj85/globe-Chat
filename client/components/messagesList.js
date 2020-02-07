@@ -52,13 +52,13 @@ class MessagesList extends Component {
         
         )}
         </ul>
-      <NewMessageEntry channelId={channelId}/>
+      <NewMessageEntry />
       </div>
     );
   }
 }
 const mapState = (state, ownProps) =>{
-    // console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
+    console.log("OWN PROPS Params FROM MESSAGE LIST",ownProps.match.params)
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
