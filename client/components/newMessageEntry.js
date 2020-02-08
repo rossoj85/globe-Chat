@@ -49,16 +49,20 @@ handleSubmit(evt){
   ///revise this in future, it is two API calls when it could be one 
   // if I put it onto backend
   if(isDM) {
-    console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`);
-    const newlyFoundOrCreatedChannel = async (currentChannel) =>{
-      postDMchannelToDB(currentChannel)
-      let response =  await postDMchannelToDB
-      return response 
-    }
-    console.log('newlyFoundOrCreatedChannel', newlyFoundOrCreatedChannel);
+    console.log('---->currentChannel', currentChannel);
+    const addChannelIdToDM = (async () =>{
+      let newlyCreatedOrFoundChannel = await postDMchannelToDB(currentChannel)
+      console.log('newlyCreatedOrFoundChannel--->', newlyCreatedOrFoundChannel);
+      originalMessage.channelId = newlyCreatedOrFoundChannel.id
+      console.log('originalMessage ==>', originalMessage);
+      const postMessageThunk = postMessage(originalMessage)
+      store.dispatch(postMessageThunk)
+    })();
   }
-  const postMessageThunk = postMessage(originalMessage)
-  store.dispatch(postMessageThunk)
+  else{
+    const postMessageThunk = postMessage(originalMessage)
+    store.dispatch(postMessageThunk)
+  }
 }
 
 

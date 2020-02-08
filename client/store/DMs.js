@@ -19,7 +19,7 @@ export const postDMchannel = (channel) =>({type: POST_NEW_DM_CHANNEL,channel});
 export const postDMchannelToDB = (channel)=>{
     console.log('inside postDMchannelToDB');
     console.log('~~~ channel info', channel);
-    axios.post(`/api/channels/dm/${channel.name}`, channel)
+    return axios.post(`/api/channels/dm/${channel.name}`, channel)
     .then(res =>{
         console.log('apI POST TO DM RES', res.data)
         let DMchannel = res.data[0];
