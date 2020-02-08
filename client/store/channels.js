@@ -11,7 +11,8 @@ const initialState = {
 export const GET_CHANNELS = "GET_CHANNELS";
 export const WRITE_CHANNEL_NAME ="WRITE_CHANNEL_NAME";
 export const GET_CHANNEL ="GET_CHANNEL";
-export const SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL'
+export const SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL';
+
 
 
 //ACTIONS
@@ -94,12 +95,12 @@ export function reduxSetCurrentChannel(channel){
             //this is a find or create post. it is necessary because it might be 
             //first time user clicks on specific cahnnel 
 
-            axios.post(`/api/channels/dm/${channel.name}`, channel)
-            .then(res =>{
-                console.log('apI POST TO DM RES', res.data)
-                let DMchannel = res.data[0];
-                dispatch(setCurrent(DMchannel))
-            })
+            // axios.post(`/api/channels/dm/${channel.name}`, channel)
+            // .then(res =>{
+                // console.log('apI POST TO DM RES', res.data)
+                // let DMchannel = res.data[0];
+                dispatch(setCurrent(channel))
+            // })
         }
     }
 }

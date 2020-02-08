@@ -46,12 +46,6 @@ router.get('/', function (req, res, next) {
       where:{
         name: dmChannelName,
         isDM,
-        // userOne: {
-        //   [Op.or]: [userOne]
-        // },
-        // userTwo:{
-        //   [Op.or]: [userTwo]
-        // },
         userOne,
         userTwo
       }

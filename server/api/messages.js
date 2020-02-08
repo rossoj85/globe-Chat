@@ -86,8 +86,9 @@ router.post('/translateAll',(req,res,next)=>{
 //POST TO DB
 router.post('/', (req,res,next)=>{
     console.log('INSIDE POST MESSAGE!!!!!')
-    const content = req.body.message
-    const channelId = req.body.channelId
+    const content = req.body.message;
+    const channelId = req.body.channelId;
+    const isDM = req.body.isDM;
     console.log("REQ BODY",req.body)
     // console.log("THIS IS THE BODY",req.body.name )
    

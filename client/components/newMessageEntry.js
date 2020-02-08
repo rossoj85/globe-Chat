@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import store, {writeMessage, postMessage, postDMchannel} from '../store';
+import store, {writeMessage, postMessage, postDMchannel, postDMchannelToDB} from '../store';
 import axios from 'axios';
 
 
@@ -26,26 +26,37 @@ handleSubmit(evt){
   const content = this.props.newMessageEntry
   const authorId = this.props.currentUser.id;
   const currentChannel = this.props.currentChannel;
-  console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~');
-
+  const channelId = this.props.currentChannel.id;
+  const isDM = this.props.currentChannel.isDM
+  console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~', currentChannel);
+  console.log('currentCHannelID', channelId);
   // if(currentChannel.isDM){
   //   let postChannelThunk = postDMchannel(currentChannel);
   //   const postDMchannelThunk = postDMchannel(currentChannel);
   //   store.dispatch(postDMchannelThunk)
   // }
-  const channelId = this.props.channelId
+
   const incomingMessageLanguage = this.props.incomingMessageLanguage
   const originalMessage ={
     message: this.props.newMessageEntry,
+    isDM,
     incomingMessageLanguage,
     channelId,
     authorId
-    } 
-    // console.log('newMessageEntryProps', this.props);
-    // console.log('channelId', channelId);
-    // console.log('CURRENT USER',this.props.currentUser)
-    console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
-  //   console.log('---> Channel ID', channelId);
+    }
+  console.log("ORIGINAL MESSAGE from handleSubmit",originalMessage)
+  
+  ///revise this in future, it is two API calls when it could be one 
+  // if I put it onto backend
+  if(isDM) {
+    console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`);
+    const newlyFoundOrCreatedChannel = async (currentChannel) =>{
+      postDMchannelToDB(currentChannel)
+      let response =  await postDMchannelToDB
+      return response 
+    }
+    console.log('newlyFoundOrCreatedChannel', newlyFoundOrCreatedChannel);
+  }
   const postMessageThunk = postMessage(originalMessage)
   store.dispatch(postMessageThunk)
 }

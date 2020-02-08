@@ -2570,6 +2570,18 @@ Object.keys(_activeUsers).forEach(function (key) {
   });
 });
 
+var _DMs = __webpack_require__(643);
+
+Object.keys(_DMs).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _DMs[key];
+    }
+  });
+});
+
 var _redux = __webpack_require__(86);
 
 var _reduxLogger = __webpack_require__(209);
@@ -2592,9 +2604,11 @@ var _currentUser2 = _interopRequireDefault(_currentUser);
 
 var _activeUsers2 = _interopRequireDefault(_activeUsers);
 
+var _DMs2 = _interopRequireDefault(_DMs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reducer = (0, _redux.combineReducers)({ messages: _messages2.default, channels: _channels2.default, navbar: _navbar2.default, author: _author2.default, currentUser: _currentUser2.default, activeUsers: _activeUsers2.default });
+var reducer = (0, _redux.combineReducers)({ messages: _messages2.default, channels: _channels2.default, navbar: _navbar2.default, author: _author2.default, currentUser: _currentUser2.default, activeUsers: _activeUsers2.default, DMs: _DMs2.default });
 
 var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger.createLogger)({ collapsed: true })));
 var store = (0, _redux.createStore)(reducer, middleware);
@@ -18855,6 +18869,8 @@ var _store = __webpack_require__(29);
 
 var _store2 = _interopRequireDefault(_store);
 
+var _utilities = __webpack_require__(642);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18875,18 +18891,52 @@ var Main = function (_Component) {
     _createClass(Main, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            console.log('constructChannelInfoFromPath', _utilities.constructChannelInfoFromPath);
             var currentUser = _store2.default.getState().currentUser;
             console.log("~~~~~~~~~~Main Component mounted~~~~~~~~~~");
             console.log('###', currentUser);
             var incomingMessageLanguage = _store2.default.getState().navbar.incomingMessageLanguage;
             var channelsThunk = (0, _store.fetchChannels)();
+
             var messagesThunk = (0, _store.fetchMessages)(incomingMessageLanguage);
             var currentUserThunk = (0, _store.retrieveLoggedInUser)();
+
+            var pathname = window.location.pathname;
+            var channelInfo = (0, _utilities.constructChannelInfoFromPath)(pathname);
+            var setCurrentChannelThunk = (0, _store.reduxSetCurrentChannel)(channelInfo);
+
             _store2.default.dispatch(channelsThunk);
             _store2.default.dispatch(messagesThunk);
             _store2.default.dispatch(currentUserThunk);
+            _store2.default.dispatch(setCurrentChannelThunk);
             console.log('MAIN COMPONENT CURRENT LANGUAGE', incomingMessageLanguage);
+            console.log('MAIN COMPONENT PROPS', this.props);
         }
+
+        // constructChannelInfoFromPath(pathname){
+        //     const pathnameArray = pathname.split('/')
+        //     // const userNameOrder = pathnameArray[2].split('dm').sort()
+        //     let channelInfo = {}
+        //     console.log('path anme array', pathnameArray);
+        //     if(pathnameArray[1]==="dm"){
+        //         channelInfo.id = null;
+        //         channelInfo.name = pathnameArray[2];
+        //         channelInfo.isDM = true;
+        //         channelInfo.userOne = pathnameArray[2].split('dm').sort()[0];
+        //         channelInfo.userTwo = pathnameArray[2].split('dm').sort()[1];
+
+        //         console.log('pathname ~~~~ channelInfo');
+        //     }
+        //     if(pathnameArray[1]==='channels'){
+        //         channelInfo.id = pathnameArray[2];
+        //         channelInfo.name = null;
+        //         channelInfo.isDM = false;
+        //         channelInfo.userOne = null;
+        //         channelInfo.userTwo = null;
+        //     }
+        //     return channelInfo;
+        // }
+
     }, {
         key: 'render',
         value: function render() {
@@ -46282,11 +46332,12 @@ function reduxSetCurrentChannel(channel) {
             //this is a find or create post. it is necessary because it might be 
             //first time user clicks on specific cahnnel 
 
-            _axios2.default.post('/api/channels/dm/' + channel.name, channel).then(function (res) {
-                console.log('apI POST TO DM RES', res.data);
-                var DMchannel = res.data[0];
-                dispatch(setCurrent(DMchannel));
-            });
+            // axios.post(`/api/channels/dm/${channel.name}`, channel)
+            // .then(res =>{
+            // console.log('apI POST TO DM RES', res.data)
+            // let DMchannel = res.data[0];
+            dispatch(setCurrent(channel));
+            // })
         };
     }
 }
@@ -63744,7 +63795,7 @@ var MessagesList = function (_Component) {
       var currentChannel = this.props.currentChannel;
       // console.log("props channel id ",channelId)
 
-      // console.log("filtered Messages",filteredMessages)
+      console.log("filtered Messages", filteredMessages);
       // console.log("channelId", this.props.channelId)
       // const originalMessage = messages.originalMessage
       // const translatedText = messages.translatedText;
@@ -63931,6 +63982,8 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -63964,30 +64017,66 @@ var NewMessageEntry = function (_Component) {
     //have to create that channel with a find or create and then link the message to that 
     //channel 
     value: function handleSubmit(evt) {
+      var _this2 = this;
+
       evt.preventDefault();
       console.log('POSTDM CHANNEL', _store.postDMchannel);
       var content = this.props.newMessageEntry;
       var authorId = this.props.currentUser.id;
       var currentChannel = this.props.currentChannel;
-      console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~');
-
+      var channelId = this.props.currentChannel.id;
+      var isDM = this.props.currentChannel.isDM;
+      console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~', currentChannel);
+      console.log('currentCHannelID', channelId);
       // if(currentChannel.isDM){
       //   let postChannelThunk = postDMchannel(currentChannel);
       //   const postDMchannelThunk = postDMchannel(currentChannel);
       //   store.dispatch(postDMchannelThunk)
       // }
-      var channelId = this.props.channelId;
+
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       var originalMessage = {
         message: this.props.newMessageEntry,
+        isDM: isDM,
         incomingMessageLanguage: incomingMessageLanguage,
         channelId: channelId,
         authorId: authorId
-        // console.log('newMessageEntryProps', this.props);
-        // console.log('channelId', channelId);
-        // console.log('CURRENT USER',this.props.currentUser)
-      };console.log("ORIGINAL MESSAGE from handleSubmit", originalMessage);
-      //   console.log('---> Channel ID', channelId);
+      };
+      console.log("ORIGINAL MESSAGE from handleSubmit", originalMessage);
+
+      ///revise this in future, it is two API calls when it could be one 
+      // if I put it onto backend
+      if (isDM) {
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        var newlyFoundOrCreatedChannel = function () {
+          var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(currentChannel) {
+            var response;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    (0, _store.postDMchannelToDB)(currentChannel);
+                    _context.next = 3;
+                    return _store.postDMchannelToDB;
+
+                  case 3:
+                    response = _context.sent;
+                    return _context.abrupt('return', response);
+
+                  case 5:
+                  case 'end':
+                    return _context.stop();
+                }
+              }
+            }, _callee, _this2);
+          }));
+
+          return function newlyFoundOrCreatedChannel(_x) {
+            return _ref.apply(this, arguments);
+          };
+        }();
+        console.log('newlyFoundOrCreatedChannel', newlyFoundOrCreatedChannel);
+      }
       var postMessageThunk = (0, _store.postMessage)(originalMessage);
       _store2.default.dispatch(postMessageThunk);
     }
@@ -65860,7 +65949,7 @@ var messgeListDMS = function messgeListDMS(props) {
 var mapState = function mapState(state, ownProps) {
   console.log("OWN PROPS FROM MESSAGE LIST", ownProps);
   return {
-    channelId: ownProps.match.params.dmpair,
+    // channelId: ownProps.match.params.dmpair,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,
@@ -65869,6 +65958,105 @@ var mapState = function mapState(state, ownProps) {
   };
 };
 exports.default = (0, _reactRedux.connect)(mapState)(messgeListDMS);
+
+/***/ }),
+/* 642 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var constructChannelInfoFromPath = exports.constructChannelInfoFromPath = function constructChannelInfoFromPath(pathname) {
+    var pathnameArray = pathname.split('/');
+    // const userNameOrder = pathnameArray[2].split('dm').sort()
+    var channelInfo = {};
+    console.log('path anme array', pathnameArray);
+    if (pathnameArray[1] === "dm") {
+        channelInfo.id = null;
+        channelInfo.name = pathnameArray[2];
+        channelInfo.isDM = true;
+        channelInfo.userOne = pathnameArray[2].split('dm').sort()[0];
+        channelInfo.userTwo = pathnameArray[2].split('dm').sort()[1];
+
+        console.log('pathname ~~~~ channelInfo');
+    }
+    if (pathnameArray[1] === 'channels') {
+        channelInfo.id = pathnameArray[2];
+        channelInfo.name = null;
+        channelInfo.isDM = false;
+        channelInfo.userOne = null;
+        channelInfo.userTwo = null;
+    }
+    return channelInfo;
+};
+
+/***/ }),
+/* 643 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.postDMchannelToDB = exports.postDMchannel = exports.POST_NEW_DM_CHANNEL = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _axios = __webpack_require__(32);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _socket = __webpack_require__(126);
+
+var _socket2 = _interopRequireDefault(_socket);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//there is some overlap with DMs and channels. DM channels are jsut channels, but there is 
+//unique wat to psot new DM channels , so for organizartion's sake, it has its won seperate reducer.
+
+
+var initialState = {
+    usersDMChannels: []
+
+    //consts
+};var POST_NEW_DM_CHANNEL = exports.POST_NEW_DM_CHANNEL = "POST_NEW_DM_CHANNEL";
+
+//actions creator
+var postDMchannel = exports.postDMchannel = function postDMchannel(channel) {
+    return { type: POST_NEW_DM_CHANNEL, channel: channel };
+};
+
+//thunk
+var postDMchannelToDB = exports.postDMchannelToDB = function postDMchannelToDB(channel) {
+    console.log('inside postDMchannelToDB');
+    console.log('~~~ channel info', channel);
+    _axios2.default.post('/api/channels/dm/' + channel.name, channel).then(function (res) {
+        console.log('apI POST TO DM RES', res.data);
+        var DMchannel = res.data[0];
+        console.log('~~~~DMchannel', DMchannel);
+        return DMchannel;
+    });
+};
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case POST_NEW_DM_CHANNEL:
+            return _extends({}, state, {
+                usersDMChannels: usersDMChannels
+            });
+        default:
+            return state;
+    }
+};
 
 /***/ })
 /******/ ]);

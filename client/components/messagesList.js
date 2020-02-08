@@ -27,7 +27,7 @@ class MessagesList extends Component {
     const currentChannel =this.props.currentChannel
     // console.log("props channel id ",channelId)
 
-    // console.log("filtered Messages",filteredMessages)
+    console.log("filtered Messages",filteredMessages)
     // console.log("channelId", this.props.channelId)
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;
