@@ -22736,8 +22736,8 @@ var Main = function (_Component) {
             var messagesThunk = (0, _store.fetchMessages)(incomingMessageLanguage);
             var currentUserThunk = (0, _store.retrieveLoggedInUser)();
 
-            var pathname = window.location.pathname;
-            var channelInfo = (0, _utilities.constructChannelInfoFromPath)(pathname);
+            // const pathname = window.location.pathname;
+            var channelInfo = (0, _utilities.constructChannelInfoFromPath)();
             var setCurrentChannelThunk = (0, _store.reduxSetCurrentChannel)(channelInfo);
 
             _store2.default.dispatch(channelsThunk);
@@ -73494,11 +73494,6 @@ var NewMessageEntry = function (_Component) {
       var isDM = this.props.currentChannel.isDM;
       console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~', currentChannel);
       console.log('currentCHannelID', channelId);
-      // if(currentChannel.isDM){
-      //   let postChannelThunk = postDMchannel(currentChannel);
-      //   const postDMchannelThunk = postDMchannel(currentChannel);
-      //   store.dispatch(postDMchannelThunk)
-      // }
 
       var incomingMessageLanguage = this.props.incomingMessageLanguage;
       var originalMessage = {
@@ -73526,14 +73521,13 @@ var NewMessageEntry = function (_Component) {
                 case 2:
                   newlyCreatedOrFoundChannel = _context.sent;
 
-                  console.log('newlyCreatedOrFoundChannel--->', newlyCreatedOrFoundChannel);
+
                   originalMessage.channelId = newlyCreatedOrFoundChannel.id;
-                  console.log('originalMessage ==>', originalMessage);
                   postMessageThunk = (0, _store.postMessage)(originalMessage);
 
                   _store2.default.dispatch(postMessageThunk);
 
-                case 8:
+                case 6:
                 case 'end':
                   return _context.stop();
               }
@@ -73548,9 +73542,6 @@ var NewMessageEntry = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      // console.log("NEW MESSAGE ENTRY",this.state.newMessageEntry)
-      // console.log("CONTENT", this.state.newMessageEntry)
-      // console.log("CHannel ID", this.props.channelId)
 
       console.log("NEW MESSAGE ENTRY PROPS", this.props);
 
@@ -75391,13 +75382,19 @@ var _axios = __webpack_require__(53);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _utilities = __webpack_require__(975);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var messgeListDMS = function messgeListDMS(props) {
   console.log("DM LIST PROPS", props);
-  var currentChannel = props.currentChannel,
-      channelId = props.channelId;
+  // const {currentChannel, channelId} = props;
+  var clientChannelsCollection = props.clientChannelsCollection;
 
+  console.log('clientChannelsCOllection', clientChannelsCollection);
+  var channelId = (0, _utilities.constructChannelInfoFromPath)();
+
+  console.log('messgeListDMS channelId', channelId);
 
   return _react2.default.createElement(
     'div',
@@ -75415,10 +75412,12 @@ var mapState = function mapState(state, ownProps) {
   console.log("OWN PROPS FROM MESSAGE LIST", ownProps);
   return {
     // channelId: ownProps.match.params.dmpair,
+    messagesCollection: state.messages.messageCollection,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,
-    userId: state.navbar.userId
+    userId: state.navbar.userId,
+    clientChannelsCollection: state.channels.channels
 
   };
 };
@@ -75434,14 +75433,27 @@ exports.default = (0, _reactRedux.connect)(mapState)(messgeListDMS);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var constructChannelInfoFromPath = exports.constructChannelInfoFromPath = function constructChannelInfoFromPath(pathname) {
+exports.constructChannelInfoFromPath = undefined;
+
+var _store = __webpack_require__(52);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var constructChannelInfoFromPath = exports.constructChannelInfoFromPath = function constructChannelInfoFromPath() {
+    var pathname = window.location.pathname;
     var pathnameArray = pathname.split('/');
-    // const userNameOrder = pathnameArray[2].split('dm').sort()
+    var channelName = pathnameArray[2];
+    var foundMatchedChannel = _store2.default.getState().channels.channels.filter(function (channel) {
+        return channel.name === channelName;
+    })[0];
     var channelInfo = {};
-    console.log('path anme array', pathnameArray);
+
+    console.log('path name array', pathnameArray);
     if (pathnameArray[1] === "dm") {
-        channelInfo.id = null;
-        channelInfo.name = pathnameArray[2];
+        channelInfo.id = foundMatchedChannel ? foundMatchedChannel.id : null;
+        channelInfo.name = channelName;
         channelInfo.isDM = true;
         channelInfo.userOne = pathnameArray[2].split('dm').sort()[0];
         channelInfo.userTwo = pathnameArray[2].split('dm').sort()[1];

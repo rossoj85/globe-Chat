@@ -2,11 +2,17 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NewMessageEntry, Message} from './index';
 import axios from 'axios';
+import { constructChannelInfoFromPath } from '../utilities';
 
 
 const messgeListDMS = (props)=>{
     console.log("DM LIST PROPS", props)
-    const {currentChannel, channelId} = props;
+    // const {currentChannel, channelId} = props;
+    const {clientChannelsCollection} = props;
+    console.log('clientChannelsCOllection', clientChannelsCollection);
+    const channelId = constructChannelInfoFromPath()
+
+    console.log('messgeListDMS channelId', channelId);
     
     return (
         <div id="messagesList">
@@ -33,10 +39,12 @@ const mapState = (state, ownProps) =>{
     console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
   return {
     // channelId: ownProps.match.params.dmpair,
+    messagesCollection: state.messages.messageCollection,
     currentUser: state.currentUser,
     currentLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,
-    userId: state.navbar.userId
+    userId: state.navbar.userId,
+    clientChannelsCollection: state.channels.channels
     
   }
 }

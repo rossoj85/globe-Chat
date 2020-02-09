@@ -18,8 +18,8 @@ export default class Main extends Component{
         const messagesThunk = fetchMessages(incomingMessageLanguage);
         const currentUserThunk =retrieveLoggedInUser();
 
-        const pathname = window.location.pathname;
-        const channelInfo = constructChannelInfoFromPath(pathname);
+        // const pathname = window.location.pathname;
+        const channelInfo = constructChannelInfoFromPath();
         const setCurrentChannelThunk = reduxSetCurrentChannel(channelInfo);
 
 

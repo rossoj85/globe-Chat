@@ -30,12 +30,7 @@ handleSubmit(evt){
   const isDM = this.props.currentChannel.isDM
   console.log('~~CURRENT CHANNEL INSIDE NEW MESSAGE ENTRY~~~', currentChannel);
   console.log('currentCHannelID', channelId);
-  // if(currentChannel.isDM){
-  //   let postChannelThunk = postDMchannel(currentChannel);
-  //   const postDMchannelThunk = postDMchannel(currentChannel);
-  //   store.dispatch(postDMchannelThunk)
-  // }
-
+ 
   const incomingMessageLanguage = this.props.incomingMessageLanguage
   const originalMessage ={
     message: this.props.newMessageEntry,
@@ -52,9 +47,8 @@ handleSubmit(evt){
     console.log('---->currentChannel', currentChannel);
     const addChannelIdToDM = (async () =>{
       let newlyCreatedOrFoundChannel = await postDMchannelToDB(currentChannel)
-      console.log('newlyCreatedOrFoundChannel--->', newlyCreatedOrFoundChannel);
+  
       originalMessage.channelId = newlyCreatedOrFoundChannel.id
-      console.log('originalMessage ==>', originalMessage);
       const postMessageThunk = postMessage(originalMessage)
       store.dispatch(postMessageThunk)
     })();
@@ -65,13 +59,7 @@ handleSubmit(evt){
   }
 }
 
-
-
-
   render () {
-    // console.log("NEW MESSAGE ENTRY",this.state.newMessageEntry)
-    // console.log("CONTENT", this.state.newMessageEntry)
-    // console.log("CHannel ID", this.props.channelId)
    
     console.log("NEW MESSAGE ENTRY PROPS",this.props)
    
