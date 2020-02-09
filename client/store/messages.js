@@ -89,6 +89,9 @@ export function fetchMessages(incomingMessageLanguage){
 export const fetchSingleChannelMessages = (channelId)=>
         dispatch =>
         axios.get('api/messages/:channelId')
+        .then(res => res.data)
+        .then(singleChannelMessages =>  singleChannelMessages )
+        
 
 export default (state = initialState, action) => {
     //return newState
