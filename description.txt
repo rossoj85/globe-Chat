@@ -81,3 +81,17 @@ WHen user writes a DM and enters it, new Mesage Entry checks for the channel
 
 3.) All Dm should be stored in DB but socket emits(notifications of new messages) 
     should only go to the users that they are intended for. 
+
+
+    TO do 
+DM channel is being created on click but right now there is now way to link 
+the newly created channel name with the user id 
+
+
+userOne and userTwo
+1.) useroNE is the client using the app 
+2.) user two is a freind from the list. 
+
+isDM is handled in the newMessageEntry component
+
+**have to set currentChannel in main.js

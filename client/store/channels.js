@@ -11,7 +11,8 @@ const initialState = {
 export const GET_CHANNELS = "GET_CHANNELS";
 export const WRITE_CHANNEL_NAME ="WRITE_CHANNEL_NAME";
 export const GET_CHANNEL ="GET_CHANNEL";
-export const SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL'
+export const SET_CURRENT_CHANNEL = 'SET_CURRENT_CHANNEL';
+
 
 
 //ACTIONS
@@ -56,6 +57,20 @@ export function fetchChannels(){
         .catch(console.err)
     }
 }
+// export function postDMchannel(channel){
+//     return function thunk(dispatch){
+//         return axios.post('/api/channels', channel)
+//         .then(res=>res.data)
+//         .then(newDMchannel=>{
+//             console.log('NEW DM CHANNEL', newDMchannel);
+//             dispatch(getChannel(newDMchannel));
+//             socket.emit('new-channel', newDMchannel)
+//             return;
+//         })
+
+//     }
+
+// } 
 
 export function postChannel(channel, history){
     return function thunk(dispatch){
@@ -69,14 +84,23 @@ export function postChannel(channel, history){
     }
 }
 export function reduxSetCurrentChannel(channel){
-    console.log('INSIDE THUNK!@#$!@!#$@!#!', channel)
+
+    console.log('Inside reduxSetCurrentChannel ', channel)
     // console.log(`api/channels/${channelId}`)
     if(!channel.isDM) return function thunk(dispatch){dispatch(setCurrent(channel))}
     else {
         return function thunk(dispatch){
-            console.log('------>INSIDE DA THUNK',channel)
-            axios.post(`/api/channels/dm/${channel.name}`, channel)
-            dispatch(setCurrent(channel))
+            console.log('------>INSIDE reduxSetCurrentChannel THUNK',channel)
+
+            //this is a find or create post. it is necessary because it might be 
+            //first time user clicks on specific cahnnel 
+
+            // axios.post(`/api/channels/dm/${channel.name}`, channel)
+            // .then(res =>{
+                // console.log('apI POST TO DM RES', res.data)
+                // let DMchannel = res.data[0];
+                dispatch(setCurrent(channel))
+            // })
         }
     }
 }

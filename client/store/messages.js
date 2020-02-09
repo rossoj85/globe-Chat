@@ -54,7 +54,7 @@ export function postMessage(messageData){  //we could have also passed in channe
         axios.post('/api/messages', messageData)
         .then(res=>res.data)
         .then(message=>{
-            // console.log("Inside Post MEssage THUNK", message)
+            console.log("Inside Post MEssage THUNK", message)
             const action = gotNewMessageFromServer(message)
             dispatch(action)
             socket.emit('new-message', message)
@@ -89,6 +89,9 @@ export function fetchMessages(incomingMessageLanguage){
 export const fetchSingleChannelMessages = (channelId)=>
         dispatch =>
         axios.get('api/messages/:channelId')
+        .then(res => res.data)
+        .then(singleChannelMessages =>  singleChannelMessages )
+        
 
 export default (state = initialState, action) => {
     //return newState

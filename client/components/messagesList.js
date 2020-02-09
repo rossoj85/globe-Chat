@@ -8,9 +8,6 @@ import axios from 'axios';
 
 class MessagesList extends Component {
  
-
-
-
   render () {
   // console.log('NEW MESSAGE LIST MOUNTED')
     // const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
@@ -27,7 +24,7 @@ class MessagesList extends Component {
     const currentChannel =this.props.currentChannel
     // console.log("props channel id ",channelId)
 
-    // console.log("filtered Messages",filteredMessages)
+    console.log("filtered Messages",filteredMessages)
     // console.log("channelId", this.props.channelId)
     // const originalMessage = messages.originalMessage
     // const translatedText = messages.translatedText;
@@ -52,13 +49,13 @@ class MessagesList extends Component {
         
         )}
         </ul>
-      <NewMessageEntry channelId={channelId}/>
+      <NewMessageEntry />
       </div>
     );
   }
 }
 const mapState = (state, ownProps) =>{
-    // console.log("OWN PROPS FROM MESSAGE LIST",ownProps)
+    console.log("OWN PROPS Params FROM MESSAGE LIST",ownProps.match.params)
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,

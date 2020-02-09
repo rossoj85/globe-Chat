@@ -5,29 +5,42 @@ import {connect} from 'react-redux';
 import {reduxSetCurrentChannel} from '../../store'
 
 
- const activeUserList = (props) => {
+
+
+const activeUserList = (props) => {
+
   const {activeUsers, currentUser} = props;
+
   const setCurrentChannel = (dmRoomId, activeUserId) =>{
       console.log('***************ACTIVE USER"S ID', activeUserId)
       console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-    let channel = {
-      id: null,
-      name: dmRoomId,
-      userOne: props.currentUser.id,
-      userTwo: activeUserId,
-      updatedAt: null,
-      createdAt: null,
-      isDM: true
-    }
-    props.reactSetCurrentChannel(channel)
+      const orderedUsers = [props.currentUser.id, activeUserId].sort()
+      console.log('orderedUsers-->', orderedUsers);
+      let channel = {
+        id: null,
+        name: dmRoomId,
+        userOne: orderedUsers[0],
+        userTwo: orderedUsers[1],
+        updatedAt: null,
+        createdAt: null,
+        isDM: true
+      }
+      props.reactSetCurrentChannel(channel)
   }
+
+  
   console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   console.log(location.pathname)
+
+
+
+
+
     return (
       <ul>
       {
         activeUsers.map(activeUser=>{
-
+          console.log('activeUser-->',activeUser);
           let sortedUsers = [activeUser.id, currentUser.id].sort((a,b)=>a-b);
           sortedUsers.splice(1,0,'dm');
           let dmRoomId = sortedUsers.join("");

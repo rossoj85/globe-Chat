@@ -11,7 +11,7 @@ export {default as NewMessageEntry} from './newMessageEntry';
 export {default as Message} from './message';
 export{default as LanguageSelect} from './navbar-language-select'
 export {default as ChannelList} from './sidebar/channelList';
-export {default as NewChannelEntry} from './newChannelEntry';
+export {default as NewChannelEntry} from './sidebar/newChannelEntry';
 export{default as NameEntry} from './navbar-nameEntry';
 export{default as SignUp} from './signup';
 export{default as Login} from './login';

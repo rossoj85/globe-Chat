@@ -86,8 +86,9 @@ router.post('/translateAll',(req,res,next)=>{
 //POST TO DB
 router.post('/', (req,res,next)=>{
     console.log('INSIDE POST MESSAGE!!!!!')
-    const content = req.body.message
-    const channelId = req.body.channelId
+    const content = req.body.message;
+    const channelId = req.body.channelId;
+    const isDM = req.body.isDM;
     console.log("REQ BODY",req.body)
     // console.log("THIS IS THE BODY",req.body.name )
    
@@ -98,6 +99,7 @@ router.post('/', (req,res,next)=>{
     })
     
     .spread(author => {
+        console.log('INSDIE THE AUHTOER SPREAD');
         const message = Message.build({content, channelId});
         // console.log("MESSAGE CREATED",message)
         message.setAuthor(author, { save: false });
