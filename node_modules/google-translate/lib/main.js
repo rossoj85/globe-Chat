@@ -168,16 +168,16 @@ module.exports = function(apiKey, newConcurrentLimit) {
   // TRANSLATE
 
   api.translate = function(strings, sourceLang, targetLang, done) {
-    if (typeof strings !== 'string' && !Array.isArray(strings)) return done('Input source must be a string or array of strings');
-    if (typeof sourceLang !== 'string') return done('No target language specified. Must be a string');
-
     // Make sourceLang optional
     if (!done) {
       done = targetLang;
       targetLang = sourceLang;
       sourceLang = null;
     }
+    
     if (!_.isFunction(done)) return console.log('No callback defined');
+    if (typeof strings !== 'string' && !Array.isArray(strings)) return done('Input source must be a string or array of strings');
+    if (typeof targetLang !== 'string') return done('No target language specified. Must be a string');
 
     // Split into multiple calls if string array is longer than allowed by Google (5k for POST)
     var stringSets;

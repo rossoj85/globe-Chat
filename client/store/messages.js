@@ -15,6 +15,9 @@ export const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES';
 export const GET_SINGLE_CHANNEL_MESSAGES= 'GET_SINGLE_CHANNEL_MESSSAGES';
 export const GET_TRANSLATION_OF_ALL_MESSAGES = 'GET_TRANSLATION_OF_ALL_MESSAGES';
 
+
+//action creators
+
 export function writeMessage (inputContent){
     return {
     type: WRITE_MESSAGE,
@@ -68,13 +71,11 @@ export function postMessage(messageData){  //we could have also passed in channe
 export function fetchMessages(incomingMessageLanguage){
 
     return function thunk(dispatch){
-        // console.log('I C M L @#FROM INSIDE FETCH MESSAFES THUNK',incomingMessageLanguage)
         axios.get('/api/messages')
         .then(res=>res.data)
         .then(allMessages=>{
             const messagesArrayAndLanguageObj = {incomingMessageLanguage,allMessages}
-            // console.log("@#@~~~~FETCH ALL MESSAGES CALLED~~~~~@#@@#")
-            // console.log(allMessages)
+
             axios.post('/api/messages/translateAll',messagesArrayAndLanguageObj)
             .then(res => res.data)
             .then(translatedMessageArray=> {
@@ -86,15 +87,25 @@ export function fetchMessages(incomingMessageLanguage){
     }
 }
 
-export const fetchSingleChannelMessages = (channelId)=>
-        dispatch =>
-        axios.get('api/messages/:channelId')
-        .then(res => res.data)
-        .then(singleChannelMessages =>  singleChannelMessages )
+export function fetchSingleChannelMessages(channelId){
+        console.log('fetch single channel messages called -- channelid', channelId);
+        return function thunk(dispatch){
+            console.log('inside dispatch');
+            axios.get(`/api/messages/${channelId}`)
+            .then(res => res.data)
+            .then(singleChannelMessages => {
+                console.log('SINGLE CHANNEL MESSAGES INSIDE THUNK', singleChannelMessages)
+                dispatch(getSingleChannelMessages(singleChannelMessages))
+            })
+            .catch(console.err)
+        }
+
+}
         
 
 export default (state = initialState, action) => {
     //return newState
+    // let cumMessageCollection = null;
     switch (action.type){
 
         case WRITE_MESSAGE:
@@ -107,6 +118,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 messageCollection: action.allMessages
+            }
+        case GET_SINGLE_CHANNEL_MESSAGES:
+             let cumMessageCollection = state.messageCollection.concat(action.singleChannelMessages)
+            return {
+                ...state,
+                messageCollection: cumMessageCollection
             }
         case GET_TRANSLATION_OF_ALL_MESSAGES:
             return{

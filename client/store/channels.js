@@ -90,7 +90,6 @@ export function reduxSetCurrentChannel(channel){
     if(!channel.isDM) return function thunk(dispatch){dispatch(setCurrent(channel))}
     else {
         return function thunk(dispatch){
-            console.log('------>INSIDE reduxSetCurrentChannel THUNK',channel)
 
             //this is a find or create post. it is necessary because it might be 
             //first time user clicks on specific cahnnel 

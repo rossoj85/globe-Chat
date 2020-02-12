@@ -6,7 +6,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import Main from './components/main';
 import store from './store'
 
-
+window.onbeforeunload = function(event) { console.log('UMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNTUMOUNT'); };
 ReactDOM.render(
     <Provider store ={store}>
         <Router>
