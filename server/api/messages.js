@@ -43,9 +43,10 @@ router.post('/translate',(req,res,next)=>{
     })
 })
 router.post('/translateAll',(req,res,next)=>{
+    console.log('INSIDE TRANSLATE ALL', req.body);
     const messageArrayAndLanguageObj = req.body
     const incomingMessageLanguage = messageArrayAndLanguageObj.incomingMessageLanguage
-    const messageArray = messageArrayAndLanguageObj.allMessages
+    const messageArray = messageArrayAndLanguageObj.allMessages || messageArrayAndLanguageObj.singleChannelMessages 
     console.log("------BOOOOOOOMMMMM-------")
     // console.log(incomingMessageLanguage)
     // console.log(messageArray)

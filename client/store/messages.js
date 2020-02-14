@@ -87,19 +87,25 @@ export function fetchMessages(incomingMessageLanguage){
     }
 }
 
-export function fetchSingleChannelMessages(channelId){
+export function fetchSingleChannelMessages(channelId, incomingMessageLanguage){
         console.log('fetch single channel messages called -- channelid', channelId);
+        console.log('fetch single channel messafged ---incoming message Langauge', incomingMessageLanguage);
         return function thunk(dispatch){
             console.log('inside dispatch');
             axios.get(`/api/messages/${channelId}`)
             .then(res => res.data)
             .then(singleChannelMessages => {
-                console.log('SINGLE CHANNEL MESSAGES INSIDE THUNK', singleChannelMessages)
-                dispatch(getSingleChannelMessages(singleChannelMessages))
+                const messagesArrayAndLanguageObj = {incomingMessageLanguage,singleChannelMessages}
+
+                axios.post('/api/messages/translateAll',messagesArrayAndLanguageObj)
+                .then(res => res.data)
+                .then(translatedMessageArray =>{
+                    console.log('SINGLE CHANNEL MESSAGES INSIDE THUNK', translatedMessageArray)
+                    dispatch(getSingleChannelMessages(translatedMessageArray))
+                })
             })
             .catch(console.err)
         }
-
 }
         
 
@@ -120,7 +126,7 @@ export default (state = initialState, action) => {
                 messageCollection: action.allMessages
             }
         case GET_SINGLE_CHANNEL_MESSAGES:
-             let cumMessageCollection = state.messageCollection.concat(action.singleChannelMessages)
+             let cumMessageCollection = state.messageCollection.concat(action.singleChannelMessages);
             return {
                 ...state,
                 messageCollection: cumMessageCollection

@@ -24,7 +24,7 @@ const  MessagesList = (props) =>{
 
     if(channelId && !channels[channelId]){
       console.log('CALLING THE DISPATCH FROM FREONT END');
-      const fetechSingleChannelMessagesThunk = fetchSingleChannelMessages(channelId)
+      const fetechSingleChannelMessagesThunk = fetchSingleChannelMessages(channelId, props.incomingMessageLanguage)
       store.dispatch(fetechSingleChannelMessagesThunk);
       channels[channelId] = "dirty";
     }
@@ -59,15 +59,13 @@ const  MessagesList = (props) =>{
     );
 }
 const mapState = (state, ownProps) =>{
-    console.log("OWN PROPS Params FROM MESSAGE LIST",ownProps.match.params)
   return {
     messagesCollection: state.messages.messageCollection,
     channelId: ownProps.match.params.channelId,
     currentUser: state.currentUser,
-    currentLanguage: state.navbar.incomingMessageLanguage,
+    incomingMessageLanguage: state.navbar.incomingMessageLanguage,
     currentChannel: state.channels.currentChannel,
-    userId: state.navbar.userId
-    
+    userId: state.navbar.userId,
   }
 }
 
